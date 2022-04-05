@@ -7,3 +7,4 @@ application/services/parsing_service/target/
 infrastructure/docker_images/rust-musl-builder.tar.xz
 infrastructure/docker_images/registry.tar.xz
 infrastructure/docker_images/mongo.tar.xz
+application/services/extraction_service/node.tar.xz
