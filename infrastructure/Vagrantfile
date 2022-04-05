@@ -1,11 +1,6 @@
 Vagrant.configure("2") do |config|
-    # The most common configuration options are documented and commented below.
-    # For a complete reference, please see the online documentation at
-    # https://docs.vagrantup.com.
-  
-    # Every Vagrant development environment requires a box. You can search for
-    # boxes at https://vagrantcloud.com/search.
-    config.vm.box = "archlinux/archlinux"
+
+    config.vm.box = "alpine-3.15-amd64-libvirt.box"
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
   
@@ -13,6 +8,7 @@ Vagrant.configure("2") do |config|
       lv.memory = 8192
       lv.cpus = 32
       lv.nested = true
+			lv.default_prefix = "stellarustCluster_"
     end
 
     config.vm.network "private_network", 
@@ -23,47 +19,35 @@ Vagrant.configure("2") do |config|
       :libvirt__network_name => "datacenter.local",
       :libvirt__network_address => "172.28.128.0/24"
 
-
-      (1..2).each do |i|
-        name = "manager-#{i.to_s.rjust(2, "0")}"
+      (1..1).each do |i|
+        name = "gamehost-#{i.to_s.rjust(2, "0")}"
   
         config.vm.define "#{name}" do |manager_machine|
-          manager_machine.vm.hostname = "#{name}"
-        end
-  
-      end
-  
-      (1..3).each do |i|
-        name = "data-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |data_machine|
-          data_machine.vm.hostname = "#{name}"
-        end
-  
-      end
-  
-      (1..3).each do |i|
-        name = "config-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |cfg_machine|
-          cfg_machine.vm.hostname = "#{name}"
-        end
-  
-      end
-  
-      (1..2).each do |i|
-        name = "router-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |query_router_machine|
-        query_router_machine.vm.hostname = "#{name}"
+
+					manager_machine.vm.hostname = "#{name}"
         end
   
       end
 
-      config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "config.yml"
+
+      (1..2).each do |i|
+        name = "client-#{i.to_s.rjust(2, "0")}"
+  
+        config.vm.define "#{name}" do |manager_machine|
+
+					manager_machine.vm.hostname = "#{name}"
+        end
+  
       end
+
+      (1..10).each do |i|
+        name = "element-#{i.to_s.rjust(2, "0")}"
   
-      config.vm.provision :reload
+        config.vm.define "#{name}" do |manager_machine|
+
+					manager_machine.vm.hostname = "#{name}"
+        end
   
+      end
+
 end

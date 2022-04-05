@@ -1,7 +1,13 @@
 {
     "folders": [
         {
-            "path": "application"
+            "path": "application/frontend_client"
+        },
+        {
+            "path": "application/save_data_client"
+        },
+        {
+            "path": "application/services"
         },
         {
             "path": "infrastructure"

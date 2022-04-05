@@ -1,1 +1,9 @@
 infrastructure/alpine-3.15-amd64-libvirt.box
+infrastructure/.vagrant
+application/services/target/
+application/services/extraction_service/target/
+application/save_data_client/target/
+application/services/parsing_service/target/
+infrastructure/docker_images/rust-musl-builder.tar.xz
+infrastructure/docker_images/registry.tar.xz
+infrastructure/docker_images/mongo.tar.xz
