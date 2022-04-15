@@ -17,7 +17,7 @@ pub fn init(config: &mut web::ServiceConfig) {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| App::new().configure(init))
-        .bind("0.0.0.0:8001")?
+        .bind("0.0.0.0:8002")?
         .run()
         .await
 }

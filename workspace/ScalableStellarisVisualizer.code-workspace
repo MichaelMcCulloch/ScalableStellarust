@@ -1,0 +1,32 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../application/frontend_client"
+        },
+        {
+            "path": "../application/save_data_client"
+        },
+        {
+            "path": "../application/services/extraction_service"
+        },
+        {
+            "path": "../application/services/parsing_service"
+        },
+        {
+            "path": "../application/services/unzipping_service"
+        },
+        {
+            "path": "../infrastructure"
+        }
+    ],
+    "settings": {
+        "workbench.colorCustomizations": {
+            "activityBar.background": "#322D20",
+            "titleBar.activeBackground": "#463F2D",
+            "titleBar.activeForeground": "#FCFBFA"
+        }
+    }
+}

@@ -1,6 +1,0 @@
-[workspace]
-
-members = [
-    "extraction_service",
-    "parsing_service",
-]

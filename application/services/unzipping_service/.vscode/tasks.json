@@ -4,6 +4,9 @@
 		{
 			"type": "cargo",
 			"command": "build",
+			"args": [
+				"--all"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -13,6 +16,9 @@
 		{
 			"type": "cargo",
 			"command": "check",
+			"args": [
+				"--all"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -22,6 +28,9 @@
 		{
 			"type": "cargo",
 			"command": "clean",
+			"args": [
+				"--all"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -31,6 +40,9 @@
 		{
 			"type": "cargo",
 			"command": "run",
+			"args": [
+				"--all"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
@@ -39,6 +51,9 @@
 		{
 			"type": "cargo",
 			"command": "test",
+			"args": [
+				"--all"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],

@@ -4,61 +4,59 @@
 		{
 			"type": "cargo",
 			"command": "build",
-			"args": [
-				"--all"
-			],
 			"problemMatcher": [
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Services: Build"
+			"label": "Build"
 		},
 		{
 			"type": "cargo",
 			"command": "check",
-			"args": [
-				"--all"
-			],
 			"problemMatcher": [
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Services: Check"
+			"label": "Check"
 		},
 		{
 			"type": "cargo",
 			"command": "clean",
-			"args": [
-				"--all"
-			],
 			"problemMatcher": [
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Services: Clean"
+			"label": "Clean"
 		},
 		{
 			"type": "cargo",
 			"command": "run",
-			"args": [
-				"--all"
-			],
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Services: Run"
+			"label": "Run"
 		},
 		{
 			"type": "cargo",
 			"command": "test",
-			"args": [
-				"--all"
-			],
 			"problemMatcher": [
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Services: Test"
+			"label": "Test"
+		},
+		{
+			"type": "docker-build",
+			"label": "Build Docker Image",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/Dockerfile",
+				"context": "${workspaceFolder}",
+				"tag": "StellarustExtractionService"
+			},
+			"dependsOn": [
+				"Check",
+				"Test"
+			]
 		}
 	]
 }

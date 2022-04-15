@@ -6,28 +6,28 @@
 			"script": "build",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Frontend: NPM Build",
+			"label": "NPM Build",
 		},
 		{
 			"type": "npm",
 			"script": "install",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Frontend: NPM Install",
+			"label": "NPM Install",
 		},
 		{
 			"type": "npm",
 			"script": "start",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Frontend: NPM Start",
+			"label": "NPM Start",
 		},
 		{
 			"type": "npm",
 			"script": "test",
 			"group": "test",
 			"problemMatcher": [],
-			"label": "Frontend: NPM Test",
+			"label": "NPM Test",
 		},
 	]
 }

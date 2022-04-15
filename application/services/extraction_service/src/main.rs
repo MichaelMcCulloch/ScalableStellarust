@@ -2,7 +2,7 @@ use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 
 #[get("/")]
 async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Rust service prototype")
+    HttpResponse::Ok().body("Extraction Service Prototype")
 }
 
 #[get("/healthcheck")]

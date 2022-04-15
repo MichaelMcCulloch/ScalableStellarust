@@ -11,8 +11,8 @@ RUN cargo build --release
 FROM scratch
 
 # Copy the binary to a minimal Linux OS
-COPY --from=rust-build /home/rust/src/target/x86_64-unknown-linux-musl/release/extraction_service .
+COPY --from=rust-build /home/rust/src/target/x86_64-unknown-linux-musl/release/unzipping_service .
 
-EXPOSE 8000
+EXPOSE 8002
 
-CMD ["./extraction_service"]
+CMD ["./unzipping_service"]
