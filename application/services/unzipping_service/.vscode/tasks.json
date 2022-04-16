@@ -73,6 +73,62 @@
 				"Check",
 				"Test"
 			]
+		},
+		{
+			"type": "shell",
+			"label": "Cleanup Docker Exported Image",
+			"group": "build",
+			"command": [
+				"rm",
+				"stellarust-unzipping-service.tar*;",
+				"rm",
+				"../../../infrastructure/docker_images/stellarust-unzipping-service.tar.xz;",
+			],
+		},
+		{
+			"type": "shell",
+			"label": "Save Docker Image To tar",
+			"group": "build",
+			"command": [
+				"docker",
+				"save",
+				"stellarust-unzipping-service:latest",
+				">",
+				"stellarust-unzipping-service.tar",
+			],
+		},
+		{
+			"type": "shell",
+			"label": "Compress tar",
+			"group": "build",
+			"command": [
+				"xz",
+				"-T32",
+				"-9",
+				"stellarust-unzipping-service.tar"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "move compressed tarxz to the infrastructure images pool",
+			"group": "build",
+			"command": [
+				"mv",
+				"stellarust-unzipping-service.tar.xz",
+				"../../../infrastructure/docker_images"
+			]
+		},
+		{
+			"label": "Export Docker Image",
+			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build Docker Image",
+				"Cleanup Docker Exported Image",
+				"Save Docker Image To tar",
+				"Compress tar",
+				"move compressed tarxz to the infrastructure images pool"
+			]
 		}
 	]
 }

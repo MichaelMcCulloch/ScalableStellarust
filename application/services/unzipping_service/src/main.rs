@@ -5,14 +5,13 @@ use unzipping_service::config;
 async fn index() -> impl Responder {
     HttpResponse::Ok().body("Parsing Service Prototype")
 }
+pub fn init(config: &mut web::ServiceConfig) {
+    config.service(web::scope("").service(index).service(healthcheck));
+}
 
 #[get("/healthcheck")]
 async fn healthcheck() -> impl Responder {
     HttpResponse::Ok().body("I'm alive!")
-}
-
-pub fn init(config: &mut web::ServiceConfig) {
-    config.service(web::scope("").service(index).service(healthcheck));
 }
 
 #[actix_web::main]
