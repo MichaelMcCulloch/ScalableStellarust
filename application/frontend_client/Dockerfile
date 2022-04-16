@@ -3,9 +3,9 @@ FROM node:17-alpine3.15 AS builder
 WORKDIR /app
 COPY package.json ./
 
-RUN npm install
+RUN npm install --save --legacy-peer-deps
 COPY . .
-CMD ["npm","run", "build"]
+RUN npm run build
 
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html

@@ -44,6 +44,20 @@
 			],
 			"group": "test",
 			"label": "Test"
+		},
+		{
+			"type": "docker-build",
+			"label": "Build Docker Image",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/Dockerfile",
+				"context": "${workspaceFolder}",
+				"tag": "stellarust-parsing-service"
+			},
+			"group": "build",
+			"dependsOn": [
+				"Check",
+				"Test"
+			]
 		}
 	]
 }

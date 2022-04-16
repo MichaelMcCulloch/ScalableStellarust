@@ -28,5 +28,11 @@
             "titleBar.activeBackground": "#463F2D",
             "titleBar.activeForeground": "#FCFBFA"
         }
+    },
+    "extensions": {
+        "recommendations": [
+            "matklad.rust-analyzer",
+            "ms-azuretools.vscode-docker",
+        ]
     }
 }

@@ -51,8 +51,9 @@
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
-				"tag": "StellarustExtractionService"
+				"tag": "stellarust-extraction-service"
 			},
+			"group": "build",
 			"dependsOn": [
 				"Check",
 				"Test"

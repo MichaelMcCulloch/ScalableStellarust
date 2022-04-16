@@ -29,5 +29,15 @@
 			"problemMatcher": [],
 			"label": "NPM Test",
 		},
+		{
+			"type": "docker-build",
+			"label": "Build Docker Image",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/Dockerfile",
+				"context": "${workspaceFolder}",
+				"tag": "stellarust-frontend-service"
+			},
+			"group": "build",
+		}
 	]
 }
