@@ -1,32 +1,39 @@
 {
     "folders": [
         {
+            "name": "Workspace File",
             "path": "."
         },
         {
+            "name": "Frontend Client",
             "path": "../application/frontend_client"
         },
         {
+            "name": "Save Data Client",
             "path": "../application/save_data_client"
         },
         {
+            "name": "Extraction Service",
             "path": "../application/services/extraction_service"
         },
         {
+            "name": "Parsing Service",
             "path": "../application/services/parsing_service"
         },
         {
+            "name": "Unzipping Service",
             "path": "../application/services/unzipping_service"
         },
         {
+            "name": "Infrastructure",
             "path": "../infrastructure"
         }
     ],
     "settings": {
         "workbench.colorCustomizations": {
-            "activityBar.background": "#322D20",
-            "titleBar.activeBackground": "#463F2D",
-            "titleBar.activeForeground": "#FCFBFA"
+            "activityBar.background": "#32202f",
+            "titleBar.activeBackground": "#462d45",
+            "titleBar.activeForeground": "#fcfafc"
         }
     },
     "extensions": {
