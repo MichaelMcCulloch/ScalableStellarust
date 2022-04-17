@@ -6,3 +6,17 @@ docker_swarm_manager_deps:
   - docker-compose
   - python-pip
 
+pip_extra_packages_manager:
+  - docker-compose
+  - docker[tls]
+  - ndg-httpsclient
+  - pyOpenSSL
+  - pyasn1
+  - jsondiff
+
+pip_extra_packages_workers:
+  - docker[tls]
+  - ndg-httpsclient
+  - pyOpenSSL
+  - pyasn1
+  - jsondiff
