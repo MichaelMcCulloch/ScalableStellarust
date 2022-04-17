@@ -1,0 +1,15 @@
+---
+- hosts: datacenter
+  roles:
+    - base_dependencies
+# - hosts: swarm_managers:swarm_workers
+#   roles:
+#     - docker_swarm
+
+# - hosts: swarm_managers
+#   roles:
+#     - docker_registry_service
+
+# - hosts: swarm_managers
+#   roles:
+#     - docker_mongo_stack
