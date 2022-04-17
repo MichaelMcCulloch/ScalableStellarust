@@ -1,0 +1,5 @@
+docker_images:
+  - lib/mongo.tar.xz
+  - lib/node.tar.xz
+  - lib/registry.tar.xz
+  - lib/rust_builder.tar.xz

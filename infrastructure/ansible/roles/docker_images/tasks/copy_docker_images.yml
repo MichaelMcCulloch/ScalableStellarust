@@ -1,0 +1,6 @@
+- name: Copy {{docker_images}} to primary Manager
+  copy:
+    src: "{{item}}"
+    dest: /tmp/
+  when: inventory_hostname == groups['swarm_managers'][0]
+  with_items: "{{docker_images}}"

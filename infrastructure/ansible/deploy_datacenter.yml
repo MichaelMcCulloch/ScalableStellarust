@@ -2,6 +2,9 @@
 - hosts: datacenter
   roles:
     - base_dependencies
+- hosts: swarm_managers
+  roles:
+    - docker_images
 - hosts: swarm_managers:swarm_workers
   roles:
     - docker_swarm

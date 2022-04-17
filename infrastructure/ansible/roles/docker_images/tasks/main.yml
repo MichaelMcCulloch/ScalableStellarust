@@ -1,0 +1,3 @@
+---
+- name: Copy Docker Images to primary Manager
+  import_tasks: copy_docker_images.yml
