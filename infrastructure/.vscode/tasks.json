@@ -5,25 +5,25 @@
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "INFRASTRUCTURE::VAGRANT::SPAWN"
+			"label": "Infrastructure::Vagrant::Spawn"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant up --parallel --provision",
 			"group": "build",
-			"label": "INFRASTRUCTURE::VAGRANT::PROVISION"
+			"label": "Infrastructure::Vagrant::Provision"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant destroy --parallel",
 			"group": "build",
-			"label": "INFRASTRUCTURE::VAGRANT::DESTROY"
+			"label": "Infrastructure::Vagrant::Destroy"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant halt",
 			"group": "build",
-			"label": "INFRASTRUCTURE::VAGRANT::HALT"
+			"label": "Infrastructure::Vagrant::Halt"
 		}
 	]
 }

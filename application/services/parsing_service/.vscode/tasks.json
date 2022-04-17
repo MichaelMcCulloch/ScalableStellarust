@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::PARSING::Build"
+			"label": "Svc::Parsing::Build"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::PARSING::Check"
+			"label": "Svc::Parsing::Check"
 		},
 		{
 			"type": "cargo",
@@ -26,7 +26,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::PARSING::Clean"
+			"label": "Svc::Parsing::Clean"
 		},
 		{
 			"type": "cargo",
@@ -34,7 +34,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "SVC::PARSING::Run"
+			"label": "Svc::Parsing::Run"
 		},
 		{
 			"type": "cargo",
@@ -43,11 +43,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "SVC::PARSING::Test"
+			"label": "Svc::Parsing::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "SVC::PARSING::DOCKER::BUILD",
+			"label": "Svc::Parsing::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -61,7 +61,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::PARSING::DOCKER::SAVE_TAR",
+			"label": "Svc::Parsing::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -73,7 +73,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::PARSING::DOCKER::COMPRESS_XZ",
+			"label": "Svc::Parsing::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -84,7 +84,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::PARSING::DOCKER::MOVE",
+			"label": "Svc::Parsing::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -93,14 +93,14 @@
 			]
 		},
 		{
-			"label": "SVC::PARSING::DOCKER::EXTRACT",
+			"label": "Svc::Parsing::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Build Docker Image",
-				"Save Docker Image To tar",
-				"Compress tar",
-				"move compressed tarxz to the infrastructure images pool"
+				"Svc::Parsing::Docker::Build",
+				"Svc::Parsing::Docker::SaveTar",
+				"Svc::Parsing::Docker::CompressXz",
+				"Svc::Parsing::Docker::Move",
 			]
 		}
 	]

@@ -11,7 +11,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::UNZIPPING::Build"
+			"label": "Svc::Unzipping::Build"
 		},
 		{
 			"type": "cargo",
@@ -23,7 +23,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::UNZIPPING::Check"
+			"label": "Svc::Unzipping::Check"
 		},
 		{
 			"type": "cargo",
@@ -35,7 +35,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "SVC::UNZIPPING::Clean"
+			"label": "Svc::Unzipping::Clean"
 		},
 		{
 			"type": "cargo",
@@ -46,7 +46,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "SVC::UNZIPPING::Run"
+			"label": "Svc::Unzipping::Run"
 		},
 		{
 			"type": "cargo",
@@ -58,11 +58,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "SVC::UNZIPPING::Test"
+			"label": "Svc::Unzipping::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "SVC::UNZIPPING::DOCKER::BUILD",
+			"label": "Svc::Unzipping::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -76,7 +76,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::UNZIPPING::DOCKER::SAVE_TAR",
+			"label": "Svc::Unzipping::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -88,7 +88,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::UNZIPPING::DOCKER::COMPRESS_XZ",
+			"label": "Svc::Unzipping::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -99,7 +99,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::UNZIPPING::DOCKER::MOVE",
+			"label": "Svc::Unzipping::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -108,14 +108,14 @@
 			]
 		},
 		{
-			"label": "SVC::UNZIPPING::DOCKER::EXTRACT",
+			"label": "Svc::Unzipping::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Build Docker Image",
-				"Save Docker Image To tar",
-				"Compress tar",
-				"move compressed tarxz to the infrastructure images pool"
+				"Svc::Unzipping::Docker::Build",
+				"Svc::Unzipping::Docker::SaveTar",
+				"Svc::Unzipping::Docker::CompressXz",
+				"Svc::Unzipping::Docker::Move",
 			]
 		}
 	]

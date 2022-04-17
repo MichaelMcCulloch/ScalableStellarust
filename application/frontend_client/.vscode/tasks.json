@@ -6,32 +6,32 @@
 			"script": "build",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "SVC::FRONTEND::NPM Build",
+			"label": "Svc::Frontend::Npm Build",
 		},
 		{
 			"type": "npm",
 			"script": "install",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "SVC::FRONTEND::NPM Install",
+			"label": "Svc::Frontend::Npm Install",
 		},
 		{
 			"type": "npm",
 			"script": "start",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "SVC::FRONTEND::NPM Start",
+			"label": "Svc::Frontend::Npm Start",
 		},
 		{
 			"type": "npm",
 			"script": "test",
 			"group": "test",
 			"problemMatcher": [],
-			"label": "SVC::FRONTEND::NPM Test",
+			"label": "Svc::Frontend::Npm Test",
 		},
 		{
 			"type": "docker-build",
-			"label": "SVC::FRONTEND::DOCKER::BUILD",
+			"label": "Svc::Frontend::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -41,7 +41,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::FRONTEND::DOCKER::SAVE_TAR",
+			"label": "Svc::Frontend::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -53,7 +53,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::FRONTEND::DOCKER::COMPRESS_XZ",
+			"label": "Svc::Frontend::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -64,7 +64,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "SVC::FRONTEND::DOCKER::MOVE",
+			"label": "Svc::Frontend::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -73,14 +73,14 @@
 			]
 		},
 		{
-			"label": "SVC::FRONTEND::DOCKER::EXTRACT",
+			"label": "Svc::Frontend::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Build Docker Image",
-				"Save Docker Image To tar",
-				"Compress tar",
-				"move compressed tarxz to the infrastructure images pool"
+				"Svc::Frontend::Docker::Build",
+				"Svc::Frontend::Docker::SaveTar",
+				"Svc::Frontend::Docker::CompressXz",
+				"Svc::Frontend::Docker::Move",
 			]
 		}
 	]
