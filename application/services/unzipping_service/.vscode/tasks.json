@@ -76,17 +76,6 @@
 		},
 		{
 			"type": "shell",
-			"label": "Cleanup Docker Exported Image",
-			"group": "build",
-			"command": [
-				"rm",
-				"stellarust-unzipping-service.tar*;",
-				"rm",
-				"../../../infrastructure/docker_images/stellarust-unzipping-service.tar.xz;",
-			],
-		},
-		{
-			"type": "shell",
 			"label": "Save Docker Image To tar",
 			"group": "build",
 			"command": [
@@ -124,7 +113,6 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Build Docker Image",
-				"Cleanup Docker Exported Image",
 				"Save Docker Image To tar",
 				"Compress tar",
 				"move compressed tarxz to the infrastructure images pool"
