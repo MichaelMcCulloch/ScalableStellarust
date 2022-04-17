@@ -1,0 +1,10 @@
+---
+- name: "Initial Setup"
+  hosts: all
+  become: true
+  tasks:
+    - name: "Append host:~/.ssh/id_rsa.pub to box:~/.ssh/authorized_keys"
+      ansible.posix.authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
