@@ -5,19 +5,25 @@
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "Infrastructure: Spawn Virtual Machines"
+			"label": "Spawn Virtual Machines"
+		},
+		{
+			"type": "shell",
+			"command": "vagrant up --parallel --provision",
+			"group": "build",
+			"label": "Provision Virtual Machines"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant destroy --parallel",
 			"group": "build",
-			"label": "Infrastructure: Destroy Virtual Machines"
+			"label": "Destroy Virtual Machines"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant halt",
 			"group": "build",
-			"label": "Infrastructure: Halt Virtual Machines"
+			"label": "Halt Virtual Machines"
 		}
 	]
 }
