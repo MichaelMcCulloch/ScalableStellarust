@@ -1,0 +1,33 @@
+- name: Init a new swarm with default parameters
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  register: swarmInitResult
+  when: inventory_hostname == groups['swarm_managers'][0]
+
+- name: Get join-token for manager nodes
+  set_fact:
+    join_token_manager: "{{ hostvars[groups['swarm_managers'][0]].swarmInitResult.swarm_facts.JoinTokens.Manager }}"
+
+- name: Get join-token for worker nodes
+  set_fact:
+    join_token_worker: "{{ hostvars[groups['swarm_managers'][0]].swarmInitResult.swarm_facts.JoinTokens.Worker }}"
+
+- name: Add master nodes
+  docker_swarm:
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }}"
+    remote_addrs: "{{ hostvars[groups['swarm_managers'][0]]['ansible_eth1']['ipv4']['address'] }}"
+    join_token: "{{ join_token_manager }}"
+    state: join
+  when:
+    - inventory_hostname in groups['swarm_managers']
+    - inventory_hostname != groups['swarm_managers'][0]
+
+- name: Join workers
+  docker_swarm:
+    state: join
+    join_token: "{{ join_token_worker }}"
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }}"
+    remote_addrs: "{{ hostvars[groups['swarm_managers'][0]]['ansible_eth1']['ipv4']['address']  }}"
+  when:
+    - inventory_hostname in groups['swarm_workers']
