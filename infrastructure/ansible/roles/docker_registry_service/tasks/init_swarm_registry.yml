@@ -1,0 +1,36 @@
+- name: Load registry image from archive
+  docker_image:
+    name: registry:latest
+    load_path: /tmp/registry.tar.xz
+    state: present
+    source: load
+  when: inventory_hostname == groups['swarm_managers'][0]
+  tags:
+    - registry
+    - docker
+
+- name: Start registry service
+  docker_swarm_service:
+    name: registry
+    image: registry
+    publish:
+      - { published_port: 5000, target_port: 5000 }
+  when: inventory_hostname == groups['swarm_managers'][0]
+  tags:
+    - registry
+    - docker
+
+- name: "Load lib images from archive"
+  docker_image:
+    name: "{{item.name}}"
+    tag: "{{item.tag}}"
+    repository: "127.0.0.0:5000/{{item.name}}"
+    load_path: "/tmp/{{item.name}}.tar.xz"
+    state: present
+    source: load
+    push: yes
+  when: inventory_hostname == groups['swarm_managers'][0]
+  with_items: "{{docker_images}}"
+  tags:
+    - registry
+    - docker

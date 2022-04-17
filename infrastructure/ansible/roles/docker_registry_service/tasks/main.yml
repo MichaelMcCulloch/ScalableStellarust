@@ -1,0 +1,3 @@
+---
+- name: Create Swarm registry
+  import_tasks: init_swarm_registry.yml

@@ -1,0 +1,7 @@
+docker_images:
+  - name: "mongo"
+    tag: "5.0.7-focal"
+  - name: "node"
+    tag: "17.9.0-alpine3.15"
+  - name: "ekidd/rust-musl-builder"
+    tag: latest
