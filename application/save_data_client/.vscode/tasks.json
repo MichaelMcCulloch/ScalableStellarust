@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Build"
+			"label": "CLIENT::SAVE_DATA::Build"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Check"
+			"label": "CLIENT::SAVE_DATA::Check"
 		},
 		{
 			"type": "cargo",
@@ -26,7 +26,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Clean"
+			"label": "CLIENT::SAVE_DATA::Clean"
 		},
 		{
 			"type": "cargo",
@@ -34,7 +34,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Run"
+			"label": "CLIENT::SAVE_DATA::Run"
 		},
 		{
 			"type": "cargo",
@@ -43,7 +43,7 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Test"
+			"label": "CLIENT::SAVE_DATA::Test"
 		}
 	]
 }

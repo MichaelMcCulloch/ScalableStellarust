@@ -5,25 +5,25 @@
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "Spawn Virtual Machines"
+			"label": "INFRASTRUCTURE::VAGRANT::SPAWN"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant up --parallel --provision",
 			"group": "build",
-			"label": "Provision Virtual Machines"
+			"label": "INFRASTRUCTURE::VAGRANT::PROVISION"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant destroy --parallel",
 			"group": "build",
-			"label": "Destroy Virtual Machines"
+			"label": "INFRASTRUCTURE::VAGRANT::DESTROY"
 		},
 		{
 			"type": "shell",
 			"command": "vagrant halt",
 			"group": "build",
-			"label": "Halt Virtual Machines"
+			"label": "INFRASTRUCTURE::VAGRANT::HALT"
 		}
 	]
 }

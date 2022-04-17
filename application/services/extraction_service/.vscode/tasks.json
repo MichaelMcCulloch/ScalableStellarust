@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Build"
+			"label": "SVC::EXTRACTION::Build"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Check"
+			"label": "SVC::EXTRACTION::Check"
 		},
 		{
 			"type": "cargo",
@@ -26,7 +26,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Clean"
+			"label": "SVC::EXTRACTION::Clean"
 		},
 		{
 			"type": "cargo",
@@ -34,7 +34,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Run"
+			"label": "SVC::EXTRACTION::Run"
 		},
 		{
 			"type": "cargo",
@@ -43,11 +43,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Test"
+			"label": "SVC::EXTRACTION::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "Build Docker Image",
+			"label": "SVC::EXTRACTION::DOCKER::BUILD",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -57,6 +57,50 @@
 			"dependsOn": [
 				"Check",
 				"Test"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "SVC::EXTRACTION::DOCKER::SAVE_TAR",
+			"group": "build",
+			"command": [
+				"docker",
+				"save",
+				"stellarust-extraction-service:latest",
+				">",
+				"stellarust-extraction-service.tar",
+			],
+		},
+		{
+			"type": "shell",
+			"label": "SVC::EXTRACTION::DOCKER::COMPRESS_XZ",
+			"group": "build",
+			"command": [
+				"xz",
+				"-T32",
+				"-9",
+				"stellarust-extraction-service.tar"
+			]
+		},
+		{
+			"type": "shell",
+			"label": "SVC::EXTRACTION::DOCKER::MOVE",
+			"group": "build",
+			"command": [
+				"mv",
+				"stellarust-extraction-service.tar.xz",
+				"../../../infrastructure/docker_images"
+			]
+		},
+		{
+			"label": "SVC::EXTRACTION::DOCKER::EXTRACT",
+			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build Docker Image",
+				"Save Docker Image To tar",
+				"Compress tar",
+				"move compressed tarxz to the infrastructure images pool"
 			]
 		}
 	]

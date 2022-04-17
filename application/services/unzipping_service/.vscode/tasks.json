@@ -11,7 +11,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Build"
+			"label": "SVC::UNZIPPING::Build"
 		},
 		{
 			"type": "cargo",
@@ -23,7 +23,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Check"
+			"label": "SVC::UNZIPPING::Check"
 		},
 		{
 			"type": "cargo",
@@ -35,7 +35,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Clean"
+			"label": "SVC::UNZIPPING::Clean"
 		},
 		{
 			"type": "cargo",
@@ -46,7 +46,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Run"
+			"label": "SVC::UNZIPPING::Run"
 		},
 		{
 			"type": "cargo",
@@ -58,11 +58,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Test"
+			"label": "SVC::UNZIPPING::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "Build Docker Image",
+			"label": "SVC::UNZIPPING::DOCKER::BUILD",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -76,7 +76,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Save Docker Image To tar",
+			"label": "SVC::UNZIPPING::DOCKER::SAVE_TAR",
 			"group": "build",
 			"command": [
 				"docker",
@@ -88,7 +88,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Compress tar",
+			"label": "SVC::UNZIPPING::DOCKER::COMPRESS_XZ",
 			"group": "build",
 			"command": [
 				"xz",
@@ -99,7 +99,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "move compressed tarxz to the infrastructure images pool",
+			"label": "SVC::UNZIPPING::DOCKER::MOVE",
 			"group": "build",
 			"command": [
 				"mv",
@@ -108,7 +108,7 @@
 			]
 		},
 		{
-			"label": "Export Docker Image",
+			"label": "SVC::UNZIPPING::DOCKER::EXTRACT",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
