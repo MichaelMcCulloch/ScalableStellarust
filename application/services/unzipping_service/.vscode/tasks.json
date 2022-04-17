@@ -11,7 +11,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Unzipping::Build"
+			"label": "Service::Unzipping::Build"
 		},
 		{
 			"type": "cargo",
@@ -23,7 +23,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Unzipping::Check"
+			"label": "Service::Unzipping::Check"
 		},
 		{
 			"type": "cargo",
@@ -35,7 +35,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Unzipping::Clean"
+			"label": "Service::Unzipping::Clean"
 		},
 		{
 			"type": "cargo",
@@ -46,7 +46,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Svc::Unzipping::Run"
+			"label": "Service::Unzipping::Run"
 		},
 		{
 			"type": "cargo",
@@ -58,11 +58,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Svc::Unzipping::Test"
+			"label": "Service::Unzipping::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "Svc::Unzipping::Docker::Build",
+			"label": "Service::Unzipping::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -76,7 +76,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Unzipping::Docker::SaveTar",
+			"label": "Service::Unzipping::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -88,7 +88,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Unzipping::Docker::CompressXz",
+			"label": "Service::Unzipping::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -99,7 +99,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Unzipping::Docker::Move",
+			"label": "Service::Unzipping::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -108,14 +108,14 @@
 			]
 		},
 		{
-			"label": "Svc::Unzipping::Docker::Extract",
+			"label": "Service::Unzipping::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Svc::Unzipping::Docker::Build",
-				"Svc::Unzipping::Docker::SaveTar",
-				"Svc::Unzipping::Docker::CompressXz",
-				"Svc::Unzipping::Docker::Move",
+				"Service::Unzipping::Docker::Build",
+				"Service::Unzipping::Docker::SaveTar",
+				"Service::Unzipping::Docker::CompressXz",
+				"Service::Unzipping::Docker::Move",
 			]
 		}
 	]

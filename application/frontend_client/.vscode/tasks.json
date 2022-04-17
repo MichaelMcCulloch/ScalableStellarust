@@ -6,32 +6,32 @@
 			"script": "build",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Svc::Frontend::Npm Build",
+			"label": "Service::Frontend::Npm Build",
 		},
 		{
 			"type": "npm",
 			"script": "install",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Svc::Frontend::Npm Install",
+			"label": "Service::Frontend::Npm Install",
 		},
 		{
 			"type": "npm",
 			"script": "start",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "Svc::Frontend::Npm Start",
+			"label": "Service::Frontend::Npm Start",
 		},
 		{
 			"type": "npm",
 			"script": "test",
 			"group": "test",
 			"problemMatcher": [],
-			"label": "Svc::Frontend::Npm Test",
+			"label": "Service::Frontend::Npm Test",
 		},
 		{
 			"type": "docker-build",
-			"label": "Svc::Frontend::Docker::Build",
+			"label": "Service::Frontend::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -41,7 +41,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Frontend::Docker::SaveTar",
+			"label": "Service::Frontend::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -53,7 +53,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Frontend::Docker::CompressXz",
+			"label": "Service::Frontend::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -64,7 +64,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Frontend::Docker::Move",
+			"label": "Service::Frontend::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -73,14 +73,14 @@
 			]
 		},
 		{
-			"label": "Svc::Frontend::Docker::Extract",
+			"label": "Service::Frontend::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Svc::Frontend::Docker::Build",
-				"Svc::Frontend::Docker::SaveTar",
-				"Svc::Frontend::Docker::CompressXz",
-				"Svc::Frontend::Docker::Move",
+				"Service::Frontend::Docker::Build",
+				"Service::Frontend::Docker::SaveTar",
+				"Service::Frontend::Docker::CompressXz",
+				"Service::Frontend::Docker::Move",
 			]
 		}
 	]

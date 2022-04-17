@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Parsing::Build"
+			"label": "Service::Parsing::Build"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Parsing::Check"
+			"label": "Service::Parsing::Check"
 		},
 		{
 			"type": "cargo",
@@ -26,7 +26,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Parsing::Clean"
+			"label": "Service::Parsing::Clean"
 		},
 		{
 			"type": "cargo",
@@ -34,7 +34,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Svc::Parsing::Run"
+			"label": "Service::Parsing::Run"
 		},
 		{
 			"type": "cargo",
@@ -43,11 +43,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Svc::Parsing::Test"
+			"label": "Service::Parsing::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "Svc::Parsing::Docker::Build",
+			"label": "Service::Parsing::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -61,7 +61,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Parsing::Docker::SaveTar",
+			"label": "Service::Parsing::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -73,7 +73,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Parsing::Docker::CompressXz",
+			"label": "Service::Parsing::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -84,7 +84,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Parsing::Docker::Move",
+			"label": "Service::Parsing::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -93,14 +93,14 @@
 			]
 		},
 		{
-			"label": "Svc::Parsing::Docker::Extract",
+			"label": "Service::Parsing::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Svc::Parsing::Docker::Build",
-				"Svc::Parsing::Docker::SaveTar",
-				"Svc::Parsing::Docker::CompressXz",
-				"Svc::Parsing::Docker::Move",
+				"Service::Parsing::Docker::Build",
+				"Service::Parsing::Docker::SaveTar",
+				"Service::Parsing::Docker::CompressXz",
+				"Service::Parsing::Docker::Move",
 			]
 		}
 	]

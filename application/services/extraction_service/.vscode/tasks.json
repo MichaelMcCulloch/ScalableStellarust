@@ -8,7 +8,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Extraction::Build"
+			"label": "Service::Extraction::Build"
 		},
 		{
 			"type": "cargo",
@@ -17,7 +17,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Extraction::Check"
+			"label": "Service::Extraction::Check"
 		},
 		{
 			"type": "cargo",
@@ -26,7 +26,7 @@
 				"$rustc"
 			],
 			"group": "build",
-			"label": "Svc::Extraction::Clean"
+			"label": "Service::Extraction::Clean"
 		},
 		{
 			"type": "cargo",
@@ -34,7 +34,7 @@
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "Svc::Extraction::Run"
+			"label": "Service::Extraction::Run"
 		},
 		{
 			"type": "cargo",
@@ -43,11 +43,11 @@
 				"$rustc"
 			],
 			"group": "test",
-			"label": "Svc::Extraction::Test"
+			"label": "Service::Extraction::Test"
 		},
 		{
 			"type": "docker-build",
-			"label": "Svc::Extraction::Docker::Build",
+			"label": "Service::Extraction::Docker::Build",
 			"dockerBuild": {
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
@@ -61,7 +61,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Extraction::Docker::SaveTar",
+			"label": "Service::Extraction::Docker::SaveTar",
 			"group": "build",
 			"command": [
 				"docker",
@@ -73,7 +73,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Extraction::Docker::CompressXz",
+			"label": "Service::Extraction::Docker::CompressXz",
 			"group": "build",
 			"command": [
 				"xz",
@@ -84,7 +84,7 @@
 		},
 		{
 			"type": "shell",
-			"label": "Svc::Extraction::Docker::Move",
+			"label": "Service::Extraction::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
@@ -93,14 +93,14 @@
 			]
 		},
 		{
-			"label": "Svc::Extraction::Docker::Extract",
+			"label": "Service::Extraction::Docker::Extract",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Svc::Extraction::Docker::Build",
-				"Svc::Extraction::Docker::SaveTar",
-				"Svc::Extraction::Docker::CompressXz",
-				"Svc::Extraction::Docker::Move",
+				"Service::Extraction::Docker::Build",
+				"Service::Extraction::Docker::SaveTar",
+				"Service::Extraction::Docker::CompressXz",
+				"Service::Extraction::Docker::Move",
 			]
 		}
 	]
