@@ -1,0 +1,5 @@
+- name: Install {{docker_swarm_workers_deps}} on workers, and {{docker_swarm_manager_deps}} on managers
+  pacman:
+    name: "{{docker_swarm_manager_deps if inventory_hostname in groups['swarm_managers'] else docker_swarm_workers_deps}}"
+    state: present
+    update_cache: yes

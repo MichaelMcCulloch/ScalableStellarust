@@ -1,0 +1,8 @@
+docker_swarm_workers_deps:
+  - docker
+  - python-pip
+docker_swarm_manager_deps:
+  - docker
+  - docker-compose
+  - python-pip
+
