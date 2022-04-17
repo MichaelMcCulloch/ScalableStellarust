@@ -5,3 +5,4 @@ application/save_data_client/target/
 application/services/parsing_service/target/
 infrastructure/docker_images/*.tar.xz
 application/services/extraction_service/node.tar.xz
+infrastructure/ansible/roles/docker_images/files/lib/*.tar.xz
