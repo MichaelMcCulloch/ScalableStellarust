@@ -6,6 +6,8 @@ docker_swarm_manager_deps:
   - docker-compose
   - python-pip
 
+docker_api_port: 2375
+
 pip_extra_packages_manager:
   - docker-compose
   - docker[tls]

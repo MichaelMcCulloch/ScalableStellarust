@@ -1,0 +1,6 @@
+- name: expose Port {{docker_api_port}} for docker API
+  replace:
+    path: /usr/lib/systemd/system/docker.service
+    regexp: '(\s+)ExecStart=/usr/bin/dockerd -H fd://(\s+.*)?$'
+    replace: '\1ExecStart=/usr/sbin/dockerd -H tcp://0.0.0.0:{{docker_api_port}} -H fd://\2'
+    backup: no

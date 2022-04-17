@@ -3,3 +3,7 @@
   import_tasks: install_additional_dependencies.yml
 - name: Install Python modules
   import_tasks: install_python_modules.yml
+- name: expose port for docker API
+  import_tasks: expose_docker_api_port.yml
+  notify:
+    - Restart docker
