@@ -1,6 +1,6 @@
-- name: Copy {{docker_images}} to primary Manager
+- name: Copy {{docker_hub_images}} to primary Manager
   copy:
     src: "{{item}}"
     dest: /tmp/
   when: inventory_hostname == groups['swarm_managers'][0]
-  with_items: "{{docker_images}}"
+  with_items: "{{docker_hub_images + docker_stellarust_images}}"
