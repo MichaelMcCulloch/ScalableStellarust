@@ -1,6 +1,6 @@
 - name: Load registry image from archive
   docker_image:
-    name: registry:latest
+    name: registry:2.8.1
     load_path: /tmp/registry.tar.xz
     state: present
     source: load
@@ -25,12 +25,27 @@
     name: "{{item.name}}"
     tag: "{{item.tag}}"
     repository: "127.0.0.0:5000/{{item.name}}"
-    load_path: "/tmp/{{item.name}}.tar.xz"
+    load_path: "/tmp/{{item.path}}"
     state: present
     source: load
     push: yes
   when: inventory_hostname == groups['swarm_managers'][0]
   with_items: "{{docker_images}}"
+  tags:
+    - registry
+    - docker
+
+- name: "Load stellarust images from archive"
+  docker_image:
+    name: "{{item.name}}"
+    tag: "{{item.tag}}"
+    repository: "127.0.0.0:5000/{{item.name}}"
+    load_path: "/tmp/{{item.path}}"
+    state: present
+    source: load
+    push: yes
+  when: inventory_hostname == groups['swarm_managers'][0]
+  with_items: "{{stellarust_docker_images}}"
   tags:
     - registry
     - docker
