@@ -1,7 +1,7 @@
 #!/bin/sh
 
 NODE=node:17.9.0-alpine3.15
-REGISTRY=registry:2.8.1
+# REGISTRY=registry:2.8.1 # gonna grab this one within the virtual infrastructure
 RUST_BUILDER=ekidd/rust-musl-builder:latest
 MONGO=mongo:5.0.7-focal
 

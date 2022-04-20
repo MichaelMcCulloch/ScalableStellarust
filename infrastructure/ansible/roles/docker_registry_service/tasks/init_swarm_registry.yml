@@ -1,18 +1,7 @@
-- name: Load registry image from archive
-  docker_image:
-    name: registry:2.8.1
-    load_path: /tmp/registry.tar.xz
-    state: present
-    source: load
-  when: inventory_hostname == groups['swarm_managers'][0]
-  tags:
-    - registry
-    - docker
-
 - name: Start registry service
   docker_swarm_service:
     name: registry
-    image: registry
+    image: registry:2
     publish:
       - { published_port: 5000, target_port: 5000 }
   when: inventory_hostname == groups['swarm_managers'][0]
@@ -24,7 +13,7 @@
   docker_image:
     name: "{{item.name}}"
     tag: "{{item.tag}}"
-    repository: "127.0.0.0:5000/{{item.name}}"
+    repository: "127.0.0.1:5000/{{item.name}}"
     load_path: "/tmp/{{item.path}}"
     state: present
     source: load
@@ -39,7 +28,7 @@
   docker_image:
     name: "{{item.name}}"
     tag: "{{item.tag}}"
-    repository: "127.0.0.0:5000/{{item.name}}"
+    repository: "127.0.0.1:5000/{{item.name}}"
     load_path: "/tmp/{{item.path}}"
     state: present
     source: load
