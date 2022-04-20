@@ -26,6 +26,17 @@
 			"label": "Infrastructure::Vagrant::Halt"
 		},
 		{
+			"command": "vagrant halt",
+			"group": "build",
+			"label": "Infrastructure::Vagrant::Redeploy",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Infrastructure::Vagrant::Destroy",
+				"Infrastructure::Vagrant::Provision",
+				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
+			]
+		},
+		{
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
