@@ -8,7 +8,7 @@
 - hosts: swarm_managers:swarm_workers
   roles:
     - docker_swarm
-- hosts: swarm_managers
+- hosts: swarm_leader
   roles:
     - docker_registry_service
 # - hosts: swarm_managers
