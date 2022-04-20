@@ -24,6 +24,24 @@
 			"command": "vagrant halt",
 			"group": "build",
 			"label": "Infrastructure::Vagrant::Halt"
+		},
+		{
+			"type": "shell",
+			"command": [
+				"ansible-playbook",
+				"-i",
+				"inventories/virtual_machines.yml",
+				"deploy_datacenter.yml",
+				"-u root",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug"
+				}
+			},
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 		}
 	]
 }
