@@ -9,5 +9,4 @@
   copy:
     src: "{{item}}"
     dest: ~/.docker
-  when: inventory_hostname == groups['swarm_managers'][0]
   with_items: "{{docker_tls_key_files}}"
