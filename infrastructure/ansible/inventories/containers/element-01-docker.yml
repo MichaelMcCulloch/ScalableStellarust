@@ -1,0 +1,6 @@
+plugin: community.docker.docker_containers
+docker_host: tcp://element-01.datacenter.local:2376
+validate_certs: true
+ca_cert: secure_keys/ca.pem
+client_key: secure_keys/key.pem
+client_cert: secure_keys/cert.pem
