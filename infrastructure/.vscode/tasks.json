@@ -53,6 +53,24 @@
 			},
 			"group": "build",
 			"label": "Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
+		},
+		{
+			"type": "shell",
+			"command": [
+				"ansible-inventory",
+				"-i",
+				"inventories/containers/",
+				"--list",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"SECURE_KEYS": "${workspaceFolder}/secure_keys"
+				}
+			},
+			"group": "build",
+			"label": "Infrastructure::Ansible::DockerContainers::Deploy"
 		}
 	]
 }
