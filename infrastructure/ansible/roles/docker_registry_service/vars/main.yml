@@ -2,12 +2,6 @@ docker_images:
   - name: "mongo"
     path: "mongo.tar.xz"
     tag: "5.0.7-focal"
-  - name: "node"
-    path: "node.tar.xz"
-    tag: "17.9.0-alpine3.15"
-  - name: "ekidd/rust-musl-builder"
-    path: "rust_builder.tar.xz"
-    tag: latest
 
 stellarust_docker_images:
   - name: "stellarust-extraction-service"
