@@ -8,3 +8,5 @@ application/services/extraction_service/node.tar.xz
 infrastructure/ansible/roles/docker_images/files/lib/*.tar.xz
 infrastructure/ansible/roles/base_dependencies/files/*.pem
 infrastructure/ansible/roles/base_dependencies/files/*.srl
+infrastructure/secure_keys/*.pem
+infrastructure/secure_keys/*.srl
