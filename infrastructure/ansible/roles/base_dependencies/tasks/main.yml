@@ -5,10 +5,5 @@
   import_tasks: install_python_modules.yml
 - name: expose port for docker API
   import_tasks: expose_secure_tls_port.yml
-- name: Restart docker
-  systemd:
-    state: restarted
-    name: docker
-    daemon_reload: yes
-    force: yes
-    enabled: yes
+  notify:
+    - Restart docker
