@@ -5,7 +5,7 @@
     state: directory
     mode: "0755"
 
-- name: Copy {{docker_hub_images}} to primary Manager
+- name: Copy {{docker_tls_key_files}} to primary Manager
   copy:
     src: "{{item}}"
     dest: ~/.docker
