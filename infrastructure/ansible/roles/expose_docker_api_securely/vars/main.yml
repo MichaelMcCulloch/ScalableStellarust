@@ -5,7 +5,7 @@ docker_tls_key_files:
   - server-cert.pem
   - server-key.pem
 
-docker_tlscacert: ~/.docker/ca.pem
-docker_tlscert: ~/.docker/server-cert.pem
-docker_tlskey: ~/.docker/server-key.pem
+docker_tlscacert: /root/.docker/ca.pem
+docker_tlscert: /root/.docker/server-cert.pem
+docker_tlskey: /root/.docker/server-key.pem
 docker_tls_arguments: "--tlsverify --tlscacert={{docker_tlscacert}}  --tlscert={{docker_tlscert}}  --tlskey={{docker_tlskey}}"
