@@ -1,0 +1,7 @@
+plugin: community.docker.docker_containers
+docker_host: tcp://element-05.datacenter.local:2376
+validate_certs: true
+tls_hostname: workstation1.datacenter.local
+ca_cert: $SECURE_KEYS/ca.pem
+client_key: $SECURE_KEYS/key.pem
+client_cert: $SECURE_KEYS/cert.pem
