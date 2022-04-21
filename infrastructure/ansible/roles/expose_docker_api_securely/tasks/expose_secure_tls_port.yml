@@ -4,3 +4,6 @@
     regexp: '(\s+)ExecStart=/usr/bin/dockerd -H fd://(\s+.*)?$'
     replace: '\1ExecStart=/usr/sbin/dockerd -H fd:// {{docker_tls_arguments}} -H tcp://{{inventory_hostname}}:{{docker_api_port}}\2'
     backup: no
+  tags:
+    - port
+    - docker

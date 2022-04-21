@@ -3,3 +3,6 @@
     name: "{{docker_swarm_manager_deps if inventory_hostname in groups['swarm_managers'] else docker_swarm_workers_deps}}"
     state: present
     update_cache: yes
+  tags:
+    - dependencies
+    - pacman

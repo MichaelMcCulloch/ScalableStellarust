@@ -2,4 +2,6 @@
 - name: Install {{pip_extra_packages_workers}} on workers, and {{pip_extra_packages_manager}} on managers
   pip:
     name: "{{ pip_extra_packages_manager if inventory_hostname in groups['swarm_managers'] else pip_extra_packages_workers  }}"
-  tags: [docker, python]
+  tags:
+    - dependencies
+    - python
