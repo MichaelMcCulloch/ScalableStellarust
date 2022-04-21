@@ -1,0 +1,13 @@
+---
+- name: Create ~/.docker if it does not exist
+  ansible.builtin.file:
+    path: ~/.docker
+    state: directory
+    mode: "0755"
+
+- name: Copy {{docker_hub_images}} to primary Manager
+  copy:
+    src: "{{item}}"
+    dest: ~/.docker
+  when: inventory_hostname == groups['swarm_managers'][0]
+  with_items: "{{docker_tls_key_files}}"
