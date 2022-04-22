@@ -1,18 +1,13 @@
 docker_images:
   - name: "mongo"
-    path: "mongo"
     tag: "5.0.7-focal"
 
 stellarust_docker_images:
   - name: "stellarust-extraction-service"
-    path: stellarust-extraction-service
     tag: latest
   - name: "stellarust-frontend-service"
-    path: stellarust-frontend-service
     tag: latest
   - name: "stellarust-parsing-service"
-    path: stellarust-parsing-service
     tag: latest
   - name: "stellarust-unzipping-service"
-    path: stellarust-unzipping-service
     tag: latest
