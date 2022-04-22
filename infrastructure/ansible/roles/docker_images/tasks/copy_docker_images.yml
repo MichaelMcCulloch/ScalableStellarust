@@ -1,9 +1,12 @@
-- name: Copy {{docker_hub_images}} to primary Manager
+- name: "Copy {{docker_hub_images + docker_stellarust_images}} to primary Manager"
   copy:
-    src: "{{item}}"
+    src: "{{item[0]}}.{{item[1]}}"
     dest: /tmp/
   when: inventory_hostname == groups['swarm_managers'][0]
-  with_items: "{{docker_hub_images + docker_stellarust_images}}"
+  with_nested:
+    - "{{docker_hub_images + docker_stellarust_images}}"
+    - ["tar.xz", "sha256"]
   tags:
     - images
     - docker
+    - registry2

@@ -1,9 +1,8 @@
 docker_hub_images:
-  - lib/mongo.tar.xz
-  - lib/registry.tar.xz
+  - lib/mongo
 
 docker_stellarust_images:
-  - stellarust/stellarust-extraction-service.tar.xz
-  - stellarust/stellarust-frontend-service.tar.xz
-  - stellarust/stellarust-parsing-service.tar.xz
-  - stellarust/stellarust-unzipping-service.tar.xz
+  - stellarust/stellarust-extraction-service
+  - stellarust/stellarust-frontend-service
+  - stellarust/stellarust-parsing-service
+  - stellarust/stellarust-unzipping-service
