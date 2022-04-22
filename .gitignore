@@ -6,6 +6,7 @@ application/services/parsing_service/target/
 infrastructure/docker_images/*.tar.xz
 infrastructure/docker_images/*.sha256
 application/services/extraction_service/node.tar.xz
+infrastructure/ansible/roles/docker_images/files/lib/*.sha256
 infrastructure/ansible/roles/docker_images/files/lib/*.tar.xz
 infrastructure/ansible/roles/base_dependencies/files/*.pem
 infrastructure/ansible/roles/base_dependencies/files/*.srl
