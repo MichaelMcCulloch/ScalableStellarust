@@ -4,7 +4,6 @@
     image: registry:2
     publish:
       - { published_port: 5000, target_port: 5000 }
-  when: inventory_hostname == groups['swarm_managers'][0]
   tags:
     - registry
     - docker
@@ -18,7 +17,6 @@
     state: present
     source: load
     push: yes
-  when: inventory_hostname == groups['swarm_managers'][0]
   with_items: "{{docker_images}}"
   tags:
     - registry
@@ -33,7 +31,6 @@
     state: present
     source: load
     push: yes
-  when: inventory_hostname == groups['swarm_managers'][0]
   with_items: "{{stellarust_docker_images}}"
   tags:
     - registry
