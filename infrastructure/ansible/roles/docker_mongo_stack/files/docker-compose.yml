@@ -95,3 +95,43 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+
+  s-extraction:
+    image: 127.0.0.0:5000/stellarust-extraction-service:latest
+    networks:
+      - mongos
+    ports:
+      - "8000:8000"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  s-parsing:
+    image: 127.0.0.0:5000/stellarust-parsing-service:latest
+    networks:
+      - mongos
+    ports:
+      - "8001:8001"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  s-unzipping:
+    image: 127.0.0.0:5000/stellarust-unzipping-service:latest
+    networks:
+      - mongos
+    ports:
+      - "8002:8002"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  s-frontend:
+    image: 127.0.0.0:5000/stellarust-frontend-service:latest
+    networks:
+      - mongos
+    ports:
+      - "8081:8080"
+    deploy:
+      mode: replicated
+      replicas: 1

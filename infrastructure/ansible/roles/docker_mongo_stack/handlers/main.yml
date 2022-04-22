@@ -1,0 +1,13 @@
+- name: Remove stellarust stack
+  community.docker.docker_stack:
+    name: stellarust
+    state: absent
+
+- name: Deploy stellarust stack
+  community.docker.docker_stack:
+    state: present
+    name: stellarust
+    resolve_image: never
+    compose:
+      - /tmp/docker-compose.yml
+    with_registry_auth: yes

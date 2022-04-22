@@ -3,12 +3,9 @@
   copy:
     src: docker-compose.yml
     dest: /tmp/docker-compose.yml
-
-- name: Mongo Swarm - Deploying Mongo Docker Stack
-  community.docker.docker_stack:
-    state: present
-    name: mongo
-    resolve_image: never
-    compose:
-      - /tmp/docker-compose.yml
-    with_registry_auth: yes
+  notify:
+    - Remove stellarust stack
+    - Deploy stellarust stack
+  tags:
+    - docker
+    - stellarust_stack
