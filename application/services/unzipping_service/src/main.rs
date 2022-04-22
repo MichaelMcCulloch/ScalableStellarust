@@ -3,7 +3,7 @@ use unzipping_service::config;
 
 #[get("/")]
 async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Parsing Service Prototype")
+    HttpResponse::Ok().body("Unzipping Service Prototype")
 }
 pub fn init(config: &mut web::ServiceConfig) {
     config.service(web::scope("").service(index).service(healthcheck));
