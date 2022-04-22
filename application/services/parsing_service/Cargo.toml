@@ -5,6 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "parsing_service"
+path = "src/main.rs" 
+
 [dependencies]
 actix-web = "4.0.1"
 rdkafka= "0.28.0"
+toml = "0.5.9"
+serde = "1.0.136"
+serde_derive = "1.0.136"
+env_logger = "0.9.0"
