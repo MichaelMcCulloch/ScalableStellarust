@@ -3,6 +3,7 @@ Vagrant.configure("2") do |config|
     config.vm.box = "archlinux/archlinux"
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.synced_folder "./data", "/data", type: "rsync", rsync__auto: true, mount_options: ["dmode=777,fmode=777"]
   
     config.vm.provider "libvirt" do |lv|
       lv.memory = 8192
