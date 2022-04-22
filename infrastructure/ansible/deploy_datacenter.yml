@@ -12,6 +12,4 @@
 - hosts: swarm_leader
   roles:
     - docker_registry_service
-# - hosts: swarm_managers
-#   roles:
-#     - docker_mongo_stack
+    - docker_mongo_stack
