@@ -4,3 +4,6 @@
     dest: /tmp/
   when: inventory_hostname == groups['swarm_managers'][0]
   with_items: "{{docker_hub_images + docker_stellarust_images}}"
+  tags:
+    - images
+    - docker
