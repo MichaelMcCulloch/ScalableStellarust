@@ -84,11 +84,22 @@
 		},
 		{
 			"type": "shell",
+			"label": "Service::Extraction::Docker::SHA256",
+			"group": "build",
+			"command": [
+				"sha256sum",
+				"stellarust-extraction-service.tar.xz",
+				">",
+				"stellarust-extraction-service.sha256"
+			]
+		},
+		{
+			"type": "shell",
 			"label": "Service::Extraction::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
-				"stellarust-extraction-service.tar.xz",
+				"stellarust-extraction-service.{tar.xz,sha256}",
 				"../../../infrastructure/docker_images"
 			]
 		},
@@ -100,6 +111,7 @@
 				"Service::Extraction::Docker::Build",
 				"Service::Extraction::Docker::SaveTar",
 				"Service::Extraction::Docker::CompressXz",
+				"Service::Extraction::Docker::SHA256",
 				"Service::Extraction::Docker::Move",
 			]
 		}

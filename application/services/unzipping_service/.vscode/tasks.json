@@ -99,11 +99,22 @@
 		},
 		{
 			"type": "shell",
+			"label": "Service::Unzipping::Docker::SHA256",
+			"group": "build",
+			"command": [
+				"sha256sum",
+				"stellarust-unzipping-service.tar.xz",
+				">",
+				"stellarust-unzipping-service.sha256"
+			]
+		},
+		{
+			"type": "shell",
 			"label": "Service::Unzipping::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
-				"stellarust-unzipping-service.tar.xz",
+				"stellarust-unzipping-service.{tar.xz,sha256}",
 				"../../../infrastructure/docker_images"
 			]
 		},
@@ -115,6 +126,7 @@
 				"Service::Unzipping::Docker::Build",
 				"Service::Unzipping::Docker::SaveTar",
 				"Service::Unzipping::Docker::CompressXz",
+				"Service::Unzipping::Docker::SHA256",
 				"Service::Unzipping::Docker::Move",
 			]
 		}

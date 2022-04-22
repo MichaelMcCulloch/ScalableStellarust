@@ -84,11 +84,22 @@
 		},
 		{
 			"type": "shell",
+			"label": "Service::Parsing::Docker::SHA256",
+			"group": "build",
+			"command": [
+				"sha256sum",
+				"stellarust-parsing-service.tar.xz",
+				">",
+				"stellarust-parsing-service.sha256"
+			]
+		},
+		{
+			"type": "shell",
 			"label": "Service::Parsing::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
-				"stellarust-parsing-service.tar.xz",
+				"stellarust-parsing-service.{tar.xz,sha256}",
 				"../../../infrastructure/docker_images"
 			]
 		},
@@ -100,6 +111,7 @@
 				"Service::Parsing::Docker::Build",
 				"Service::Parsing::Docker::SaveTar",
 				"Service::Parsing::Docker::CompressXz",
+				"Service::Parsing::Docker::SHA256",
 				"Service::Parsing::Docker::Move",
 			]
 		}

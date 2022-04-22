@@ -64,12 +64,23 @@
 		},
 		{
 			"type": "shell",
+			"label": "Service::Frontend::Docker::SHA256",
+			"group": "build",
+			"command": [
+				"sha256sum",
+				"stellarust-frontend-service.tar.xz",
+				">",
+				"stellarust-frontend-service.sha256"
+			]
+		},
+		{
+			"type": "shell",
 			"label": "Service::Frontend::Docker::Move",
 			"group": "build",
 			"command": [
 				"mv",
-				"stellarust-frontend-service.tar.xz",
-				"../../infrastructure/docker_images"
+				"stellarust-frontend-service.{tar.xz,sha256}",
+				"../../infrastructure/docker_images;",
 			]
 		},
 		{
@@ -80,6 +91,7 @@
 				"Service::Frontend::Docker::Build",
 				"Service::Frontend::Docker::SaveTar",
 				"Service::Frontend::Docker::CompressXz",
+				"Service::Frontend::Docker::SHA256",
 				"Service::Frontend::Docker::Move",
 			]
 		}
