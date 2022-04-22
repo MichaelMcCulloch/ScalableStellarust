@@ -21,7 +21,7 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var(
         "RUST_LOG",
         format!(
-            "actix_web={},webapp={}",
+            "actix_web={},unzipping_service={}",
             config.log.actix_web, config.log.service
         ),
     );
