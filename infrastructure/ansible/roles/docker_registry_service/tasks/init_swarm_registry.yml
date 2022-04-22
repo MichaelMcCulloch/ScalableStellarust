@@ -13,25 +13,11 @@
     name: "{{item.name}}"
     tag: "{{item.tag}}"
     repository: "127.0.0.1:5000/{{item.name}}"
-    load_path: "/tmp/{{item.path}}.tar.xz"
+    load_path: "/tmp/{{item.name}}.tar.xz"
     state: present
     source: load
     push: yes
-  with_items: "{{docker_images}}"
+  with_items: "{{docker_images + stellarust_docker_images}}"
   tags:
-    - registry
-    - docker
-
-- name: "Load stellarust images from archive"
-  docker_image:
-    name: "{{item.name}}"
-    tag: "{{item.tag}}"
-    repository: "127.0.0.1:5000/{{item.name}}"
-    load_path: "/tmp/{{item.path}}.tar.xz"
-    state: present
-    source: load
-    push: yes
-  with_items: "{{stellarust_docker_images}}"
-  tags:
-    - registry
+    - registry2
     - docker
