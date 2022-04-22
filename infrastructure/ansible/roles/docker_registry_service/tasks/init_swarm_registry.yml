@@ -13,7 +13,7 @@
     name: "{{item.name}}"
     tag: "{{item.tag}}"
     repository: "127.0.0.1:5000/{{item.name}}"
-    load_path: "/tmp/{{item.path}}"
+    load_path: "/tmp/{{item.path}}.tar.xz"
     state: present
     source: load
     push: yes
@@ -27,7 +27,7 @@
     name: "{{item.name}}"
     tag: "{{item.tag}}"
     repository: "127.0.0.1:5000/{{item.name}}"
-    load_path: "/tmp/{{item.path}}"
+    load_path: "/tmp/{{item.path}}.tar.xz"
     state: present
     source: load
     push: yes
