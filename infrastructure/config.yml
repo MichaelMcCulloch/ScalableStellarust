@@ -16,6 +16,21 @@
         replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
         backup: no
 
+    - name: Disable Swap
+      block:
+        - name: Turn Off Swap
+          shell: swapoff /swap/swapfile
+
+        - name: Delete Swapfile
+          shell: rm -f /swap/swapfile
+
+        - name: Remove Swap from /etc/fstab
+          replace:
+            path: /etc/fstab
+            regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
+            replace: '\1\2'
+            backup: no
+
     - name: Run mkinitcpio
       shell: mkinitcpio -p linux
 
