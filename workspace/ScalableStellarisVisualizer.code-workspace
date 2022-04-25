@@ -40,6 +40,7 @@
         "recommendations": [
             "matklad.rust-analyzer",
             "ms-azuretools.vscode-docker",
+            "redhat.ansible"
         ]
     }
 }
