@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.box = "archlinux/archlinux"
+    config.vm.box = "alvistack/ubuntu-22.04"
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.synced_folder "./data", "/data", type: "rsync", rsync__auto: true, mount_options: ["dmode=777,fmode=777"]
@@ -55,5 +55,5 @@ Vagrant.configure("2") do |config|
         ansible.playbook = "config.yml"
       end
 
-      config.vm.provision :reload
+      # config.vm.provision :reload
 end
