@@ -2,6 +2,9 @@
 - name: "Initial Setup"
   hosts: all
   become: true
+  handlers:
+    - name: Run mkinitcpio
+      shell: mkinitcpio -p linux
   tasks:
     - name: "Append host:~/.ssh/id_rsa.pub to box:~/.ssh/authorized_keys"
       ansible.posix.authorized_key:
@@ -15,6 +18,7 @@
         regexp: '(\s+)MODULES=\(\)(\s+.*)?$'
         replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
         backup: no
+      notify: Run mkinitcpio
 
     - name: check if /swap/swapfile exists
       stat:
@@ -36,9 +40,6 @@
             regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
             replace: '\1\2'
             backup: no
-
-    - name: Run mkinitcpio
-      shell: mkinitcpio -p linux
 
     - name: Attach datacenter.local DNS to network interface
       replace:
