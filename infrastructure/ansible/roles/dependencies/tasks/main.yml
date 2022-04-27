@@ -1,0 +1,5 @@
+---
+- name: Install Pacman Dependencies
+  import_tasks: install_pacman_deps.yml
+- name: Install Python Dependencies
+  import_tasks: install_python_deps.yml
