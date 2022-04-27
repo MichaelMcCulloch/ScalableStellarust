@@ -1,6 +1,9 @@
 all:
   children:
     ungrouped: {}
+    ha_proxy:
+      hosts:
+        haproxy.datacenter.local:
     master_nodes:
       hosts:
         element-[01:03].datacenter.local:
