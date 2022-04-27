@@ -16,7 +16,13 @@
         replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
         backup: no
 
+    - name: check if /swap/swapfile exists
+      stat:
+        path: /swap/swapfile
+      register: swap_file
+
     - name: Disable Swap
+      when: swap_file.stat.exists
       block:
         - name: Turn Off Swap
           shell: swapoff /swap/swapfile
