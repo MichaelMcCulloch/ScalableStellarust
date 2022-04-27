@@ -1,0 +1,7 @@
+---
+- name: "Install {{additional_python_packages}}"
+  pip:
+    name: "{{additional_python_packages}}"
+  tags:
+    - dependencies
+    - python

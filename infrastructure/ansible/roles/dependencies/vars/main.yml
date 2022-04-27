@@ -1,0 +1,21 @@
+additional_apt_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - kubernetes
+  - kubernetes-kubeadm
+  - kubernetes-kubelet
+  - kubernetes-kubectl
+  - docker
+  - python-pip
+
+additional_master_node_packages:
+
+additional_node_worker_packages:
+
+additional_python_packages:
+  - docker[tls]
+  - PyYAML
+  - jsonpatch

@@ -1,0 +1,4 @@
+---
+- hosts: datacenter
+  roles:
+    - dependencies

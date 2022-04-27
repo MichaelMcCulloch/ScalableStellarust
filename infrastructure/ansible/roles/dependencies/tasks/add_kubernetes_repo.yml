@@ -1,0 +1,6 @@
+---
+- name: Add Kubernetes Repo
+  lineinfile:
+    path: /etc/apt/sources.list.d/kubernetes.list
+    line: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    create: yes

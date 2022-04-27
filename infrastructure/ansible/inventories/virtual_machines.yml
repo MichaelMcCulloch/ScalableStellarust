@@ -4,13 +4,13 @@ all:
     datacenter:
       hosts:
         element-[01:10].datacenter.local:
-    swarm_managers:
+    control_plane:
       hosts:
         element-[01:03].datacenter.local:
-    swarm_workers:
+    data_plane:
       hosts:
         element-[04:10].datacenter.local:
-    swarm_leader:
+    control_plane_leader:
       hosts:
         element-01.datacenter.local:
     swarm_nonleader:

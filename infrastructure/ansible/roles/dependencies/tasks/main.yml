@@ -1,0 +1,5 @@
+---
+- name: Install apt packages
+  import_tasks: install_apt_dependencies.yml
+- name: Install python packages
+  import_tasks: install_python_dependencies.yml

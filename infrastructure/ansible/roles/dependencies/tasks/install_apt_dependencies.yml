@@ -1,0 +1,9 @@
+---
+- name: "Install {{additional_apt_packages}}"
+  apt:
+    pkg: "{{additional_apt_packages}}"
+    state: present
+    update-cache: yes
+  tags:
+    - dependencies
+    - apt

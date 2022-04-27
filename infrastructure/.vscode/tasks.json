@@ -42,7 +42,7 @@
 				"ansible-playbook",
 				"-i",
 				"inventories/virtual_machines.yml",
-				"deploy_datacenter.yml",
+				"deploy.yml",
 				"-u root",
 			],
 			"options": {
