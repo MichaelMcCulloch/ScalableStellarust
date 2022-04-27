@@ -1,13 +1,10 @@
 all:
   children:
     ungrouped: {}
-    datacenter:
-      hosts:
-        element-[01:10].datacenter.local:
-    swarm_managers:
+    master_nodes:
       hosts:
         element-[01:03].datacenter.local:
-    swarm_workers:
+    worker_nodes:
       hosts:
         element-[04:10].datacenter.local:
     swarm_leader:
