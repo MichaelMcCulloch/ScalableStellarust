@@ -41,6 +41,11 @@ Vagrant.configure("2") do |config|
   
       end
 
+      name = "haproxy"
+      config.vm.define "#{name}" do |manager_machine|
+					manager_machine.vm.hostname = "#{name}"
+      end
+     
       (1..10).each do |i|
         name = "element-#{i.to_s.rjust(2, "0")}"
   
