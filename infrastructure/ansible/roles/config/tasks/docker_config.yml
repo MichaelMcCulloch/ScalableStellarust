@@ -1,0 +1,30 @@
+---
+- name: Create daemon.json in /etc/docker/ folder
+  register: docker_json
+  copy:
+    src: daemon.json
+    dest: /etc/docker
+  tags:
+    - config
+    - docker
+
+- name: Create taskmax.conf in /etc/systemd/system/docker.service.d/ folder
+  register: docker_taskmax_conf
+  copy:
+    src: taskmax.conf
+    dest: /etc/systemd/system/docker.service.d/
+  tags:
+    - config
+    - docker
+    - systemd
+
+- name: Run handler if either file was changed
+  assert: { that: true, quiet: true }
+  changed_when: true
+  when: docker_json.changed or docker_taskmax_conf.changed
+  notify:
+    - Restart docker and daemon
+  tags:
+    - config
+    - docker
+    - systemd

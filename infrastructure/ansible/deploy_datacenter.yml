@@ -2,3 +2,4 @@
 - hosts: master_nodes:worker_nodes:ha_proxy
   roles:
     - dependencies
+    - config
