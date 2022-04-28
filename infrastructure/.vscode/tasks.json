@@ -57,6 +57,33 @@
 		{
 			"type": "shell",
 			"command": [
+				"ansible-playbook",
+				"-i",
+				"inventories/virtual_machines.yml",
+				"deploy_haproxy.yml",
+				"-u root",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug"
+				}
+			},
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::DeployHAProxy"
+		},
+		{
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::ProvisionPhysicalMachines",
+			"dependsOrder": "parallel",
+			"dependsOn": [
+				"Infrastructure::Ansible::VirtualMachines::DeployHAProxy",
+				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
+			]
+		},
+		{
+			"type": "shell",
+			"command": [
 				"ansible-inventory",
 				"-i",
 				"inventories/containers/",

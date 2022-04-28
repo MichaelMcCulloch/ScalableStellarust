@@ -1,0 +1,9 @@
+---
+- name: Install HAProxy
+  import_tasks: install_haproxy.yml
+
+- name: HAProxy Config
+  import_tasks: haproxy_config.yml
+
+- name: Start HAProxy
+  import_tasks: start_haproxy.yml

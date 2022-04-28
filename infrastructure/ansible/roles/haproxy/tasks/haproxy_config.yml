@@ -1,0 +1,6 @@
+---
+- name: Copy HAProxy Config
+  copy:
+    src: haproxy.cfg
+    dest: /etc/haproxy
+    backup: no

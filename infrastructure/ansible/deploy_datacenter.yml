@@ -1,5 +1,5 @@
 ---
-- hosts: master_nodes:worker_nodes:ha_proxy
+- hosts: master_nodes:worker_nodes
   roles:
     - dependencies
     - config
