@@ -1,7 +1,7 @@
 all:
   children:
     ungrouped: {}
-    ha_proxy:
+    haproxy:
       hosts:
         haproxy.datacenter.local:
     master_nodes:
@@ -10,9 +10,3 @@ all:
     worker_nodes:
       hosts:
         element-[04:10].datacenter.local:
-    swarm_leader:
-      hosts:
-        element-01.datacenter.local:
-    swarm_nonleader:
-      hosts:
-        element-[02:10].datacenter.local:

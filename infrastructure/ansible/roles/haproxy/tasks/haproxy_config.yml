@@ -1,6 +1,8 @@
 ---
 - name: Copy HAProxy Config
-  copy:
-    src: haproxy.cfg
-    dest: /etc/haproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
     backup: no
+  notify:
+    - Start HAProxy

@@ -5,20 +5,20 @@
   handlers:
     - name: Run mkinitcpio
       shell: mkinitcpio -p linux
+    - name: Restart systemd-resolved
+      systemd:
+        state: restarted
+        name: systemd-resolved
+    - name: Restart systemd-networkd
+      systemd:
+        state: restarted
+        name: systemd-networkd
   tasks:
     - name: "Append host:~/.ssh/id_rsa.pub to box:~/.ssh/authorized_keys"
       ansible.posix.authorized_key:
         user: root
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
-
-    - name: Update modules with virtio drivers
-      replace:
-        path: /etc/mkinitcpio.conf
-        regexp: '(\s+)MODULES=\(\)(\s+.*)?$'
-        replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
-        backup: no
-      notify: Run mkinitcpio
 
     - name: check if /swap/swapfile exists
       stat:
@@ -41,16 +41,37 @@
             replace: '\1\2'
             backup: no
 
-    - name: Attach datacenter.local DNS to network interface
+    - name: Update modules with virtio drivers
       replace:
+        path: /etc/mkinitcpio.conf
+        regexp: '(\s+)MODULES=\(\)(\s+.*)?$'
+        replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
+        backup: no
+      notify: Run mkinitcpio
+
+    - name: Attach datacenter.local DNS to network interface eth1
+      lineinfile:
         path: /etc/systemd/network/eth1.network
-        regexp: '(\s+)DHCP=ipv4(\s+.*)?$'
-        replace: '\1DHCP=ipv4\nDomains=datacenter.local ~local\2'
+        search_string: "Domains=datacenter.local"
+        line: "Domains=datacenter.local ~local"
+        insertafter: "DHCP=ipv4"
         backup: no
 
-    - name: use global DNS
-      replace:
-        path: /etc/systemd/resolved.conf
-        regexp: '(\s+)#DNS=(\s+.*)?$'
-        replace: '\1DNS=1.1.1.1 1.0.0.1\2'
+    - name: Attach cluster.local DNS to network interface eth2
+      lineinfile:
+        path: /etc/systemd/network/eth2.network
+        search_string: "Domains=cluster.local"
+        line: "Domains=cluster.local ~local"
+        insertafter: "DHCP=ipv4"
         backup: no
+      notify:
+        - Restart systemd-networkd
+
+    # - name: use global DNS
+    #   replace:
+    #     path: /etc/systemd/resolved.conf
+    #     regexp: '(\s+)#DNS=(\s+.*)?$'
+    #     replace: '\1DNS=1.1.1.1 1.0.0.1\2'
+    #     backup: no
+    #   notify:
+    #     - Restart systemd-resolved

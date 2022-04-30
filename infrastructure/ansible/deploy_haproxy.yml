@@ -1,4 +1,0 @@
----
-- hosts: ha_proxy
-  roles:
-    - haproxy

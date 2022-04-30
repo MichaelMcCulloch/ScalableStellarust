@@ -9,6 +9,12 @@
 		},
 		{
 			"type": "shell",
+			"command": "vagrant halt",
+			"group": "build",
+			"label": "Infrastructure::Vagrant::Halt"
+		},
+		{
+			"type": "shell",
 			"command": "vagrant up --parallel --provision",
 			"group": "build",
 			"label": "Infrastructure::Vagrant::Provision"
@@ -20,13 +26,6 @@
 			"label": "Infrastructure::Vagrant::Destroy"
 		},
 		{
-			"type": "shell",
-			"command": "vagrant halt",
-			"group": "build",
-			"label": "Infrastructure::Vagrant::Halt"
-		},
-		{
-			"command": "vagrant halt",
 			"group": "build",
 			"label": "Infrastructure::Vagrant::Redeploy",
 			"dependsOrder": "sequence",
@@ -60,7 +59,7 @@
 				"ansible-playbook",
 				"-i",
 				"inventories/virtual_machines.yml",
-				"deploy_haproxy.yml",
+				"teardown_datacenter.yml",
 				"-u root",
 			],
 			"options": {
@@ -70,16 +69,7 @@
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::DeployHAProxy"
-		},
-		{
-			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::ProvisionPhysicalMachines",
-			"dependsOrder": "parallel",
-			"dependsOn": [
-				"Infrastructure::Ansible::VirtualMachines::DeployHAProxy",
-				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
-			]
+			"label": "Infrastructure::Ansible::VirtualMachines::TeardownDatacenter"
 		},
 		{
 			"type": "shell",
@@ -97,7 +87,7 @@
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::DockerContainers::Deploy"
+			"label": "Infrastructure::Ansible::DockerContainers::ListContainers"
 		}
 	]
 }

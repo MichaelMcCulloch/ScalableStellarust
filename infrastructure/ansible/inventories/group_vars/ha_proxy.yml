@@ -1,3 +1,0 @@
-additional_pacman_packages:
-  - haproxy
-additional_pip_packages: []

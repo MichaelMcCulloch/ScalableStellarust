@@ -1,0 +1,14 @@
+---
+- name: Reset Kubeadm
+  shell: kubeadm reset --force
+  when: inventory_hostname == groups['master_nodes'][0]
+
+- name: Stop Docker
+  systemd:
+    state: stopped
+    name: docker
+
+- name: Stop Kubelet
+  systemd:
+    state: stopped
+    name: kubelet

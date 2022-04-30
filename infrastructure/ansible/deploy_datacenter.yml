@@ -3,3 +3,11 @@
   roles:
     - dependencies
     - config
+
+- hosts: haproxy:master_nodes
+  roles:
+    - haproxy
+
+- hosts: master_nodes:worker_nodes
+  roles:
+    - cluster

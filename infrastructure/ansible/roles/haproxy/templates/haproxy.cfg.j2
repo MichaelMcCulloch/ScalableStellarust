@@ -22,11 +22,21 @@ frontend k8s
     timeout client  30s
     default_backend k8s-control-plane
 
+
 backend k8s-control-plane
     mode            tcp
     balance         roundrobin
     timeout         connect 30s
     timeout         server  30s
-    server          k8s-node01 element-01.datacenter.local:6443 check
-    server          k8s-node02 element-02.datacenter.local:6443 check
-    server          k8s-node03 element-03.datacenter.local:6443 check
+{% for item in groups['master_nodes'] %}
+    server          {{hostvars[item]['inventory_hostname_short'] }}.cluster.local {{ hostvars[item]['ansible_eth2']['ipv4']['address'] }}:6443 check
+{% endfor %}
+
+frontend stats
+   mode http
+   bind *:1024
+   http-request set-var(txn.base) base
+   http-request use-service prometheus-exporter if { path /metrics }
+   stats enable
+   stats uri /
+   stats refresh 10s

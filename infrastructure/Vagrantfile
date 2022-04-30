@@ -2,8 +2,6 @@ Vagrant.configure("2") do |config|
 
     config.vm.box = "archlinux/archlinux"
     config.ssh.forward_agent = true
-    config.vm.synced_folder ".", "/vagrant", disabled: true
-    config.vm.synced_folder "./data", "/data", type: "rsync", rsync__auto: true, mount_options: ["dmode=777,fmode=777"]
   
     config.vm.provider "libvirt" do |lv|
       lv.memory = 8192
@@ -19,6 +17,14 @@ Vagrant.configure("2") do |config|
       :libvirt__domain_name => "datacenter.local",
       :libvirt__network_name => "datacenter.local",
       :libvirt__network_address => "172.28.128.0/24"
+
+    config.vm.network "private_network", 
+      :dev => "cluster", 
+      :mode => "bridge", 
+      :type => "dhcp", 
+      :libvirt__domain_name => "cluster.local",
+      :libvirt__network_name => "cluster.local",
+      :libvirt__network_address => "10.11.0.0/16"
 
 
     config.vm.define "gamehost" do |gamehost| gamehost.vm.hostname = "gamehost" end
