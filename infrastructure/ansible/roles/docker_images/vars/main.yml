@@ -1,8 +1,0 @@
-docker_hub_images:
-  - lib/mongo
-
-docker_stellarust_images:
-  - stellarust/stellarust-extraction-service
-  - stellarust/stellarust-frontend-service
-  - stellarust/stellarust-parsing-service
-  - stellarust/stellarust-unzipping-service

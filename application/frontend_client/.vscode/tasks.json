@@ -41,25 +41,10 @@
 		},
 		{
 			"type": "shell",
-			"label": "Service::Frontend::Docker::SaveTar",
+			"label": "Service::Frontend::Docker::SaveTarXz",
 			"group": "build",
 			"command": [
-				"docker",
-				"save",
-				"stellarust-frontend-service:latest",
-				">",
-				"stellarust-frontend-service.tar",
-			],
-		},
-		{
-			"type": "shell",
-			"label": "Service::Frontend::Docker::CompressXz",
-			"group": "build",
-			"command": [
-				"xz",
-				"-T32",
-				"-9",
-				"stellarust-frontend-service.tar"
+				"tar cvJf stellarust-frontend-service.tar.xz public src package.json Dockerfile"
 			]
 		},
 		{
@@ -89,8 +74,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Service::Frontend::Docker::Build",
-				"Service::Frontend::Docker::SaveTar",
-				"Service::Frontend::Docker::CompressXz",
+				"Service::Frontend::Docker::SaveTarXz",
 				"Service::Frontend::Docker::SHA256",
 				"Service::Frontend::Docker::Move",
 			]

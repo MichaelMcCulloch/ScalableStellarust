@@ -61,25 +61,10 @@
 		},
 		{
 			"type": "shell",
-			"label": "Service::Extraction::Docker::SaveTar",
+			"label": "Service::Extraction::Docker::SaveTarXz",
 			"group": "build",
 			"command": [
-				"docker",
-				"save",
-				"stellarust-extraction-service:latest",
-				">",
-				"stellarust-extraction-service.tar",
-			],
-		},
-		{
-			"type": "shell",
-			"label": "Service::Extraction::Docker::CompressXz",
-			"group": "build",
-			"command": [
-				"xz",
-				"-T32",
-				"-9",
-				"stellarust-extraction-service.tar"
+				"tar cvJf stellarust-extraction-service.tar.xz ./src Config.toml Cargo.toml Dockerfile"
 			]
 		},
 		{
@@ -109,8 +94,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Service::Extraction::Docker::Build",
-				"Service::Extraction::Docker::SaveTar",
-				"Service::Extraction::Docker::CompressXz",
+				"Service::Extraction::Docker::SaveTarXz",
 				"Service::Extraction::Docker::SHA256",
 				"Service::Extraction::Docker::Move",
 			]

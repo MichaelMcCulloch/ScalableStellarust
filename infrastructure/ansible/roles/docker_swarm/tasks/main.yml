@@ -1,3 +1,0 @@
----
-- name: Initialize Docker Swarm
-  import_tasks: init_docker_swarm.yml

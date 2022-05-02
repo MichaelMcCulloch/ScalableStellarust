@@ -1,0 +1,5 @@
+---
+- name: Install Python Dependencies
+  pip:
+    name: "{{additional_pip_packages}}"
+  when: additional_pip_packages | length > 0

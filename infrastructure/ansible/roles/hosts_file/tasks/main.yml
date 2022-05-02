@@ -1,0 +1,9 @@
+---
+- name: ensure all hosts know about each other
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    backup: no
+  notify:
+    - Restart systemd-resolved
+    - Restart systemd-networkd

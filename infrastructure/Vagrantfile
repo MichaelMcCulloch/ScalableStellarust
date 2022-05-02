@@ -3,13 +3,19 @@ Vagrant.configure("2") do |config|
     config.vm.box = "archlinux/archlinux"
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
-    config.vm.synced_folder "./data", "/data", type: "rsync", rsync__auto: true, mount_options: ["dmode=777,fmode=777"]
   
     config.vm.provider "libvirt" do |lv|
       lv.memory = 8192
       lv.cpus = 32
       lv.nested = true
 			lv.default_prefix = "stellarustCluster_"
+      lv.disk_bus = "virtio"
+      lv.disk_driver :cache => "writeback"
+      lv.nic_model_type = "virtio"
+      lv.storage :file, bus: "virtio", cache: "writeback"
+      lv.driver = "kvm"
+      lv.video_type = "virtio"
+
     end
 
     config.vm.network "private_network", 
@@ -20,40 +26,29 @@ Vagrant.configure("2") do |config|
       :libvirt__network_name => "datacenter.local",
       :libvirt__network_address => "172.28.128.0/24"
 
-      (1..1).each do |i|
-        name = "gamehost-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |manager_machine|
 
-					manager_machine.vm.hostname = "#{name}"
-        end
-  
-      end
+    # config.vm.define "gamehost" do |gamehost| gamehost.vm.hostname = "gamehost" end
+
+    # config.vm.define "client-01" do |client| 	client.vm.hostname = "client-01" end
+    # config.vm.define "client-02" do |client| 	client.vm.hostname = "client-02" end
+
+    config.vm.define "haproxy" do |proxy| proxy.vm.hostname = "haproxy" end
+      
+    config.vm.define "element-01" do |node| node.vm.hostname = "element-01"  end
+    config.vm.define "element-02" do |node| node.vm.hostname = "element-02"  end
+    config.vm.define "element-03" do |node| node.vm.hostname = "element-03"  end
+    # config.vm.define "element-04" do |node| node.vm.hostname = "element-04"  end
+    # config.vm.define "element-05" do |node| node.vm.hostname = "element-05"  end
+    # config.vm.define "element-06" do |node| node.vm.hostname = "element-06"  end
+    # config.vm.define "element-07" do |node| node.vm.hostname = "element-07"  end
+    # config.vm.define "element-08" do |node| node.vm.hostname = "element-08"  end
+    # config.vm.define "element-09" do |node| node.vm.hostname = "element-09"  end
+    # config.vm.define "element-10" do |node| node.vm.hostname = "element-10"  end
 
 
-      (1..2).each do |i|
-        name = "client-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |manager_machine|
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "config.yml"
+    end
 
-					manager_machine.vm.hostname = "#{name}"
-        end
-  
-      end
-
-      (1..10).each do |i|
-        name = "element-#{i.to_s.rjust(2, "0")}"
-  
-        config.vm.define "#{name}" do |manager_machine|
-
-					manager_machine.vm.hostname = "#{name}"
-        end
-  
-      end
-
-      config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "config.yml"
-      end
-
-      config.vm.provision :reload
+    # config.vm.provision :reload
 end

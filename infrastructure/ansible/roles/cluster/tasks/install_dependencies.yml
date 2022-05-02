@@ -1,0 +1,6 @@
+---
+- name: Install Dependencies
+  block:
+    - import_tasks: install_dependencies/install_iptables_nft.yml
+    - import_tasks: install_dependencies/install_pacman_packages.yml
+    - import_tasks: install_dependencies/install_python_modules.yml

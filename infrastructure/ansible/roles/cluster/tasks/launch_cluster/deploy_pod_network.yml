@@ -1,0 +1,3 @@
+---
+- name: Deploy Pod Network
+  shell: kubectl apply -f $HOME/calico.yaml
