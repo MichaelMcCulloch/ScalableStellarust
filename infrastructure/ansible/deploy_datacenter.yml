@@ -1,15 +1,12 @@
 ---
 - hosts: datacenter
   roles:
-    - base_dependencies
-    - expose_docker_api_securely
-- hosts: swarm_managers
+    - hosts_file
+
+- hosts: haproxy
   roles:
-    - docker_images
-- hosts: swarm_managers:swarm_workers
+    - haproxy
+
+- hosts: cluster
   roles:
-    - docker_swarm
-- hosts: swarm_leader
-  roles:
-    - docker_registry_service
-    - docker_stack
+    - cluster

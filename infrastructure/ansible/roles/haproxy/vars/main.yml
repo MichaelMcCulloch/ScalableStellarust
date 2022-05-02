@@ -1,0 +1,2 @@
+additional_pacman_packages:
+  - haproxy

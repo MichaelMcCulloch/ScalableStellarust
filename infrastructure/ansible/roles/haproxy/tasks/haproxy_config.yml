@@ -1,0 +1,14 @@
+---
+- name: Gather facts
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['control_plane'] }}"
+
+- name: Copy HAProxy Config
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    backup: no
+  notify:
+    - Start HAProxy

@@ -1,5 +1,0 @@
----
-- name: Install additional packages
-  import_tasks: install_additional_dependencies.yml
-- name: Install Python modules
-  import_tasks: install_python_modules.yml

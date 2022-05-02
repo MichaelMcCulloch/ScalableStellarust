@@ -1,9 +1,0 @@
----
-- name: Docker Networks
-  import_tasks: docker_networks.yml
-
-- name: Docker Node Labels
-  import_tasks: docker_node_labels.yml
-
-- name: Deploy Docker Stack
-  import_tasks: docker_stack.yml

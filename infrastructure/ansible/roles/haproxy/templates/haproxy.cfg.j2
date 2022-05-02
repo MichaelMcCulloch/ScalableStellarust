@@ -1,0 +1,42 @@
+#---------------------------------------------------------------------
+# Example configuration.  See the full configuration manual online.
+#
+#   http://www.haproxy.org/download/1.7/doc/configuration.txt
+#
+#---------------------------------------------------------------------
+
+global
+    maxconn     20000
+    log         127.0.0.1 local0
+    user        haproxy
+    chroot      /usr/share/haproxy
+    pidfile     /run/haproxy.pid
+    daemon
+
+frontend k8s
+    bind            :6443
+    mode            tcp
+    option          tcplog
+    log             global
+    option          dontlognull
+    timeout client  30s
+    default_backend k8s-control-plane
+
+
+backend k8s-control-plane
+    mode            tcp
+    balance         roundrobin
+    timeout         connect 30s
+    timeout         server  30s
+{% for item in groups['control_plane'] %}
+    server          {{hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}:6443 check
+{% endfor %}
+
+frontend stats
+   mode http
+   bind *:1024
+   http-request set-var(txn.base) base
+   http-request use-service prometheus-exporter if { path /metrics }
+   stats enable
+   stats uri /
+   stats refresh 10s

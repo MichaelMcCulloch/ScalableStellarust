@@ -1,0 +1,9 @@
+---
+- name: Check if iptables-nft is installed
+  shell: pacman -Ss iptables-nft | grep installed
+  failed_when: false
+  register: pacman_Ss_iptables_nft_pipe_grep_installed
+
+- name: Install iptables-nft
+  shell: "yes | sudo pacman -S iptables-nft "
+  when: pacman_Ss_iptables_nft_pipe_grep_installed.stdout | length == 0

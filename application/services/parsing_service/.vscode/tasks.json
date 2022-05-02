@@ -61,25 +61,10 @@
 		},
 		{
 			"type": "shell",
-			"label": "Service::Parsing::Docker::SaveTar",
+			"label": "Service::Parsing::Docker::SaveTarXz",
 			"group": "build",
 			"command": [
-				"docker",
-				"save",
-				"stellarust-parsing-service:latest",
-				">",
-				"stellarust-parsing-service.tar",
-			],
-		},
-		{
-			"type": "shell",
-			"label": "Service::Parsing::Docker::CompressXz",
-			"group": "build",
-			"command": [
-				"xz",
-				"-T32",
-				"-9",
-				"stellarust-parsing-service.tar"
+				"tar cvJf stellarust-parsing-service.tar.xz ./src Config.toml Cargo.toml Dockerfile"
 			]
 		},
 		{
@@ -109,8 +94,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Service::Parsing::Docker::Build",
-				"Service::Parsing::Docker::SaveTar",
-				"Service::Parsing::Docker::CompressXz",
+				"Service::Parsing::Docker::SaveTarXz",
 				"Service::Parsing::Docker::SHA256",
 				"Service::Parsing::Docker::Move",
 			]

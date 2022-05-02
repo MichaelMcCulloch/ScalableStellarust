@@ -34,12 +34,20 @@
             "activityBar.background": "#32202f",
             "titleBar.activeBackground": "#462d45",
             "titleBar.activeForeground": "#fcfafc"
+        },
+        "yaml.schemas": {
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/definitions/playbook": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/deploy.yml",
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-inventory.json": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/inventories/virtual_machines.yml",
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/definitions/tasks": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/roles/dependencies/tasks/main.yml",
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-vars.json": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/roles/dependencies/vars/main.yml"
         }
     },
     "extensions": {
         "recommendations": [
             "matklad.rust-analyzer",
             "ms-azuretools.vscode-docker",
+            "redhat.ansible",
+            "bmarkovic.haproxy"
         ]
     }
 }
