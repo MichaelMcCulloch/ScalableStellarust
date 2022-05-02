@@ -1,5 +1,0 @@
----
-- name: Docker Config
-  import_tasks: docker_config.yml
-- name: Kubernetes Config
-  import_tasks: kubernetes_config.yml

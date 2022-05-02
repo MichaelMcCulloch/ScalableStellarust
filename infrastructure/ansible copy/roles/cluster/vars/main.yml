@@ -1,5 +1,0 @@
-pod_network_cidr: 192.168.0.0/16
-calico_ipv4pool_cidr: 10.12.0.0/16
-kubernetes_port: 6443
-ip: autodetect
-ip_autodetection_method: can-reach=haproxy.cluster.local

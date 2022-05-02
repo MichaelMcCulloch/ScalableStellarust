@@ -1,0 +1,6 @@
+---
+- name: Copy Calico config files to hosts
+  template:
+    src: calico.yaml.j2
+    dest: $HOME/calico.yaml
+    backup: no

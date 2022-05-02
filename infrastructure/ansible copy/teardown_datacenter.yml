@@ -1,4 +1,0 @@
-# ---
-# - hosts: master_nodes:worker_nodes
-#   roles:
-#     - teardown

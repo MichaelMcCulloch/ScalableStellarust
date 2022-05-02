@@ -4,11 +4,14 @@
     src: "{{item.file}}"
     dest: "{{item.path}}"
     backup: no
+  register: copy_docker_files
   with_items:
     - file: daemon.json
       path: /etc/docker/
     - file: taskmax.conf
       path: /etc/systemd/system/docker.service.d/
+  notify:
+    - Restart Docker & Daemon
   tags:
     - config
     - docker

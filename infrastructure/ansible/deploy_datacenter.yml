@@ -6,3 +6,7 @@
 - hosts: haproxy
   roles:
     - haproxy
+
+- hosts: cluster
+  roles:
+    - cluster

@@ -1,14 +1,15 @@
 additional_pacman_packages:
   - cni-plugins
+  - cri-o
   - conntrack-tools
   - docker
   - ebtables
   - ethtool
   - kubeadm
-  - kubectl
   - kubelet
   - python-pip
   - socat
 
 additional_pip_packages:
-  - docker[tls]
+  []
+  # - docker[tls]

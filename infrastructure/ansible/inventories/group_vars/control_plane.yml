@@ -1,5 +1,6 @@
 additional_pacman_packages:
   - cni-plugins
+  - cri-o
   - conntrack-tools
   - docker
   - ebtables
@@ -11,4 +12,5 @@ additional_pacman_packages:
   - socat
 
 additional_pip_packages:
-  - docker[tls]
+  []
+  # - docker[tls]
