@@ -10,9 +10,16 @@
       path: /etc/docker/
     - file: taskmax.conf
       path: /etc/systemd/system/docker.service.d/
-  notify:
-    - Restart Docker & Daemon
   tags:
     - config
     - docker
     - file
+
+- name: Restart Docker & Daemon
+  when: copy_docker_files.changed
+  systemd:
+    state: restarted
+    name: docker
+    daemon_reload: yes
+    force: yes
+    enabled: yes
