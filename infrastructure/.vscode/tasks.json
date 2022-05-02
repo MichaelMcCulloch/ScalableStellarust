@@ -40,7 +40,7 @@
 			"command": [
 				"ansible-playbook",
 				"-i",
-				"inventories/virtual_machines.yml",
+				"inventories/inv.ini",
 				"deploy_datacenter.yml",
 				"-u root",
 			],
@@ -58,7 +58,7 @@
 			"command": [
 				"ansible-playbook",
 				"-i",
-				"inventories/virtual_machines.yml",
+				"inventories/inv.ini",
 				"teardown_datacenter.yml",
 				"-u root",
 			],

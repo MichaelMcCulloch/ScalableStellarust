@@ -3,7 +3,7 @@
   setup:
   delegate_to: "{{ item }}"
   delegate_facts: True
-  with_items: "{{ groups['control_plane'] }}"
+  with_items: "{{ groups['master_nodes'] }}"
 
 - name: Copy HAProxy Config
   template:

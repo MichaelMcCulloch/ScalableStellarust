@@ -20,26 +20,26 @@
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
 
-    - name: check if /swap/swapfile exists
-      stat:
-        path: /swap/swapfile
-      register: swap_file
+    # - name: check if /swap/swapfile exists
+    #   stat:
+    #     path: /swap/swapfile
+    #   register: swap_file
 
-    - name: Disable Swap
-      when: swap_file.stat.exists
-      block:
-        - name: Turn Off Swap
-          shell: swapoff /swap/swapfile
+    # - name: Disable Swap
+    #   when: swap_file.stat.exists
+    #   block:
+    #     - name: Turn Off Swap
+    #       shell: swapoff /swap/swapfile
 
-        - name: Delete Swapfile
-          shell: rm -f /swap/swapfile
+    #     - name: Delete Swapfile
+    #       shell: rm -f /swap/swapfile
 
-        - name: Remove Swap from /etc/fstab
-          replace:
-            path: /etc/fstab
-            regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
-            replace: '\1\2'
-            backup: no
+    #     - name: Remove Swap from /etc/fstab
+    #       replace:
+    #         path: /etc/fstab
+    #         regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
+    #         replace: '\1\2'
+    #         backup: no
 
     - name: Update modules with virtio drivers
       replace:
@@ -56,22 +56,14 @@
         line: "Domains=datacenter.local ~local"
         insertafter: "DHCP=ipv4"
         backup: no
-
-    - name: Attach cluster.local DNS to network interface eth2
-      lineinfile:
-        path: /etc/systemd/network/eth2.network
-        search_string: "Domains=cluster.local"
-        line: "Domains=cluster.local ~local"
-        insertafter: "DHCP=ipv4"
-        backup: no
       notify:
         - Restart systemd-networkd
 
-    # - name: use global DNS
-    #   replace:
-    #     path: /etc/systemd/resolved.conf
-    #     regexp: '(\s+)#DNS=(\s+.*)?$'
-    #     replace: '\1DNS=1.1.1.1 1.0.0.1\2'
-    #     backup: no
-    #   notify:
-    #     - Restart systemd-resolved
+    - name: use global DNS
+      replace:
+        path: /etc/systemd/resolved.conf
+        regexp: '(\s+)#DNS=(\s+.*)?$'
+        replace: '\1DNS=1.1.1.1 1.0.0.1\2'
+        backup: no
+      notify:
+        - Restart systemd-resolved

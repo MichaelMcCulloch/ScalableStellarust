@@ -1,3 +1,5 @@
 ---
 - name: Install HAProxy
-  shell: "yes | sudo pacman -S {{ additional_pacman_packages | join(' ') }} "
+  pacman:
+    name: haproxy
+    state: present

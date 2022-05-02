@@ -28,8 +28,8 @@ backend k8s-control-plane
     balance         roundrobin
     timeout         connect 30s
     timeout         server  30s
-{% for item in groups['control_plane'] %}
-    server          {{hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}:6443 check
+{% for item in groups['master_nodes'] %}
+    server          {{hostvars[item]['inventory_hostname_short'] }}.cluster.local {{ hostvars[item]['ansible_eth2']['ipv4']['address'] }}:6443 check
 {% endfor %}
 
 frontend stats

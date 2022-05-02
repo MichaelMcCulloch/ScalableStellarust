@@ -1,13 +1,8 @@
 ---
-- hosts: master_nodes:worker_nodes
+- hosts: datacenter
   roles:
-    - dependencies
-    - config
+    - hosts_file
 
-- hosts: haproxy:master_nodes
+- hosts: haproxy
   roles:
     - haproxy
-
-- hosts: master_nodes:worker_nodes
-  roles:
-    - cluster
