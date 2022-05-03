@@ -1,0 +1,34 @@
+---
+- name: Kubeadm Phase Upload-Certs
+  shell: kubeadm init phase upload-certs --upload-certs | grep ^[^\[].*
+  register: certs
+  when: inventory_hostname == groups['control_plane'][0]
+
+- name: Get certs for manager nodes
+  set_fact:
+    join_cert_manager: "{{ hostvars[groups['control_plane'][0]].certs.stdout }}"
+
+- name: Kubeadm Token Create Print Join Command
+  shell: kubeadm token create --print-join-command
+  register: join_command
+  when: inventory_hostname == groups['control_plane'][0]
+
+- name: Get join token command for manager nodes
+  set_fact:
+    join_command_manager: "{{ hostvars[groups['control_plane'][0]].join_command.stdout }}"
+
+- name: Kubeadm Join Control Plane Nodes
+  shell: "{{join_command_manager}} --control-plane --certificate-key {{join_cert_manager}}"
+  register: join_command
+  when:
+    - inventory_hostname is in groups['control_plane']
+    - inventory_hostname != groups['control_plane'][0]
+
+- name: Make .kube directory
+  file:
+    path: $HOME/.kube
+    state: directory
+    mode: "0755"
+  when:
+    - inventory_hostname is in groups['control_plane']
+    - inventory_hostname != groups['control_plane'][0]
