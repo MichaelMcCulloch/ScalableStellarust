@@ -17,12 +17,18 @@
   set_fact:
     join_command_manager: "{{ hostvars[groups['control_plane'][0]].join_command.stdout }}"
 
+- name: "Check localhost:{{kubernetes_port}} for response"
+  shell: "curl https://localhost:{{kubernetes_port}}"
+  register: curl_k8s
+  failed_when: false
+
 - name: Kubeadm Join Control Plane Nodes
   shell: "{{join_command_manager}} --control-plane --certificate-key {{join_cert_manager}}"
   register: join_command
   when:
     - inventory_hostname is in groups['control_plane']
     - inventory_hostname != groups['control_plane'][0]
+    - "'curl: (7)' in curl_k8s.stderr"
 
 - name: Make .kube directory
   file:
