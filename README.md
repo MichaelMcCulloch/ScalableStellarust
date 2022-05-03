@@ -1,4 +1,6 @@
 # Scaleable Stellarust
 
 ## Notes:
-You can run `ansible/roles/docker_images/files/lib/fetch_and_export_docker_images.sh` to fetch and compress the set of 'external' docker images, this is useful for setting up and tearing down virtual infrastructure as you don't need to fetch the image more than once. be sure to check for updates!
+- All tasks are configured for VSCode.
+- You can bring up the datacenter with `Infrastructure::Vagrant::Provision` task and deploy the cluster with `Infrastructure::Ansible::VirtualMachines::DeployDatacenter`.
+- Your local dns server should search datacenter.local on the subnet XXX.XXX.XXX.XXX/YY. I achieved this by adding `server=/datacenter.local/XXX.XXX.XXX.XXX#53` to `/etc/NetworkManager/dnsmasq.d/50-datacenter.conf` on Manjaro
