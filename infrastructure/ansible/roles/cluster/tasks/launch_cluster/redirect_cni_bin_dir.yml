@@ -1,0 +1,8 @@
+---
+- name: Redirect cni bin
+  replace:
+    path: /etc/kubernetes/kubelet.env
+    after: "KUBELET_ARGS="
+    before: "\n"
+    regexp: "(--cni-bin-dir=\/usr\/lib\/cni)"
+    replace: "\\1 --cni-bin-dir=/opt/cni/bin"
