@@ -1,4 +1,4 @@
-# ---
-# - hosts: master_nodes:worker_nodes
-#   roles:
-#     - teardown
+---
+- hosts: control_plane
+  roles:
+    - teardown
