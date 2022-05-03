@@ -50,5 +50,5 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "config.yml"
     end
 
-    # config.vm.provision :reload
+    config.vm.provision :reload
 end
