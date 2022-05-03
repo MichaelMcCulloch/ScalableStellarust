@@ -1,6 +1,7 @@
 ---
 - name: Launch Cluster
   block:
+    - import_tasks: launch_cluster/redirect_cni_bin_dir.yml
     - import_tasks: launch_cluster/enable_kubelet.yml
     - block:
         - import_tasks: launch_cluster/kubeadm_init_cluster.yml
@@ -9,3 +10,5 @@
       when: inventory_hostname == groups['control_plane'][0]
     - import_tasks: launch_cluster/join_control_plane_nodes.yml
       when: inventory_hostname is in groups['control_plane']
+    - import_tasks: launch_cluster/join_worker_nodes.yml
+      when: inventory_hostname is in groups['cluster']

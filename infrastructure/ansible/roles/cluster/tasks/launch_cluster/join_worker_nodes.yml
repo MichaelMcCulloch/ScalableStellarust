@@ -1,0 +1,23 @@
+- name: Kubeadm Token Create Print Join Command
+  shell: kubeadm token create --print-join-command
+  register: join_command
+  when: inventory_hostname == groups['control_plane'][0]
+
+- name: Get join token command for manager nodes
+  set_fact:
+    join_command_manager: "{{ hostvars[groups['control_plane'][0]].join_command.stdout }}"
+
+- name: Kubeadm Join Worker Nodes
+  shell: "{{join_command_manager}} "
+  register: join_command
+  failed_when: false
+  when:
+    - inventory_hostname is in groups['workers']
+
+- name: Make .kube directory
+  file:
+    path: $HOME/.kube
+    state: directory
+    mode: "0755"
+  when:
+    - inventory_hostname is in groups['workers']
