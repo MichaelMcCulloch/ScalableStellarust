@@ -13,3 +13,15 @@
     --pod-network-cidr={{pod_network_cidr}} \
     --control-plane-endpoint haproxy.datacenter.local:6443 \
     --upload-certs"
+
+- name: Make .kube directory
+  file:
+    path: $HOME/.kube
+    state: directory
+    mode: "0755"
+
+- name: Copy /etc/kubernetes/admin.conf on the remote machine to $HOME/.kube/config
+  ansible.builtin.copy:
+    src: /etc/kubernetes/admin.conf
+    dest: $HOME/.kube/config
+    remote_src: yes

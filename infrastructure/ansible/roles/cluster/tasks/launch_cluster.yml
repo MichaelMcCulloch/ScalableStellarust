@@ -2,11 +2,10 @@
 - name: Launch Cluster
   block:
     - import_tasks: launch_cluster/enable_kubelet.yml
-    - import_tasks: launch_cluster/kubeadm_init_cluster.yml
+    - block:
+        - import_tasks: launch_cluster/kubeadm_init_cluster.yml
+        - import_tasks: launch_cluster/deploy_pod_network.yml
+        - import_tasks: launch_cluster/untaint_master_node.yml
       when: inventory_hostname == groups['control_plane'][0]
-    - import_tasks: launch_cluster/create_kube_config.yml
-      when: inventory_hostname == groups['control_plane'][0]
-    - import_tasks: launch_cluster/deploy_pod_network.yml
-      when: inventory_hostname == groups['control_plane'][0]
-    - import_tasks: launch_cluster/untaint_master_node.yml
-      when: inventory_hostname == groups['control_plane'][0]
+    - import_tasks: launch_cluster/join_control_plane_nodes.yml
+      when: inventory_hostname is in groups['control_plane']
