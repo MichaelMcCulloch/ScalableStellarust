@@ -1,0 +1,9 @@
+---
+- name: Copy dashboard manifest files
+  copy:
+    src: "{{item}}"
+    dest: "$HOME"
+    backup: no
+  with_items:
+    - dashboard-adminuser.yml
+    - dashboard-cluster-rolebinding.yml
