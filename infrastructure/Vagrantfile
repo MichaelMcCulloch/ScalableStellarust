@@ -37,13 +37,13 @@ Vagrant.configure("2") do |config|
     config.vm.define "element-01" do |node| node.vm.hostname = "element-01"  end
     config.vm.define "element-02" do |node| node.vm.hostname = "element-02"  end
     config.vm.define "element-03" do |node| node.vm.hostname = "element-03"  end
-    # config.vm.define "element-04" do |node| node.vm.hostname = "element-04"  end
-    # config.vm.define "element-05" do |node| node.vm.hostname = "element-05"  end
-    # config.vm.define "element-06" do |node| node.vm.hostname = "element-06"  end
-    # config.vm.define "element-07" do |node| node.vm.hostname = "element-07"  end
-    # config.vm.define "element-08" do |node| node.vm.hostname = "element-08"  end
-    # config.vm.define "element-09" do |node| node.vm.hostname = "element-09"  end
-    # config.vm.define "element-10" do |node| node.vm.hostname = "element-10"  end
+    config.vm.define "element-04" do |node| node.vm.hostname = "element-04"  end
+    config.vm.define "element-05" do |node| node.vm.hostname = "element-05"  end
+    config.vm.define "element-06" do |node| node.vm.hostname = "element-06"  end
+    config.vm.define "element-07" do |node| node.vm.hostname = "element-07"  end
+    config.vm.define "element-08" do |node| node.vm.hostname = "element-08"  end
+    config.vm.define "element-09" do |node| node.vm.hostname = "element-09"  end
+    config.vm.define "element-10" do |node| node.vm.hostname = "element-10"  end
 
 
     config.vm.provision "ansible" do |ansible|
