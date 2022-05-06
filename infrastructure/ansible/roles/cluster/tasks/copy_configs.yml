@@ -2,5 +2,5 @@
 - name: Copy Configs
   block:
     - import_tasks: copy_configs/copy_docker_configs.yml
-    - import_tasks: copy_configs/copy_calico_config.yml
+    - import_tasks: copy_configs/copy_dashboard_configs.yml
       when: inventory_hostname == groups['control_plane'][0]
