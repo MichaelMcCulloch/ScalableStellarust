@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "redhat.ansible",
+        "bmarkovic.haproxy",
+        "rebornix.ruby"
+    ]
+}
