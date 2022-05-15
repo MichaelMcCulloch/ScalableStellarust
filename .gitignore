@@ -1,9 +1,8 @@
 application/save_data_client/target/
 application/services/*/target/
-application/services/extraction_service/node.tar.xz
-application/services/parsing_service/target/
+application/services/*/*.tar.xz
+application/*/*.tar.xz
 infrastructure/.vagrant
-infrastructure/alpine-3.15-amd64-libvirt.box
 infrastructure/ansible/roles/base_dependencies/files/*.pem
 infrastructure/ansible/roles/base_dependencies/files/*.srl
 infrastructure/ansible/roles/docker_images/files/lib/*.sha256
