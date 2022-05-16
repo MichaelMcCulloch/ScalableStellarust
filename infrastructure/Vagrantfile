@@ -41,9 +41,16 @@ def define_datacenter(config, n_control_plane, n_worker)
 end
 
 def define_haproxy(config)
-  config.vm.define "haproxy" do |proxy|
-    proxy.vm.hostname = "haproxy" 
-    # proxy.vm.network "forwarded_port", guest: 6443, host: 6443 
+  name = "haproxy"
+  config.vm.define name do |proxy|
+    proxy.vm.hostname = name 
+    [8001, 6443].each do |port|
+      proxy.vm.network "forwarded_port", guest: port, host: port
+    end
+    proxy.vm.provider "libvirt" do |lv|
+      lv.memory = 8192
+      lv.cpus = 8
+    end 
   end
 end
 
@@ -53,22 +60,19 @@ def define_k8s(config, n_control_plane, n_worker)
 end
 
 def define_control_plane(config, n_control_plane)
-  define_leader config
-  (2..n_control_plane).each do |i|
-    define_non_leader_control_plane config,i
+  (1..n_control_plane).each do |i|
+    define_master config,i
   end
 end
 
-def define_leader(config)
-  config.vm.define "master-01" do |node| 
-    node.vm.hostname = "master-01" 
-    node.vm.network "forwarded_port", guest: 8001, host: 8001
-  end
-end
-
-def define_non_leader_control_plane(config, number)
-  config.vm.define "master-#{number.to_s.rjust(2, "0")}"  do |node| 
-    node.vm.hostname = "master-#{number.to_s.rjust(2, "0")}"
+def define_master(config, number)
+  name = "master-#{number.to_s.rjust(2, "0")}"
+  config.vm.define name do |node| 
+    node.vm.hostname = name
+    node.vm.provider "libvirt" do |lv|
+      lv.memory = 8192
+      lv.cpus = 8
+    end
   end
 end
 
@@ -79,7 +83,12 @@ def define_worker_plane(config, n_worker)
 end
 
 def define_worker(config, number) 
-  config.vm.define "worker-#{number.to_s.rjust(2, "0")}"  do |node| 
-    node.vm.hostname = "worker-#{number.to_s.rjust(2, "0")}"
+  name = "worker-#{number.to_s.rjust(2, "0")}"
+  config.vm.define name  do |node| 
+    node.vm.hostname = name
+    node.vm.provider "libvirt" do |lv|
+      lv.memory = 4096
+      lv.cpus = 4
+    end
   end 
 end

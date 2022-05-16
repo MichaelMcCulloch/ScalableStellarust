@@ -10,6 +10,7 @@ additional_pacman_packages:
   - kubelet
   - python-pip
   - socat
+  - helm
 
 additional_pip_packages:
   []
