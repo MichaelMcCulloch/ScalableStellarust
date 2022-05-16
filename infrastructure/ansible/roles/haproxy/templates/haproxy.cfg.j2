@@ -21,6 +21,15 @@ frontend k8s
     option          dontlognull
     timeout client  30s
     default_backend k8s-control-plane
+    
+frontend dashboard
+    bind            :8001
+    mode            tcp
+    option          tcplog
+    log             global
+    option          dontlognull
+    timeout client  30s
+    default_backend dashboard-master-one
 
 
 backend k8s-control-plane
@@ -31,6 +40,13 @@ backend k8s-control-plane
 {% for item in groups['control_plane'] %}
     server          {{hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}:6443 check
 {% endfor %}
+
+backend dashboard-master-one
+    mode            tcp
+    balance         roundrobin
+    timeout         connect 30s
+    timeout         server  30s
+    server          {{hostvars[groups['control_plane'][0]]['inventory_hostname'] }} {{ hostvars[groups['control_plane'][0]]['ansible_eth1']['ipv4']['address'] }}:8001 check
 
 frontend stats
    mode http
