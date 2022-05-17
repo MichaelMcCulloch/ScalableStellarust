@@ -1,3 +1,9 @@
 ---
-- name: Deploy Pod Network
-  shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+- name: Create Tigerate-Operator Network
+  shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+
+- name: Deploy calico-installation.yml
+  shell: kubectl apply -f $HOME/calico-installation.yml
+
+- name: Apply calico-bgpconfiguration.yml
+  shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml

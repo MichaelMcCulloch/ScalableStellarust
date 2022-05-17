@@ -1,0 +1,9 @@
+---
+- name: Copy calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+  copy:
+    src: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+    dest: $HOME
+    backup: no
+
+- name: Install calicoctl from source
+  shell: "pacman -U --noconfirm --needed calicoctl-3.23.0-1-x86_64.pkg.tar.zst"
