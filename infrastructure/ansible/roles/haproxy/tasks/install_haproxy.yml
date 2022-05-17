@@ -1,4 +1,8 @@
 ---
+- name: Update Pacman and upgrade system
+  pacman:
+    update_cache: yes
+    upgrade: yes
 - name: Install HAProxy
   pacman:
     name: haproxy
