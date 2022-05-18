@@ -1,9 +1,15 @@
 ---
-- name: Create Tigera-Operator Network
-  shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+- name: Check if Tigera-Operator namespace exists
+  register: TigeraOperatorNetwork
+  shell: kubectl get pods  --namespace=tigera-operator | awk '{ print $1}' | grep tigera
 
-- name: Deploy calico-installation.yml
-  shell: kubectl apply -f $HOME/calico-installation.yml
+- block:
+    - name: Deploy Tigera-Operator Network
+      shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
 
-- name: Apply calico-bgpconfiguration.yml
-  shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml
+    - name: Deploy calico-installation.yml
+      shell: kubectl apply -f $HOME/calico-installation.yml
+
+    - name: Apply calico-bgpconfiguration.yml
+      shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml
+  when: TigeraOperatorNetwork.stdout == ""
