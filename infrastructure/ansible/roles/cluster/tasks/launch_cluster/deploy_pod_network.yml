@@ -1,5 +1,5 @@
 ---
-- name: Create Tigerate-Operator Network
+- name: Create Tigera-Operator Network
   shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
 
 - name: Deploy calico-installation.yml
