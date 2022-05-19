@@ -1,6 +1,7 @@
 ---
 - name: Check if Tigera-Operator namespace exists
-  register: TigeraOperatorNetwork
+  register: TigeraOperatorNamespace
+  failed_when: false
   shell: kubectl get pods  --namespace=tigera-operator | awk '{ print $1}' | grep tigera
 
 - block:
@@ -12,4 +13,4 @@
 
     - name: Apply calico-bgpconfiguration.yml
       shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml
-  when: TigeraOperatorNetwork.stdout == ""
+  when: TigeraOperatorNamespace.stdout == ""
