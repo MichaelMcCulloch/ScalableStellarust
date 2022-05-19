@@ -1,5 +1,4 @@
 ip: autodetect
 ip_autodetection_method: can-reach=haproxy.datacenter.local
-pod_network_cidr: 10.11.0.0/16
-calico_ipv4pool_cidr: 10.11.0.0/16
+pod_network_cidr: 10.85.0.0/16
 kubernetes_port: 6443
