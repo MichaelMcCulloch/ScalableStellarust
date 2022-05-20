@@ -32,11 +32,11 @@
             src: "{{item.file}}"
             dest: "{{item.path}}"
             backup: no
-          with_items: "{{config_files.dashboard + config_files.calicoctl}}"
+          with_items: "{{config_files.dashboard }}"
 
-        - name: Copy calico templates
-          template:
-            src: "{{item.template}}"
+        - name: Copy calicoctl config
+          copy:
+            src: "{{item.file}}"
             dest: "{{item.path}}"
             backup: no
-          with_items: "{{config_templates.calico}}"
+          with_items: "{{config_files.calicoctl }}"
