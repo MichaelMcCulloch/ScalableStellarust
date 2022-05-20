@@ -1,9 +1,22 @@
 ---
 - name: Launch Cluster
   block:
-    - import_tasks: launch_cluster/redirect_cni_bin_dir.yml
+    - name: Enable Kubelet
+      systemd:
+        name: kubelet
+        enabled: yes
 
-    - import_tasks: launch_cluster/enable_kubelet.yml
+    - name: Enable Container Runtime
+      systemd:
+        state: started
+        name: crio
+        enabled: yes
+
+    - name: install kubelet.env -> /etc/kubernetes/kubelet.env
+      copy:
+        src: kubelet.env
+        dest: /etc/kubernetes/kubelet.env
+        backup: no
 
     - block:
         - import_tasks: launch_cluster/kubeadm_init_cluster.yml

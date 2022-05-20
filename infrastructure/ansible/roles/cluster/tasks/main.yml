@@ -4,4 +4,4 @@
     - import_tasks: install_dependencies.yml
     - import_tasks: disable_swap.yml
     - import_tasks: copy_configs.yml
-    # - import_tasks: launch_cluster.yml
+    - import_tasks: launch_cluster.yml
