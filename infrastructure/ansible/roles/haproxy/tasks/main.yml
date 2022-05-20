@@ -5,11 +5,6 @@
   delegate_facts: True
   with_items: "{{ groups['control_plane'] }}"
 
-- name: Update Pacman and upgrade system
-  pacman:
-    update_cache: yes
-    upgrade: yes
-
 - name: Install HAProxy
   pacman:
     name: haproxy
