@@ -1,2 +1,1 @@
-additional_pacman_packages:
-  - haproxy
+haproxy_port: 1024

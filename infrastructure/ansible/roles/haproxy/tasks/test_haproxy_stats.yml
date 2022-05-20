@@ -1,0 +1,9 @@
+---
+- name: Get response from  {{inventory_hostname}}:{{haproxy_port}}
+  shell: curl -Is "{{inventory_hostname}}:{{haproxy_port}}" | grep "HTTP/1.1"
+  register: response
+
+- name: Assert that 200 is in response
+  assert:
+    that: "'200' in response.stdout"
+    quiet: true
