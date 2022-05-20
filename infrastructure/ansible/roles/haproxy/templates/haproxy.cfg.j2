@@ -50,7 +50,7 @@ backend dashboard-master-one
 
 frontend stats
    mode http
-   bind *:1024
+   bind *:{{haproxy_port}}
    http-request set-var(txn.base) base
    http-request use-service prometheus-exporter if { path /metrics }
    stats enable
