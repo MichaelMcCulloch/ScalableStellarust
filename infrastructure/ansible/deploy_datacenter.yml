@@ -1,7 +1,8 @@
 ---
-# - hosts: datacenter
-#   roles:
-#     - hosts_file
+- hosts: datacenter
+  roles:
+    - pacman_cache
+    - hosts_file
 
 - hosts: haproxy
   roles:
