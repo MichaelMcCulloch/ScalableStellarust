@@ -7,3 +7,7 @@
   notify:
     - Restart systemd-resolved
     - Restart systemd-networkd
+
+- name: Test all hosts know about each other
+  include_tasks: test_connectivity.yml
+  loop: "{{groups['datacenter']}}"
