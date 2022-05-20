@@ -1,8 +1,26 @@
 ---
 - name: Install Dependencies
   block:
-    - import_tasks: install_dependencies/install_iptables_nft.yml
-    - import_tasks: install_dependencies/install_pacman_packages.yml
-    - import_tasks: install_dependencies/install_python_modules.yml
-    - import_tasks: install_dependencies/install_calicoctl.yml
+    - name: Install iptables-nft
+      shell: "yes | sudo pacman -S iptables-nft --needed"
+      register: install_iptables
+      changed_when: "'skipping' not in install_iptables.stderr"
+
+    - name: Install Pacman Dependencies
+      pacman:
+        name: "{{ additional_pacman_packages }}"
+        state: present
+
+    - name: Install calicoctl
       when: inventory_hostname == groups['control_plane'][0]
+      block:
+        - name: Copy calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+          copy:
+            src: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+            dest: $HOME
+            backup: no
+
+        - name: Install calicoctl from source
+          shell: "pacman -U --noconfirm --needed calicoctl-3.23.0-1-x86_64.pkg.tar.zst"
+          register: install_calicoctl
+          changed_when: "'skipping' not in install_calicoctl.stderr"
