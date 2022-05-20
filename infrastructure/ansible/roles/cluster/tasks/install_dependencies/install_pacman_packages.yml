@@ -1,4 +1,0 @@
-- name: Install Pacman Dependencies
-  pacman:
-    name: "{{ additional_pacman_packages }}"
-    state: present
