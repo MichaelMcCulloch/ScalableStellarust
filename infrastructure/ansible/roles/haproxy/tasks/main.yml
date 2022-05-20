@@ -11,12 +11,18 @@
     state: present
 
 - name: Copy HAProxy Config
+  register: config
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     backup: no
-  notify:
-    - Start HAProxy
+
+- name: Start HAProxy
+  when: config.changed
+  systemd:
+    state: restarted
+    name: haproxy
+    enabled: yes
 
 - name: Test that haproxy is active
   include_tasks: test_haproxy_stats.yml

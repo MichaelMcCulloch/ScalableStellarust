@@ -1,7 +1,6 @@
 ---
 - hosts: datacenter
   roles:
-    - pacman_cache
     - hosts_file
 
 - hosts: haproxy

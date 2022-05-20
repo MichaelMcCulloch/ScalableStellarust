@@ -40,3 +40,8 @@
 
     - name: Point pacman mirrorlist to nginx pacman-cache
       shell: echo "Server = http://10.0.0.249:8080/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
+
+    - name: Update Pacman and upgrade system
+      pacman:
+        update_cache: yes
+        upgrade: yes
