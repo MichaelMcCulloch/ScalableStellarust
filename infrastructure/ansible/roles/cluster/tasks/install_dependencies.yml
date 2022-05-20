@@ -14,13 +14,13 @@
     - name: Install calicoctl
       when: inventory_hostname == groups['control_plane'][0]
       block:
-        - name: Copy calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+        - name: Copy calicoctl package
           copy:
             src: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
             dest: $HOME
             backup: no
 
-        - name: Install calicoctl from source
+        - name: Install calicoctl from package
           shell: "pacman -U --noconfirm --needed calicoctl-3.23.0-1-x86_64.pkg.tar.zst"
           register: install_calicoctl
           changed_when: "'skipping' not in install_calicoctl.stderr"

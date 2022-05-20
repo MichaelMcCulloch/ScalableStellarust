@@ -1,8 +1,42 @@
 ---
+- name: Gather facts
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['haproxy'] }}"
+
 - name: Copy Configs
   block:
-    - import_tasks: copy_configs/copy_docker_configs.yml
-    - block:
-        - import_tasks: copy_configs/copy_dashboard_configs.yml
-        - import_tasks: copy_configs/copy_calico_configs.yml
+    - name: Copy docker config files to hosts
+      copy:
+        src: "{{item.file}}"
+        dest: "{{item.path}}"
+        backup: no
+      register: docker_files
+      with_items: "{{config_files.docker}}"
+
+    - name: Restart Docker & Daemon
+      when: docker_files.changed
+      systemd:
+        state: restarted
+        name: docker
+        daemon_reload: yes
+        force: yes
+        enabled: yes
+
+    - name: Copy leader configs and templates
       when: inventory_hostname == groups['control_plane'][0]
+      block:
+        - name: Copy dashboard k8s configs
+          copy:
+            src: "{{item.file}}"
+            dest: "{{item.path}}"
+            backup: no
+          with_items: "{{config_files.dashboard + config_files.calicoctl}}"
+
+        - name: Copy calico templates
+          template:
+            src: "{{item.template}}"
+            dest: "{{item.path}}"
+            backup: no
+          with_items: "{{config_templates.calico}}"
