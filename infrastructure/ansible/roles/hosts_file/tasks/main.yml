@@ -4,9 +4,15 @@
     src: hosts.j2
     dest: /etc/hosts
     backup: no
-  notify:
-    - Restart systemd-resolved
-    - Restart systemd-networkd
+
+- name: Restart systemd-resolved
+  systemd:
+    state: restarted
+    name: systemd-resolved
+- name: Restart systemd-networkd
+  systemd:
+    state: restarted
+    name: systemd-networkd
 
 - name: Test all hosts know about each other
   include_tasks: test_connectivity.yml

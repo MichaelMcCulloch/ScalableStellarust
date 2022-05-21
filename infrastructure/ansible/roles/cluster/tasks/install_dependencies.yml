@@ -14,11 +14,12 @@
     - name: Install calicoctl
       when: inventory_hostname == groups['control_plane'][0]
       block:
-        - name: Copy calicoctl package
+        - name: Copy calicoctl config
           copy:
-            src: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
-            dest: $HOME
+            src: "{{item.file}}"
+            dest: "{{item.path}}"
             backup: no
+          with_items: "{{config_files.calicoctl }}"
 
         - name: Install calicoctl from package
           shell: "pacman -U --noconfirm --needed calicoctl-3.23.0-1-x86_64.pkg.tar.zst"

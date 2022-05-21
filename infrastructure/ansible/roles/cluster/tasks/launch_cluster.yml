@@ -1,17 +1,6 @@
 ---
 - name: Launch Cluster
   block:
-    - name: Enable Kubelet
-      systemd:
-        name: kubelet
-        enabled: yes
-
-    - name: Enable Container Runtime
-      systemd:
-        state: started
-        name: crio
-        enabled: yes
-
     - name: install kubelet.env -> /etc/kubernetes/kubelet.env
       copy:
         src: kubelet.env
@@ -28,6 +17,3 @@
 
     - import_tasks: launch_cluster/join_worker_nodes.yml
       when: inventory_hostname is in groups['cluster']
-
-    - import_tasks: launch_cluster/deploy_dashboard.yml
-      when: inventory_hostname == groups['control_plane'][0]
