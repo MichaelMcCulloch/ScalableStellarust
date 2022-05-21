@@ -1,0 +1,25 @@
+---
+- name: Deploy Kubernetes Dashboard
+  shell: "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.1/aio/deploy/recommended.yaml"
+
+- name: install dashboard-adminuser.yml -> ~/dashboard-adminuser.yml
+  register: dash_adminuser
+  copy:
+    src: dashboard-adminuser.yml
+    dest: $HOME
+    backup: no
+
+- name: Deploy dashboard-adminuser.yml
+  when: dash_adminuser.changed
+  shell: "kubectl apply -f $HOME/dashboard-adminuser.yml"
+
+- name: install dashboard-cluster-rolebinding.yml -> ~/dashboard-cluster-rolebinding.yml
+  register: dash_cluster_roll
+  copy:
+    src: dashboard-cluster-rolebinding.yml
+    dest: $HOME
+    backup: no
+
+- name: Deploy dashboard-cluster-rolebinding.yml
+  when: dash_cluster_roll.changed
+  shell: "kubectl apply -f $HOME/dashboard-cluster-rolebinding.yml"

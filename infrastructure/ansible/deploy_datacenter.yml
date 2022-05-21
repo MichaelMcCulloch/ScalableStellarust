@@ -10,3 +10,7 @@
 - hosts: cluster
   roles:
     - cluster
+
+- hosts: leader
+  roles:
+    - dashboard

@@ -1,0 +1,41 @@
+---
+- name: Gather facts
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['haproxy'] }}"
+
+- name: Install docker files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  register: docker_files
+  with_items: "{{config_files.docker}}"
+
+- name: Restart Docker & Daemon
+  when: docker_files.changed
+  systemd:
+    state: restarted
+    name: docker
+    daemon_reload: yes
+    force: yes
+    enabled: yes
+
+- name: Install CRI-o files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  with_items: "{{config_files.cri_o}}"
+
+- name: Enable Kubelet
+  systemd:
+    name: kubelet
+    enabled: yes
+
+- name: Enable Container Runtime
+  systemd:
+    state: started
+    name: crio
+    enabled: yes
