@@ -1,5 +1,0 @@
----
-- name: Install HAProxy
-  pacman:
-    name: haproxy
-    state: present

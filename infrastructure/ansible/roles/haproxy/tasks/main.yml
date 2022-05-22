@@ -1,8 +1,28 @@
 ---
-- name: Install HAProxy
-  import_tasks: install_haproxy.yml
-  when: inventory_hostname in groups['haproxy']
+- name: Gather facts
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['control_plane'] }}"
 
-- name: HAProxy Config
-  import_tasks: haproxy_config.yml
-  when: inventory_hostname in groups['haproxy']
+- name: Install HAProxy
+  pacman:
+    name: haproxy
+    state: present
+
+- name: Copy HAProxy Config
+  register: config
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    backup: no
+
+- name: Start HAProxy
+  when: config.changed
+  systemd:
+    state: restarted
+    name: haproxy
+    enabled: yes
+
+- name: Test that haproxy is active
+  include_tasks: test_haproxy_stats.yml

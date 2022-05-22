@@ -2,6 +2,7 @@
     "recommendations": [
         "redhat.ansible",
         "bmarkovic.haproxy",
-        "rebornix.ruby"
+        "rebornix.ruby",
+        "coolbear.systemd-unit-file"
     ]
 }

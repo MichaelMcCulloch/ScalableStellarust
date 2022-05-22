@@ -1,8 +1,7 @@
 ---
 - name: Standup Cluster
   block:
-    - import_tasks: update_pacman_cache.yml
     - import_tasks: install_dependencies.yml
     - import_tasks: disable_swap.yml
-    - import_tasks: copy_configs.yml
+    - import_tasks: start_services.yml
     - import_tasks: launch_cluster.yml

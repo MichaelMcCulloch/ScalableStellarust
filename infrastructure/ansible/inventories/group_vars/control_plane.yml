@@ -11,7 +11,3 @@ additional_pacman_packages:
   - python-pip
   - socat
   - helm
-
-additional_pip_packages:
-  []
-  # - docker[tls]
