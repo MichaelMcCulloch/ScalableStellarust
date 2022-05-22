@@ -38,11 +38,10 @@
       notify:
         - Restart systemd-networkd
 
-    - name: use global DNS
-      replace:
-        path: /etc/systemd/resolved.conf
-        regexp: '(\s+)#DNS=(\s+.*)?$'
-        replace: '\1DNS=1.1.1.1 1.0.0.1\2'
-        backup: no
-      notify:
-        - Restart systemd-resolved
+    - name: Point pacman mirrorlist to nginx pacman-cache
+      shell: echo "Server = http://10.0.0.249:8080/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
+
+    - name: Update Pacman and upgrade system
+      pacman:
+        update_cache: yes
+        upgrade: yes

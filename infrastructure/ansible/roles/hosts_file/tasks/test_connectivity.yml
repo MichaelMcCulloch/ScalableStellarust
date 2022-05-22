@@ -1,0 +1,16 @@
+---
+- name: Test All hosts know about "{{hostvars[item]['inventory_hostname'] }}"
+  shell: cat /etc/hosts | grep {{hostvars[item]['inventory_hostname']  }}
+  register: hosts_grep
+
+- name: Assert that "{{hostvars[item]['inventory_hostname'] }}" knows about itself
+  assert:
+    that: "'127.0.1.1' in hosts_grep.stdout"
+    quiet: true
+  when: inventory_hostname == hostvars[item]['inventory_hostname']
+
+- name: Assert that all hosts know about "{{hostvars[item]['inventory_hostname'] }}"
+  assert:
+    that: "'{{hostvars[item]['ansible_eth1']['ipv4']['address']}}' in hosts_grep.stdout"
+    quiet: true
+  when: inventory_hostname != hostvars[item]['inventory_hostname']

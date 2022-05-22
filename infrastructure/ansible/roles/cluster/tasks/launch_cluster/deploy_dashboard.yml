@@ -1,7 +1,0 @@
----
-- name: Deploy Kubernetes Dashboard
-  shell: "kubectl apply -f {{item}}"
-  with_items:
-    - https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.1/aio/deploy/recommended.yaml
-    - "$HOME/dashboard-adminuser.yml"
-    - "$HOME/dashboard-cluster-rolebinding.yml"

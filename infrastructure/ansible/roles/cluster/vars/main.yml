@@ -1,5 +1,25 @@
 ip: autodetect
 ip_autodetection_method: can-reach=haproxy.datacenter.local
-pod_network_cidr: 10.11.0.0/16
-calico_ipv4pool_cidr: 10.11.0.0/16
+pod_network_cidr: 10.11.0.0/24
 kubernetes_port: 6443
+config_files:
+  cri_o:
+    - file: registries.conf
+      path: /etc/containers/
+  docker:
+    - file: daemon.json
+      path: /etc/docker/
+    - file: taskmax.conf
+      path: /etc/systemd/system/docker.service.d/
+  calicoctl:
+    - file: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
+      path: $HOME
+    - file: calicoctl.cfg
+      path: /etc/calico/
+
+config_templates:
+  calico:
+    - template: calico-bgpconfiguration.yml.j2
+      path: $HOME/calico-bgpconfiguration.yml
+    - template: calico-installation.yml.j2
+      path: $HOME/calico-installation.yml

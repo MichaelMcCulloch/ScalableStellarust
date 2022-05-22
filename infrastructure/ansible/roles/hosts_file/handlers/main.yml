@@ -1,8 +1,0 @@
-- name: Restart systemd-resolved
-  systemd:
-    state: restarted
-    name: systemd-resolved
-- name: Restart systemd-networkd
-  systemd:
-    state: restarted
-    name: systemd-networkd
