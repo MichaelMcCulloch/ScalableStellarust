@@ -1,25 +1,17 @@
 ---
-- name: Deploy Kubernetes Dashboard
-  shell: "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.1/aio/deploy/recommended.yaml"
+- name: intall helm-diff
+  shell: helm plugin install https://github.com/databus23/helm-diff
+  register: installDiffPlugin
+  failed_when:
+    - '"Installed plugin: diff" not in installDiffPlugin.stdout'
+    - '"Error: plugin already exists" not in installDiffPlugin.stderr'
 
-- name: install dashboard-adminuser.yml -> ~/dashboard-adminuser.yml
-  register: dash_adminuser
-  copy:
-    src: dashboard-adminuser.yml
-    dest: $HOME
-    backup: no
+- name: Add a repository
+  shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 
-- name: Deploy dashboard-adminuser.yml
-  when: dash_adminuser.changed
-  shell: "kubectl apply -f $HOME/dashboard-adminuser.yml"
-
-- name: install dashboard-cluster-rolebinding.yml -> ~/dashboard-cluster-rolebinding.yml
-  register: dash_cluster_roll
-  copy:
-    src: dashboard-cluster-rolebinding.yml
-    dest: $HOME
-    backup: no
-
-- name: Deploy dashboard-cluster-rolebinding.yml
-  when: dash_cluster_roll.changed
-  shell: "kubectl apply -f $HOME/dashboard-cluster-rolebinding.yml"
+- name: Install Kubernetes Dashboard
+  register: installDashChart
+  shell: helm install star-dash kubernetes-dashboard/kubernetes-dashboard
+  failed_when:
+    - '"Error: INSTALLATION FAILED: cannot re-use a name that is still in use" not in installDashChart.stderr'
+    - '"Get the Kubernetes Dashboard URL by running:" not in installDashChart.stdout'
