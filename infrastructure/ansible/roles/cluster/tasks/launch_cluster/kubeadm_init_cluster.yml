@@ -18,10 +18,11 @@
   file:
     path: $HOME/.kube
     state: directory
-    mode: "0755"
+    mode: "0600"
 
 - name: Copy /etc/kubernetes/admin.conf on the remote machine to $HOME/.kube/config
   copy:
     src: /etc/kubernetes/admin.conf
     dest: $HOME/.kube/config
+    mode: 0600
     remote_src: yes
