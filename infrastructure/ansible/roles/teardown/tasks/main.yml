@@ -1,4 +1,0 @@
----
-- name: Reset Kubeadm
-  shell: kubeadm reset --force
-  when: inventory_hostname == groups['control_plane'][0]
