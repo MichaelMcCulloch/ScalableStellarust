@@ -9,3 +9,5 @@ additional_pacman_packages:
   - kubelet
   - python-pip
   - socat
+
+additional_python_packages: []
