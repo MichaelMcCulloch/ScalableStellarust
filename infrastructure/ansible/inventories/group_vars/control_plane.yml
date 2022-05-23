@@ -11,3 +11,6 @@ additional_pacman_packages:
   - python-pip
   - socat
   - helm
+  - git
+additional_python_packages:
+  - PyYAML

@@ -11,6 +11,12 @@
         name: "{{ additional_pacman_packages }}"
         state: present
 
+    - name: Install Python Dependencies
+      when: additional_python_packages | length > 0
+      pip:
+        name: "{{ additional_python_packages }}"
+        state: present
+
     - name: Install calicoctl
       when: inventory_hostname == groups['control_plane'][0]
       block:
