@@ -1,0 +1,33 @@
+---
+- name: Install Kubernetes Dashboard
+  register: installDashChart
+  shell: >
+    helm install --create-namespace \
+      --namespace kubernetes-dashboard \
+      kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+  failed_when:
+    - '"Error: INSTALLATION FAILED: cannot re-use a name that is still in use" not in installDashChart.stderr'
+    - '"Get the Kubernetes Dashboard URL by running:" not in installDashChart.stdout'
+
+- name: Deploy dashboard-adminuser.yml
+  block:
+    - name: Install dashboard-adminuser.yml -> $HOME/dashboard-adminuser.yml
+      register: svc_account
+      copy:
+        src: dashboard-adminuser.yml
+        dest: $HOME/
+    - name: Apply dashboard-adminuser.yml
+      when: svc_account.changed
+      shell: kubectl apply -f $HOME/dashboard-adminuser.yml
+
+- name: dashboard-cluster-rolebinding.yml
+  block:
+    - name: Install dashboard-cluster-rolebinding.yml -> $HOME/dashboard-cluster-rolebinding.yml
+      register: cluster_role_binding
+      copy:
+        src: dashboard-cluster-rolebinding.yml
+        dest: $HOME/
+
+    - name: Apply dashboard-cluster-rolebinding.yml
+      when: cluster_role_binding.changed
+      shell: kubectl apply -f $HOME/dashboard-cluster-rolebinding.yml

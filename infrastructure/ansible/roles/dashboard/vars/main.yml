@@ -4,3 +4,8 @@ config_files:
       path: $HOME/
     - file: dashboard-cluster-rolebinding.yml
       path: $HOME/
+helm_repos:
+  - name: kubernetes-dashboard
+    repo_url: https://kubernetes.github.io/dashboard/
+  - name: ingress-nginx
+    repo_url: https://kubernetes.github.io/ingress-nginx

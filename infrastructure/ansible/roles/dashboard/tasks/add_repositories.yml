@@ -1,0 +1,7 @@
+---
+- name: Add repositories
+  shell: "helm repo add {{item.name}} {{item.repo_url}}"
+  with_items: "{{helm_repos}}"
+
+- name: Update repository info
+  shell: helm repo update
