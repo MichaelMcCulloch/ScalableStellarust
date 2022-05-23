@@ -6,4 +6,4 @@
       ingress-nginx ingress-nginx/ingress-nginx
   failed_when:
     - '"Error: INSTALLATION FAILED: cannot re-use a name that is still in use" not in installNginxIngressChart.stderr'
-    - '"The ingress-nginx controller has been installed." not in installDashChart.stderr'
+    - '"The ingress-nginx controller has been installed." not in installNginxIngressChart.stdout'
