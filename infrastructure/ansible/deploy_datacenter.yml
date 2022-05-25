@@ -3,7 +3,7 @@
   roles:
     - hosts_file
 
-- hosts: haproxy
+- hosts: haproxy_group
   roles:
     - haproxy
 

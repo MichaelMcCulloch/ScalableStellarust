@@ -1,6 +1,7 @@
 ip: autodetect
-ip_autodetection_method: can-reach=haproxy.datacenter.local
-pod_network_cidr: 10.11.0.0/24
+ip_autodetection_method: can-reach=haproxy
+pod_network_cidr: "10.12.0.0/24"
+advertise_address: "{{ ansible_eth0.ipv4.address }}"
 kubernetes_port: 6443
 config_files:
   cri_o:

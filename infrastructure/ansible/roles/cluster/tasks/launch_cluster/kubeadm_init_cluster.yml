@@ -11,8 +11,10 @@
   when: "'curl: (7)' in curl_k8s.stderr"
   shell: "kubeadm init \
     --pod-network-cidr={{pod_network_cidr}} \
-    --control-plane-endpoint haproxy.datacenter.local:6443 \
-    --upload-certs"
+    --apiserver-advertise-address={{advertise_address}} \
+    --control-plane-endpoint haproxy:6443 \
+    --upload-certs \
+    --v 1"
 
 - name: Make .kube directory
   file:

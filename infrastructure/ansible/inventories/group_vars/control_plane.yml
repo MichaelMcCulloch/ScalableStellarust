@@ -8,6 +8,7 @@ additional_pacman_packages:
   - kubeadm
   - kubectl
   - kubelet
+  - cmctl
   - python-pip
   - socat
   - helm

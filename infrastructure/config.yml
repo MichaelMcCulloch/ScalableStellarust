@@ -28,16 +28,6 @@
         backup: no
       notify: Run mkinitcpio
 
-    - name: Attach datacenter.local DNS to network interface eth1
-      lineinfile:
-        path: /etc/systemd/network/eth1.network
-        search_string: "Domains=datacenter.local"
-        line: "Domains=datacenter.local ~local"
-        insertafter: "DHCP=ipv4"
-        backup: no
-      notify:
-        - Restart systemd-networkd
-
     - name: Point pacman mirrorlist to nginx pacman-cache
       shell: echo "Server = http://10.0.0.249:8080/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 

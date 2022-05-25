@@ -2,9 +2,10 @@
 - name: Install Kubernetes Dashboard
   register: installDashChart
   shell: >
-    helm install --create-namespace \
+    helm install \
+      kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
       --namespace kubernetes-dashboard \
-      kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard
+      --create-namespace
   failed_when:
     - '"Error: INSTALLATION FAILED: cannot re-use a name that is still in use" not in installDashChart.stderr'
     - '"Get the Kubernetes Dashboard URL by running:" not in installDashChart.stdout'

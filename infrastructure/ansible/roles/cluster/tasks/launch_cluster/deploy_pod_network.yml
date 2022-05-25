@@ -6,26 +6,36 @@
 
 - name: Deploy Tigera-Operator Network
   when: tigera_namespace.stdout == ""
-  shell: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+  shell: kubectl create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
 
-- name: Copy calico templates
+- name: Copy calico CRD
   register: calico_installation
   template:
-    src: calico-installation.yml.j2
-    dest: $HOME/calico-installation.yml
+    src: custom-resources.yml.j2
+    dest: $HOME/custom-resources.yml
     backup: no
 
-- name: Deploy calico-installation.yml
+- name: Deploy calico-system
   when: calico_installation.changed
-  shell: kubectl apply -f $HOME/calico-installation.yml
+  shell: kubectl create -f $HOME/custom-resources.yml
+# - name: Copy calico templates
+#   register: calico_installation
+#   template:
+#     src: calico-installation.yml.j2
+#     dest: $HOME/calico-installation.yml
+#     backup: no
 
-- name: Copy calico templates
-  register: calico_bgpconfiguration
-  template:
-    src: calico-bgpconfiguration.yml.j2
-    dest: $HOME/calico-bgpconfiguration.yml
-    backup: no
+# - name: Deploy calico-installation.yml
+#   when: calico_installation.changed
+#   shell: kubectl apply -f $HOME/calico-installation.yml
 
-- name: Apply calico-bgpconfiguration.yml
-  when: calico_bgpconfiguration.changed
-  shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml
+# - name: Copy calico templates
+#   register: calico_bgpconfiguration
+#   template:
+#     src: calico-bgpconfiguration.yml.j2
+#     dest: $HOME/calico-bgpconfiguration.yml
+#     backup: no
+
+# - name: Apply calico-bgpconfiguration.yml
+#   when: calico_bgpconfiguration.changed
+#   shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml

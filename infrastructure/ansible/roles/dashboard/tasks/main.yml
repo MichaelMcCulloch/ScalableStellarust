@@ -1,6 +1,7 @@
 ---
 - block:
-    - import_tasks: add_plugins.yml
-    - import_tasks: add_repositories.yml
-    - import_tasks: install_dashboard.yml
-    - import_tasks: install_nginx_ingress.yml
+        - import_tasks: add_plugins.yml
+        - import_tasks: add_repositories.yml
+        - import_tasks: install_dashboard.yml
+        - import_tasks: install_nginx_ingress.yml
+        # - import_tasks: install_cert_manager.yml
