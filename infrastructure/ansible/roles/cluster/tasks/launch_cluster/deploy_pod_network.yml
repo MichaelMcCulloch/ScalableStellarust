@@ -1,20 +1,12 @@
 ---
-- name: Check if Tigera-Operator namespace exists
-  register: tigera_namespace
-  failed_when: false
-  shell: kubectl get pods  --namespace=tigera-operator | awk '{ print $1}' | grep tigera
-
 - name: Deploy Tigera-Operator Network
-  when: tigera_namespace.stdout == ""
-  shell: kubectl create -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
+  shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
 
 - name: Copy calico CRD
-  register: calico_installation
   template:
     src: custom-resources.yml.j2
     dest: $HOME/custom-resources.yml
     backup: no
 
 - name: Deploy calico-system
-  when: calico_installation.changed
-  shell: kubectl create -f $HOME/custom-resources.yml
+  shell: kubectl apply -f $HOME/custom-resources.yml

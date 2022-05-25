@@ -1,0 +1,22 @@
+---
+- name: Copy and apply letsencrypt_issuer.yml
+  block:
+    - name: Copy letsencrypt_issuer.yml
+      copy:
+        src: letsencrypt_issuer.yml
+        dest: $HOME/
+        backup: no
+
+    - name: create letsencrypt_issuer.yml
+      shell: kubectl apply -f $HOME/letsencrypt_issuer.yml
+
+- name: Get a certificate
+  block:
+    - name: Copy certificate.yml
+      copy:
+        src: certificate.yml
+        dest: $HOME/
+        backup: no
+
+    - name: Apply certificate.yml
+      shell: kubectl apply -f $HOME/certificate.yml

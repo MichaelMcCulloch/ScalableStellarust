@@ -2,7 +2,13 @@
 # Install cert-manager3
 # Note: Currently we must set hostNetwork=true otherwise it will fail to resolve the pods it needs.
 #   I'm not convinced this is the right solution, since other pods do not have the same recourse
+- name: Check if Cert Manager namespace exists
+  register: certmanagernamespace
+  failed_when: false
+  shell: kubectl get pods  --namespace=cert-manager | awk '{ print $1}' | grep cert-manager
+
 - name: Install Cert Manager
+  when: certmanagernamespace.stdout == ""
   shell: >
     helm install \
     cert-manager jetstack/cert-manager \

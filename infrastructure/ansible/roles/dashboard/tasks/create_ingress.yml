@@ -1,0 +1,11 @@
+---
+- name: Copy and apply ingress.yml
+  block:
+    - name: Copy ingress.yml
+      copy:
+        src: ingress.yml
+        dest: $HOME/
+        backup: no
+
+    - name: create ingress.yml
+      shell: kubectl apply -f $HOME/ingress.yml

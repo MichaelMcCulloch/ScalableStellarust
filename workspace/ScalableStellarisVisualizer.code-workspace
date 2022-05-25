@@ -39,7 +39,8 @@
             "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/definitions/playbook": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/deploy.yml",
             "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-inventory.json": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/inventories/virtual_machines.yml",
             "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/definitions/tasks": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/roles/dependencies/tasks/main.yml",
-            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-vars.json": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/roles/dependencies/vars/main.yml"
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-vars.json": "file:///home/michael/Dev/Stellarust/ScalableStellarisVizualizer/infrastructure/ansible/roles/dependencies/vars/main.yml",
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/$defs/tasks": "file:///home/michael/Dev/Stellarust/ScalableStellarust/infrastructure/ansible/roles/dashboard/tasks/install_cert_issuer.yml"
         }
     },
     "extensions": {
