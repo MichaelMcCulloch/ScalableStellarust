@@ -1,10 +1,4 @@
 ---
-- name: Gather facts
-  setup:
-  delegate_to: "{{ item }}"
-  delegate_facts: True
-  with_items: "{{ groups['haproxy_group'] }}"
-
 - name: Install docker files
   copy:
     src: "{{item.file}}"

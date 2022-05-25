@@ -1,6 +1,7 @@
 ---
 - name: Install Dependencies
   block:
+    # ugly pipe because the pacman plugin cannot handle replacing iptables with iptables-nfg
     - name: Install iptables-nft
       shell: "yes | sudo pacman -S iptables-nft --needed"
       register: install_iptables
@@ -16,18 +17,3 @@
       pip:
         name: "{{ additional_python_packages }}"
         state: present
-
-    - name: Install calicoctl
-      when: inventory_hostname == groups['control_plane'][0]
-      block:
-        - name: Copy calicoctl config
-          copy:
-            src: "{{item.file}}"
-            dest: "{{item.path}}"
-            backup: no
-          with_items: "{{config_files.calicoctl }}"
-
-        - name: Install calicoctl from package
-          shell: "pacman -U --noconfirm --needed calicoctl-3.23.0-1-x86_64.pkg.tar.zst"
-          register: install_calicoctl
-          changed_when: "'skipping' not in install_calicoctl.stderr"

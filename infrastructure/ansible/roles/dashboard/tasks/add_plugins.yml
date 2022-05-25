@@ -1,7 +1,0 @@
----
-- name: intall helm-diff
-  shell: helm plugin install https://github.com/databus23/helm-diff
-  register: installDiffPlugin
-  failed_when:
-    - '"Installed plugin: diff" not in installDiffPlugin.stdout'
-    - '"Error: plugin already exists" not in installDiffPlugin.stderr'

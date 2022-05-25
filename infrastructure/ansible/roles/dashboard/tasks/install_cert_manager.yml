@@ -1,6 +1,7 @@
 ---
-# # TODO: THIS IS HANGING
-
+# Install cert-manager3
+# Note: Currently we must set hostNetwork=true otherwise it will fail to resolve the pods it needs.
+#   I'm not convinced this is the right solution, since other pods do not have the same recourse
 - name: Install Cert Manager
   shell: >
     helm install \
@@ -9,8 +10,4 @@
     --create-namespace \
     --version v1.8.0 \
     --set installCRDs=true \
-    --debug
-  register: certmanager
-
-- debug:
-    msg: "{{certmanager}}"
+    --set webhook.hostNetwork=true --set webhook.securePort=10251

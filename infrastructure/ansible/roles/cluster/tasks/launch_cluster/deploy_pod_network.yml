@@ -18,24 +18,3 @@
 - name: Deploy calico-system
   when: calico_installation.changed
   shell: kubectl create -f $HOME/custom-resources.yml
-# - name: Copy calico templates
-#   register: calico_installation
-#   template:
-#     src: calico-installation.yml.j2
-#     dest: $HOME/calico-installation.yml
-#     backup: no
-
-# - name: Deploy calico-installation.yml
-#   when: calico_installation.changed
-#   shell: kubectl apply -f $HOME/calico-installation.yml
-
-# - name: Copy calico templates
-#   register: calico_bgpconfiguration
-#   template:
-#     src: calico-bgpconfiguration.yml.j2
-#     dest: $HOME/calico-bgpconfiguration.yml
-#     backup: no
-
-# - name: Apply calico-bgpconfiguration.yml
-#   when: calico_bgpconfiguration.changed
-#   shell: calicoctl apply -f $HOME/calico-bgpconfiguration.yml

@@ -1,5 +1,3 @@
-ip: autodetect
-ip_autodetection_method: can-reach=haproxy
 pod_network_cidr: "10.12.0.0/24"
 advertise_address: "{{ ansible_eth0.ipv4.address }}"
 kubernetes_port: 6443
@@ -12,15 +10,3 @@ config_files:
       path: /etc/docker/
     - file: taskmax.conf
       path: /etc/systemd/system/docker.service.d/
-  calicoctl:
-    - file: calicoctl-3.23.0-1-x86_64.pkg.tar.zst
-      path: $HOME
-    - file: calicoctl.cfg
-      path: /etc/calico/
-
-config_templates:
-  calico:
-    - template: calico-bgpconfiguration.yml.j2
-      path: $HOME/calico-bgpconfiguration.yml
-    - template: calico-installation.yml.j2
-      path: $HOME/calico-installation.yml

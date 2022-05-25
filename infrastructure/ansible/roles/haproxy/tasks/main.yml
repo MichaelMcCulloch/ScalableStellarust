@@ -10,6 +10,7 @@
     name: haproxy
     state: present
 
+# Point the proxy at the master nodes
 - name: Copy HAProxy Config
   register: config
   template:
