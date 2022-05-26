@@ -62,6 +62,29 @@
 			"command": [
 				"ansible-playbook",
 				"-i",
+				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				"-i",
+				"inventories/inv.ini",
+				"deploy_datacenter.yml",
+				"-e 'ansible_user=root'",
+				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				"-u root",
+				"--tags dnsutils",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug"
+				}
+			},
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::TestDNS"
+		},
+		{
+			"type": "shell",
+			"command": [
+				"ansible-playbook",
+				"-i",
 				"inventories/inv.ini",
 				"teardown_datacenter.yml",
 				"-u root",

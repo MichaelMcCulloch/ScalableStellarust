@@ -5,11 +5,61 @@
 - name: wait for dnsutils
   shell: sleep 1m
 
-- name: kubectl exec -i -t dnsutils -- nslookup kubernetes.default
-  shell: kubectl exec -i -t dnsutils -- nslookup kubernetes.default
-  register: a
-  tags: [nslookup]
+- name: exec nslookup
+  block:
+    - shell: kubectl exec -i -t dnsutils -- nslookup kubernetes.default
+      failed_when: false
+      register: nslookup
 
-- debug:
-    msg: "{{a}}"
-  tags: [nslookup]
+    - debug:
+        msg: "OUT:\n{{nslookup.stdout}}\n\nERR:\n{{nslookup.stderr}}"
+  tags: [nslookup, dnsutils, test]
+
+- name: Check the local DNS configuration first
+  block:
+    - shell: kubectl exec -ti dnsutils -- cat /etc/resolv.conf
+      failed_when: false
+      register: resolve
+
+    - debug:
+        msg: "OUT:\n{{resolve.stdout}}\n\nERR:\n{{resolve.stderr}}"
+  tags: [resolve, dnsutils, test]
+
+- name: Check if the DNS pod is running
+  block:
+    - shell: kubectl get pods --namespace=kube-system -l k8s-app=kube-dns
+      failed_when: false
+      register: running
+
+    - debug:
+        msg: "OUT:\n{{running.stdout}}\n\nERR:\n{{running.stderr}}"
+  tags: [running, dnsutils, test]
+
+- name: Check for errors in the DNS pod
+  block:
+    - shell: kubectl logs --namespace=kube-system -l k8s-app=kube-dns
+      failed_when: false
+      register: errors
+
+    - debug:
+        msg: "OUT:\n{{errors.stdout}}\n\nERR:\n{{errors.stderr}}"
+  tags: [errors, dnsutils, test]
+- name: Is DNS service up?
+  block:
+    - shell: kubectl get svc --namespace=kube-system
+      failed_when: false
+      register: service
+
+    - debug:
+        msg: "OUT:\n{{service.stdout}}\n\nERR:\n{{service.stderr}}"
+  tags: [service, dnsutils, test]
+
+- name: Are DNS endpoints exposed?
+  block:
+    - shell: kubectl get endpoints kube-dns --namespace=kube-system
+      failed_when: false
+      register: endexposed
+
+    - debug:
+        msg: "OUT:\n{{endexposed.stdout}}\n\nERR:\n{{endexposed.stderr}}"
+  tags: [endexposed, dnsutils, test]
