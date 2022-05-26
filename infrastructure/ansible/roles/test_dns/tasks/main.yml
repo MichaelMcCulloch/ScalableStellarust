@@ -1,0 +1,15 @@
+---
+- name: kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
+  shell: kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
+
+- name: wait for dnsutils
+  shell: sleep 1m
+
+- name: kubectl exec -i -t dnsutils -- nslookup kubernetes.default
+  shell: kubectl exec -i -t dnsutils -- nslookup kubernetes.default
+  register: a
+  tags: [nslookup]
+
+- debug:
+    msg: "{{a}}"
+  tags: [nslookup]
