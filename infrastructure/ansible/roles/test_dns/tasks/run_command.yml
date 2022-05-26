@@ -1,0 +1,11 @@
+---
+- block:
+    - name: "{{item}}"
+      shell: "{{item}}"
+      failed_when: false
+      register: output
+
+    - name: "{{item}} output"
+      debug:
+        msg: "OUT:\n{{output.stdout}}\n\nERR:\n{{output.stderr}}"
+  tags: [dnsutils, command]
