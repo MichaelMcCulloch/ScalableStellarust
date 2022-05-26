@@ -31,7 +31,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Infrastructure::Vagrant::Destroy",
-				"Infrastructure::Vagrant::Provision",
+				"Infrastructure::Vagrant::Spawn",
 				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 			]
 		},
