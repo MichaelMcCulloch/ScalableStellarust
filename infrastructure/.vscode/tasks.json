@@ -31,7 +31,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Infrastructure::Vagrant::Destroy",
-				"Infrastructure::Vagrant::Provision",
+				"Infrastructure::Vagrant::Spawn",
 				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 			]
 		},
@@ -51,11 +51,36 @@
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug"
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
 			"label": "Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
+		},
+		{
+			"type": "shell",
+			"command": [
+				"ansible-playbook",
+				"-i",
+				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				"-i",
+				"inventories/inv.ini",
+				"deploy_datacenter.yml",
+				"-e 'ansible_user=root'",
+				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				"-u root",
+				"--tags dnsutils",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
+				}
+			},
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::TestDNS"
 		},
 		{
 			"type": "shell",
@@ -69,7 +94,8 @@
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug"
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
@@ -87,6 +113,7 @@
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug",
 					"SECURE_KEYS": "${workspaceFolder}/secure_keys"
 				}
 			},

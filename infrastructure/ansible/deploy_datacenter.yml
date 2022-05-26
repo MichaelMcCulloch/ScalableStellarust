@@ -9,8 +9,9 @@
 
 - hosts: cluster
   roles:
+    - configure_cluster_dns
     - cluster
 
 - hosts: leader
   roles:
-    - dashboard
+    - test_dns
