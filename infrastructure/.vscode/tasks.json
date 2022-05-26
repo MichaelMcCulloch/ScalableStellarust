@@ -51,7 +51,8 @@
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug"
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
@@ -74,7 +75,8 @@
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug"
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
@@ -92,7 +94,8 @@
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug"
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
@@ -110,6 +113,7 @@
 				"cwd": "${workspaceFolder}/ansible",
 				"env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug",
 					"SECURE_KEYS": "${workspaceFolder}/secure_keys"
 				}
 			},
