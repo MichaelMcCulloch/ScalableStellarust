@@ -13,5 +13,5 @@
 
 - hosts: leader
   roles:
-    - test_dns
+    # - test_dns
     - dashboard

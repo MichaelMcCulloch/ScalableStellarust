@@ -6,6 +6,7 @@ additional_pacman_packages:
   - ethtool
   - kubeadm
   - kubectl
+  - kubelet
   - cmctl
   - python-pip
   - socat

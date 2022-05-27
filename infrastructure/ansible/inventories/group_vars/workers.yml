@@ -5,6 +5,7 @@ additional_pacman_packages:
   - docker
   - ethtool
   - kubeadm
+  - kubelet
   - socat
 
 additional_python_packages: []
