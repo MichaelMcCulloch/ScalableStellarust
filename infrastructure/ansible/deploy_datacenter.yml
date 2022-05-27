@@ -9,7 +9,7 @@
 
 - hosts: cluster
   roles:
-    - configure_cluster_dns
+    # - configure_cluster_dns
     - cluster
 
 - hosts: leader

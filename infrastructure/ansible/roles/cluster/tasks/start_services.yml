@@ -16,13 +16,6 @@
     force: yes
     enabled: yes
 
-- name: Install CRI-o files
-  copy:
-    src: "{{item.file}}"
-    dest: "{{item.path}}"
-    backup: no
-  with_items: "{{config_files.cri_o}}"
-
 - name: Enable Kubelet
   systemd:
     name: kubelet

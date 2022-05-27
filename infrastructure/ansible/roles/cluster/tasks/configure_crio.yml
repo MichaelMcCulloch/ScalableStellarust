@@ -1,0 +1,12 @@
+---
+# see issue here: https://wiki.archlinux.org/title/CRI-O#Configuration
+
+- name: Install CRI-o files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  with_items: "{{config_files.cri_o}}"
+
+- name: clear  /etc/cni/net.d
+  shell: rm -rf /etc/cni/net.d/*

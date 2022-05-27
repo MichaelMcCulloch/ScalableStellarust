@@ -5,4 +5,10 @@
     regexp: "#DNS="
     replace: "DNS=10.96.0.10 127.0.0.53 1.0.0.1"
   tags: [DNS, systemd-resolved]
-  notify: restart_systemd_resolved
+
+- name: restart_systemd_resolved
+  systemd:
+    name: systemd-resolved
+    state: restarted
+    force: yes
+  tags: [systemd-resolved]
