@@ -1,12 +1,12 @@
 ---
-- name: Deploy Tigera-Operator Network
+- name: Deploy the Tigera Operator
   shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
 
-- name: Copy calico CRD
+- name: Install calico-installation-crd.yml.j2 -> $HOME/calico-installation-crd.yml
   template:
-    src: custom-resources.yml.j2
-    dest: $HOME/custom-resources.yml
+    src: calico-installation-crd.yml.j2
+    dest: $HOME/calico-installation-crd.yml
     backup: no
 
-- name: Deploy calico-system
-  shell: kubectl apply -f $HOME/custom-resources.yml
+- name: Deploy Calico Pod Network
+  shell: kubectl apply -f $HOME/calico-installation-crd.yml
