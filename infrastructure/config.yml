@@ -35,8 +35,3 @@
       pacman:
         update_cache: yes
         upgrade: yes
-
-    - name: install ansible
-      pacman:
-        name: ansible
-        state: present
