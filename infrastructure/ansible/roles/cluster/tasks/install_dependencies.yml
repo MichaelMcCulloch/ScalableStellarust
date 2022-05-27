@@ -1,16 +1,13 @@
 ---
 - name: Install Dependencies
   block:
-    # ugly pipe because the pacman plugin cannot handle replacing iptables with iptables-nfg
-    - name: Install iptables-nft
-      shell: "yes | sudo pacman -S iptables-nft --needed"
-      register: install_iptables
-      changed_when: "'skipping' not in install_iptables.stderr"
-
     - name: Install Pacman Dependencies
       pacman:
         name: "{{ additional_pacman_packages }}"
         state: present
+
+    - name: Install kublet
+      shell: "pacman -Sdd --nodeps --noconfirm --needed kubelet"
 
     - name: Install Python Dependencies
       when: additional_python_packages | length > 0
