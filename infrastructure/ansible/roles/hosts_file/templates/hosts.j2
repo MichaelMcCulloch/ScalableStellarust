@@ -1,8 +1,8 @@
 127.0.0.1 localhost
-127.0.1.1 {{ inventory_hostname }} 
+127.0.1.1 {{ inventory_hostname }}  {{ inventory_hostname }}.{{domain}}
 
 {% for item in groups['datacenter'] %}
 {% if inventory_hostname != hostvars[item]['inventory_hostname'] %}
-{{ hostvars[item]['ansible_eth0']['ipv4']['address'] }} {{hostvars[item]['inventory_hostname'] }} 
+{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }} {{hostvars[item]['inventory_hostname'] }} {{hostvars[item]['inventory_hostname'] }}.{{domain}}
 {% endif %}
 {% endfor %}
