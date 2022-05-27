@@ -4,7 +4,9 @@ Vagrant.configure("2") do |config|
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.cache.scope = :machine
-  
+    config.cache.auto_detect = false
+    config.cache.enable :pacman
+    
     config.vm.provider "libvirt" do |lv|
       lv.memory = 8192
       lv.cpus = 32
@@ -28,13 +30,6 @@ Vagrant.configure("2") do |config|
     end
 
     define_datacenter config,1,1
-
-    config.vm.define "controller"  do |node| 
-      node.vm.hostname = "controller"
-      node.vm.provider "libvirt" do |lv|
-        lv.memory = 4096
-      end
-    end 
 
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "config.yml"
