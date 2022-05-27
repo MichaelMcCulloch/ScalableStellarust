@@ -1,6 +1,6 @@
 ---
 - name: Verify kubernetes is running on localhost
-  shell: "curl https://localhost:{{kubernetes_port}}"
+  shell: "curl https://localhost:{{kubernetes_api_port}}"
   register: curl_k8s
   failed_when: false
   tags:
@@ -11,7 +11,7 @@
   when: "'curl: (7)' in curl_k8s.stderr"
   shell: "kubeadm init \
     --pod-network-cidr={{pod_network_cidr}} \
-    --control-plane-endpoint haproxy:{{kubernetes_port}} \
+    --control-plane-endpoint haproxy.{{domain}}:{{kubernetes_api_port}} \
     --upload-certs \
     --v 1"
 

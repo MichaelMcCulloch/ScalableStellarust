@@ -17,8 +17,8 @@
   set_fact:
     join_command_manager: "{{ hostvars[groups['control_plane'][0]].join_command.stdout }}"
 
-- name: "Check localhost:{{kubernetes_port}} for response"
-  shell: "curl https://localhost:{{kubernetes_port}}"
+- name: "Check localhost:{{kubernetes_api_port}} for response"
+  shell: "curl https://localhost:{{kubernetes_api_port}}"
   register: curl_k8s
   failed_when: false
 

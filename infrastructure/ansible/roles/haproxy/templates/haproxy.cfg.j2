@@ -14,7 +14,7 @@ global
     daemon
 
 frontend k8s
-    bind            :6443
+    bind            :{{kubernetes_api_port}}
     mode            tcp
     option          tcplog
     log             global
@@ -28,7 +28,7 @@ backend k8s-control-plane
     timeout         connect 30s
     timeout         server  30s
 {% for item in groups['control_plane'] %}
-    server          {{hostvars[item]['inventory_hostname'] }} {{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}:6443 check
+    server          {{hostvars[item]['inventory_hostname'] }}.{{domain}} {{ hostvars[item]['ansible_eth1']['ipv4']['address'] }}:{{kubernetes_api_port}} check
 {% endfor %}
 
 frontend stats
