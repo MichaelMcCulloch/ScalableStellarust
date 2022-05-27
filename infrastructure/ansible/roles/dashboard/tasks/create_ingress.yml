@@ -2,9 +2,9 @@
 - name: Copy and apply ingress.yml
   block:
     - name: Copy ingress.yml
-      copy:
-        src: ingress.yml
-        dest: $HOME/
+      template:
+        src: ingress.yml.j2
+        dest: $HOME/ingress.yml
         backup: no
 
     - name: create ingress.yml

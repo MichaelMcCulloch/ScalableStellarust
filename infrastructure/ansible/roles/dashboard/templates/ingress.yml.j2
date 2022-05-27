@@ -13,10 +13,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - test-cluster-dashboard.wildwolf.name
+        - {{ingress.spec.tls.hosts}}
       secretName: certificate-prod-dashboard
   rules:
-    - host: test-cluster-dashboard.wildwolf.name
+    - host: {{ingress.spec.rules.host}}
       http:
         paths:
           - pathType: Prefix

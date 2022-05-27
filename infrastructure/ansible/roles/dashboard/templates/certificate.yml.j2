@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: certificate-prod-dashboard
   dnsNames:
-    - test-cluster-dashboard.wildwolf.name
+    - {{cert.spec.dnsNames}}
   issuerRef:
     name: clusterissuer-le
     kind: ClusterIssuer

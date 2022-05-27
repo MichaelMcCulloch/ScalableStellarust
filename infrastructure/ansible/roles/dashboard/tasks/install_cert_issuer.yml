@@ -13,9 +13,9 @@
 - name: Get a certificate
   block:
     - name: Copy certificate.yml
-      copy:
-        src: certificate.yml
-        dest: $HOME/
+      template:
+        src: certificate.yml.j2
+        dest: $HOME/certificate.yml
         backup: no
 
     - name: Apply certificate.yml
