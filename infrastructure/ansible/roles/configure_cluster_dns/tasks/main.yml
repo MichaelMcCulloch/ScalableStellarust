@@ -3,16 +3,6 @@
   replace:
     path: /etc/systemd/resolved.conf
     regexp: "#DNS="
-    replace: "DNS=10.96.0.10 8.8.8.8"
+    replace: "DNS=10.96.0.10 127.0.0.53 1.0.0.1"
   tags: [DNS, systemd-resolved]
-
-- name: iptables
-  shell: iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
-  tags: [nslookup, iptables]
-
-- name: restart_systemd_resolved
-  systemd:
-    name: systemd-resolved
-    state: restarted
-    force: yes
-  tags: [systemd-resolved]
+  notify: restart_systemd_resolved

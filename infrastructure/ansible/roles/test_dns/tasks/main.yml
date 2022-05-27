@@ -13,5 +13,5 @@
     - kubectl get pods --namespace=kube-system -l k8s-app=kube-dns
     - kubectl logs --namespace=kube-system -l k8s-app=kube-dns
     - kubectl get svc --namespace=kube-system
-    - kubectl get endpoints kube-dns --namespace=kube-system
+    - kubectl get endpoints kube-dns --namespace=kube-system -o wide
   tags: [dnsutils]

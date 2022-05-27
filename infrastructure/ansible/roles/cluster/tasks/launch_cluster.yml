@@ -1,6 +1,9 @@
 ---
 - name: Launch Cluster
   block:
+    - name: create directory /etc/kubernetes
+      shell: mkdir -p /etc/kubernetes
+
     - name: install kubelet.env -> /etc/kubernetes/kubelet.env
       copy:
         src: kubelet.env
