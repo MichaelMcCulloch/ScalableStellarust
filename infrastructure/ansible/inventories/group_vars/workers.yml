@@ -3,11 +3,8 @@ additional_pacman_packages:
   - cri-o
   - conntrack-tools
   - docker
-  - ebtables
   - ethtool
   - kubeadm
-  - kubelet
-  - python-pip
   - socat
 
 additional_python_packages: []
