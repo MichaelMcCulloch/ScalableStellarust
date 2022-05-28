@@ -7,6 +7,15 @@
     dest: "{{item.path}}"
     backup: no
   with_items: "{{config_files.cri_o}}"
+  register: crio_files
 
-- name: clear  /etc/cni/net.d
-  shell: rm -rf /etc/cni/net.d/*
+- name: Clear Existing CNI Configurations from /etc/cni/net.d
+  block:
+    - name: Get list of files in /etc/cni/net.d
+      shell: find /etc/cni/net.d/
+      register: cni_dir_contents
+
+    - name: Wipe the /etc/cni/net.d directory if it has not been done already
+      shell: rm -rf /etc/cni/net.d/*
+      when: ('crio-bridge.conf' in cni_dir_contents.stdout) or
+        ('crio-loopback.conf' in cni_dir_contents.stdout)
