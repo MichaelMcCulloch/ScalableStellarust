@@ -1,0 +1,19 @@
+- name: restart_docker_and_daemon
+  when: docker_files.changed
+  systemd:
+    state: restarted
+    name: docker
+    daemon_reload: yes
+    force: yes
+    enabled: yes
+
+- name: enable_kubelet
+  systemd:
+    name: kubelet
+    enabled: yes
+
+- name: start_crio
+  systemd:
+    state: started
+    name: crio
+    enabled: yes

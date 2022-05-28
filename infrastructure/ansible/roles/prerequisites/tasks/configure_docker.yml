@@ -1,0 +1,9 @@
+---
+- name: Install docker files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  register: docker_files
+  with_items: "{{config_files.docker}}"
+  notify: [restart_docker_and_daemon]

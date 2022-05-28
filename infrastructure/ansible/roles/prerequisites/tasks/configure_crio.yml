@@ -8,6 +8,7 @@
     backup: no
   with_items: "{{config_files.cri_o}}"
   register: crio_files
+  notify: [start_crio]
 
 - name: Clear Existing CNI Configurations from /etc/cni/net.d
   block:
@@ -19,3 +20,4 @@
       shell: rm -rf /etc/cni/net.d/*
       when: ('crio-bridge.conf' in cni_dir_contents.stdout) or
         ('crio-loopback.conf' in cni_dir_contents.stdout)
+      notify: [start_crio]

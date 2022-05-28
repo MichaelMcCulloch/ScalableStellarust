@@ -1,9 +1,9 @@
 ---
 - name: Standup Cluster
   block:
+    # kubernetes does not work when swap is enabled
+    - import_tasks: disable_swap.yml
     - import_tasks: install_dependencies.yml
     - import_tasks: configure_crio.yml
-      # kubernetes does not work when swap is enabled
-    - import_tasks: disable_swap.yml
     - import_tasks: configure_kubelet.yml
-    - import_tasks: start_services.yml
+    - import_tasks: configure_docker.yml
