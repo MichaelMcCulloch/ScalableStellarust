@@ -1,0 +1,12 @@
+---
+- name: Copy busywait.sh script
+  copy:
+    src: busywait.sh
+    dest: /tmp/
+    backup: no
+    mode: "0744"
+  tags: [busywait_all_pods]
+
+- name: "Wait for all jobs to settle. this can take up to 10 minutes"
+  shell: /tmp/busywait.sh
+  tags: [busywait_all_pods]

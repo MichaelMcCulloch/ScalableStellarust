@@ -20,3 +20,10 @@
 
     - import_tasks: launch_cluster/join_worker_nodes.yml
       when: inventory_hostname is in groups['cluster']
+
+    - name: "Verify ClusterDNS is actually working, otherwise it will cause many things to silently fail"
+      block:
+        - import_tasks: launch_cluster/deploy_dnsutils_pod.yml
+        - import_tasks: launch_cluster/wait_for_cluster_to_settle.yml
+        - import_tasks: launch_cluster/verify_dns.yml
+      when: inventory_hostname == groups['control_plane'][0]

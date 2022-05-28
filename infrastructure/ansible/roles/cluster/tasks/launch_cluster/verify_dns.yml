@@ -1,0 +1,11 @@
+---
+- name: Execute nslookup kubernetes.default within dnsutils pod
+  shell: kubectl exec -ti dnsutils -- nslookup kubernetes.default
+  register: nslookup_out
+
+- name: "Assert that the result of `nslookup kubernetes.default` contains\n\t- the cluster dns ip and port 10.96.0.10#53\n\t - the name kubernetes.default.svc.cluster.local"
+  assert:
+    that:
+      - nslookup_out.stderr | length == 0
+      - '"10.96.0.10#53" in nslookup_out.stdout'
+      - '"kubernetes.default.svc.cluster.local" in nslookup_out.stdout'

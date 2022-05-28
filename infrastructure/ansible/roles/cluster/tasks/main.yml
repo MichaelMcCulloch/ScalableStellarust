@@ -6,5 +6,4 @@
       # kubernetes does not work when swap is enabled
     - import_tasks: disable_swap.yml
     - import_tasks: start_services.yml
-
     - import_tasks: launch_cluster.yml

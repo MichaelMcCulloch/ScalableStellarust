@@ -1,0 +1,3 @@
+---
+- name: Deploy dnsutils pod in default namespace so that we can run nslookup within it
+  shell: kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
