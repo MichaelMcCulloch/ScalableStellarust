@@ -1,0 +1,25 @@
+---
+- name: kubectl exec -ti dnsutils -- nslookup kubernetes.default
+  shell: kubectl exec -ti dnsutils -- nslookup kubernetes.default | tee /tmp/actual.txt
+
+  # nslookup_expected.txt was generated from a successful pass.
+  # You can't just copy pasta the stdoutput from the above command into the expected file and expect this to work
+- name: copy nslookup_expected.txt
+  copy:
+    src: nslookup_expected.txt
+    dest: /tmp/
+    backup: no
+
+- name: compare output with expected output
+  shell: diff /tmp/actual.txt /tmp/nslookup_expected.txt
+  register: diffout
+
+- name: assert equal
+  assert:
+    that:
+      - diffout.stdout | length == 0
+      - diffout.stderr | length == 0
+
+- name: cleanup
+  shell: rm /tmp/actual.txt /tmp/nslookup_expected.txt
+  failed_when: false

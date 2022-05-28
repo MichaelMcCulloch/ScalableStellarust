@@ -1,17 +1,19 @@
 ---
 - name: kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
   shell: kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
-
+  tags: [dnsutils]
 - name: wait for dnsutils
   shell: sleep 1m
-
-- name: Execute Debugging Commands
-  include_tasks: run_command.yml
-  loop:
-    - kubectl exec -i -t dnsutils -- nslookup kubernetes.default
-    - kubectl exec -ti dnsutils -- cat /etc/resolv.conf
-    - kubectl get pods --namespace=kube-system -l k8s-app=kube-dns
-    - kubectl logs --namespace=kube-system -l k8s-app=kube-dns
-    - kubectl get svc --namespace=kube-system
-    - kubectl get endpoints kube-dns --namespace=kube-system -o wide
+- block:
+    - include_tasks: test_nslookup.yml
   tags: [dnsutils]
+# - name: Execute Debugging Commands
+#   include_tasks: run_command.yml
+#   loop:
+#     - kubectl exec -ti dnsutils -- nslookup kubernetes.default
+#     - kubectl exec -ti dnsutils -- cat /etc/resolv.conf
+#     - kubectl get pods --namespace=kube-system -l k8s-app=kube-dns
+#     - kubectl logs --namespace=kube-system -l k8s-app=kube-dns
+#     - kubectl get svc --namespace=kube-system
+#     - kubectl get endpoints kube-dns --namespace=kube-system -o wide
+#   tags: [dnsutils]
