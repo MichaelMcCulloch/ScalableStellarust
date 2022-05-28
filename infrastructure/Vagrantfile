@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
     config.cache.enable :pacman
     
     config.vm.provider "libvirt" do |lv|
-      lv.memory = 8192
+      lv.memory = (32*1024)
       lv.cpus = 32
       lv.nested = true
 			lv.default_prefix = "stellarustCluster_"
@@ -50,9 +50,6 @@ def define_haproxy(config)
     [8001, 6443].each do |port|
       proxy.vm.network "forwarded_port", guest: port, host: port
     end
-    proxy.vm.provider "libvirt" do |lv|
-      lv.memory = 8192
-    end 
   end
 end
 
@@ -71,9 +68,6 @@ def define_master(config, number)
   name = "master-#{number.to_s.rjust(2, "0")}"
   config.vm.define name do |node| 
     node.vm.hostname = name
-    node.vm.provider "libvirt" do |lv|
-      lv.memory = 8192
-    end
   end
 end
 
@@ -87,8 +81,5 @@ def define_worker(config, number)
   name = "worker-#{number.to_s.rjust(2, "0")}"
   config.vm.define name  do |node| 
     node.vm.hostname = name
-    node.vm.provider "libvirt" do |lv|
-      lv.memory = 4096
-    end
   end 
 end
