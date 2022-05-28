@@ -10,10 +10,11 @@
 - hosts: cluster
   any_errors_fatal: true
   roles:
-    - cluster
+    - prerequisites
+    - k8s
 
 - hosts: leader
   any_errors_fatal: true
   roles:
-    # - test_dns
+    - test_dns
     - dashboard
