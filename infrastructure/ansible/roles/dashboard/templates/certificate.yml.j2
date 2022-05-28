@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: certificate-prod-dashboard
   dnsNames:
-    - {{cert.spec.dnsNames}}
+    - {{cert_spec_dnsNames}}
   issuerRef:
     name: clusterissuer-le
     kind: ClusterIssuer

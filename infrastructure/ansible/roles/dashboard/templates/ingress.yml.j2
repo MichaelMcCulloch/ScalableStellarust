@@ -13,10 +13,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - {{ingress.spec.tls.hosts}}
+        - {{ingress_spec_tls_hosts}}
       secretName: certificate-prod-dashboard
   rules:
-    - host: {{ingress.spec.rules.host}}
+    - host: {{ingress_spec_rules_host}}
       http:
         paths:
           - pathType: Prefix
