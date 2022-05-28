@@ -1,1 +1,0 @@
-test_nslookup_expected: "Server:         10.96.0.10\nAddress:        10.96.0.10#53\n\nName:   kubernetes.default.svc.cluster.local\nAddress: 10.96.0.1"
