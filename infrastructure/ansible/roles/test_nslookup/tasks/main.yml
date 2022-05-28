@@ -1,0 +1,7 @@
+---
+- name: "Verify ClusterDNS is actually working, otherwise it will cause many things to silently fail"
+  block:
+    - import_tasks: deploy_dnsutils_pod.yml
+    - import_tasks: wait_for_cluster_to_settle.yml
+    - import_tasks: verify_dns.yml
+  when: inventory_hostname == groups['control_plane'][0]

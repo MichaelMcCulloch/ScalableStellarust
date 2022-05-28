@@ -1,3 +1,0 @@
----
-- name: Delete DNS Utils Pod
-  shell: kubectl delete pods dnsutils

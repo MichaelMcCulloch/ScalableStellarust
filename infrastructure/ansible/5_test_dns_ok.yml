@@ -1,5 +1,5 @@
 ---
-- hosts: haproxy_group
+- hosts: leader
   any_errors_fatal: true
   roles:
-    - haproxy
+    - test_nslookup
