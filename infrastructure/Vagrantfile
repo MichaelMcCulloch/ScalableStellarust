@@ -1,12 +1,14 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.box = "archlinux/archlinux"
+    config.vm.box = "mikem/rhel9"
     config.ssh.forward_agent = true
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.cache.scope = :machine
     config.cache.auto_detect = false
-    config.cache.enable :pacman
-    
+    config.cache.enable :dnf
+    config.cache.synced_folder_opts = {
+      type: :rsync
+    }
     config.vm.provider "libvirt" do |lv|
       lv.memory = (32*1024)
       lv.cpus = 32
