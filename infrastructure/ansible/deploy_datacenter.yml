@@ -1,9 +1,11 @@
 ---
 - hosts: datacenter
+  strategy: free
   roles:
     - hosts_file
 
 - hosts: haproxy_group
+  strategy: free
   roles:
     - haproxy
 

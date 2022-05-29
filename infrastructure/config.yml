@@ -19,26 +19,3 @@
         user: root
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
-
-    - name: Update modules with virtio drivers
-      replace:
-        path: /etc/mkinitcpio.conf
-        regexp: '(\s+)MODULES=\(\)(\s+.*)?$'
-        replace: '\1MODULES=(virtio virtio_pci virtio_blk virtio_net virtio_ring)\2'
-        backup: no
-      notify: Run mkinitcpio
-
-    - name: Attach stellarust.com DNS to network interface
-      replace:
-        path: /etc/systemd/network/eth1.network
-        regexp: '(\s+)DHCP=ipv4(\s+.*)?$'
-        replace: '\1DHCP=ipv4\nDomains=stellarust.com ~local\2'
-        backup: no
-
-    - name: Point pacman mirrorlist to nginx pacman-cache
-      shell: echo "Server = http://10.0.0.249:8080/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
-
-    - name: Update Pacman and upgrade system
-      pacman:
-        update_cache: yes
-        upgrade: yes
