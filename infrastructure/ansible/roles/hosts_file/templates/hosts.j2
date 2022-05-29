@@ -3,6 +3,6 @@
 
 {% for item in groups['datacenter'] %}
 {% if inventory_hostname != hostvars[item]['inventory_hostname'] %}
-{{ hostvars[item]['ansible_eth1']['ipv4']['address'] }} {{hostvars[item]['inventory_hostname'] }} {{hostvars[item]['inventory_hostname'] }}.{{domain}}
+{{ hostvars[item]['ansible_ens6']['ipv4']['address'] }} {{hostvars[item]['inventory_hostname'] }} {{hostvars[item]['inventory_hostname'] }}.{{domain}}
 {% endif %}
 {% endfor %}
