@@ -1,0 +1,9 @@
+---
+- name: Install CRI-o files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  with_items: "{{config_files.cri_o}}"
+  register: crio_files
+  notify: [start_crio]

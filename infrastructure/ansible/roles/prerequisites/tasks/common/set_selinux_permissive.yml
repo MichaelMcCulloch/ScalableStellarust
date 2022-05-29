@@ -1,0 +1,3 @@
+---
+- name: replace enforcing with permissive within selinux config
+  shell: sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config

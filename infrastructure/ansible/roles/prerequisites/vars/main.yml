@@ -3,8 +3,8 @@ config_files:
     - file: registries.conf
       path: /etc/containers/
       # see issue here: https://wiki.archlinux.org/title/CRI-O#Configuration
-    - file: 00-plugin-dir.conf
-      path: /etc/crio/crio.conf.d/
+    # - file: 00-plugin-dir.conf
+    #   path: /etc/crio/crio.conf.d/
   docker:
     - file: daemon.json
       path: /etc/docker/

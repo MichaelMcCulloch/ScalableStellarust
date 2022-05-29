@@ -1,9 +1,13 @@
 ---
-- name: Standup Cluster
-  block:
-    # kubernetes does not work when swap is enabled
-    - import_tasks: disable_swap.yml
-    - import_tasks: install_dependencies.yml
-    - import_tasks: configure_crio.yml
-    - import_tasks: configure_kubelet.yml
-    - import_tasks: configure_docker.yml
+- block:
+    - import_tasks: common/disable_swap.yml
+    - import_tasks: common/set_selinux_permissive.yml
+    - import_tasks: install_crio_runtime.yml
+
+- import_tasks: master/open_firewall.yml
+  when: inventory_hostname is in groups['control_plane']
+
+- import_tasks: worker/open_firewall.yml
+  when:
+    inventory_hostname is in groups['workers']
+    # - import_tasks: install_k8s_cli_tools.yml

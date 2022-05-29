@@ -1,0 +1,14 @@
+---
+- block:
+    - name: Expose port 6443 on control_plane nodes
+      shell: firewall-cmd --permanent --add-port=6443/tcp
+    - name: Expose ports 2379-2380 on control_plane nodes
+      shell: firewall-cmd --permanent --add-port=2379-2380/tcp
+    - name: Expose port 10250 on control_plane nodes
+      shell: firewall-cmd --permanent --add-port=10250/tcp
+    - name: Expose port 10251 on control_plane nodes
+      shell: firewall-cmd --permanent --add-port=10251/tcp
+    - name: Expose port 10252 on control_plane nodes
+      shell: firewall-cmd --permanent --add-port=10252/tcp
+    - name: Reload firewall on control_plane nodes
+      shell: firewall-cmd --reload

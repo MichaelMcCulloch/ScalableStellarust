@@ -6,7 +6,7 @@
   with_items: "{{ groups['control_plane'] }}"
 
 - name: Install HAProxy
-  pacman:
+  dnf:
     name: haproxy
     state: present
 
@@ -17,6 +17,9 @@
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     backup: no
+
+- name: Tell SELinux to allow haproxy to connect by setting haproxy_connect_any=true
+  shell: setsebool -P haproxy_connect_any=1
 
 - name: Start HAProxy
   when: config.changed
