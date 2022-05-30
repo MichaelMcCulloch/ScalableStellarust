@@ -1,12 +1,13 @@
 ---
 - name: Install Dependencies
   block:
-    - name: Install Pacman Dependencies
+    - name: Install dnf packages
       dnf:
         name: "{{ additional_pacman_packages }}"
+        disable_excludes: kubernetes
         state: present
 
-    - name: Install Python Dependencies
+    - name: Install pip packages
       when: additional_python_packages | length > 0
       pip:
         name: "{{ additional_python_packages }}"

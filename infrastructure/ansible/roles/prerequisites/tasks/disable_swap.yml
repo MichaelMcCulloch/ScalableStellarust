@@ -1,21 +1,21 @@
 ---
-- name: check if /swap/swapfile exists
+- name: check if /dev/mapper/rhel-swap exists
   stat:
-    path: /swap/swapfile
+    path: /dev/mapper/rhel-swap
   register: swap_file
 
 - name: Disable Swap
   when: swap_file.stat.exists
   block:
     - name: Turn Off Swap
-      shell: swapoff /swap/swapfile
+      shell: swapoff /dev/mapper/rhel-swap
 
     - name: Delete Swapfile
-      shell: rm -f /swap/swapfile
+      shell: rm -f /dev/mapper/rhel-swap
 
     - name: Remove Swap from /etc/fstab
       replace:
         path: /etc/fstab
-        regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
+        regexp: '(\s+)/dev/mapper/rhel-swap   none                    swap    defaults        0 0(\s+.*)?$'
         replace: '\1\2'
         backup: no

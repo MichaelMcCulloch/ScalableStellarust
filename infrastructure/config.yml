@@ -19,9 +19,3 @@
         user: root
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
-
-    - name: Update and upgrade system
-      dnf:
-        name: "*"
-        state: latest
-        update_cache: yes

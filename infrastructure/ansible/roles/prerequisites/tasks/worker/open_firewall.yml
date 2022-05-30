@@ -1,9 +1,0 @@
----
-- name: Expose ports on the worker nodes
-  block:
-    - name: Expose port 10250 on worker nodes
-      shell: firewall-cmd --permanent --add-port=10250/tcp
-    - name: Expose ports 30000-32767 on worker nodes
-      shell: firewall-cmd --permanent --add-port=30000-32767/tcp
-    - name: Reload firewall on worker nodes
-      shell: firewall-cmd --reload

@@ -1,0 +1,28 @@
+---
+# see issue here: https://wiki.archlinux.org/title/CRI-O#Configuration
+
+- name: Install CRI-o files
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  with_items: "{{config_files.cri_o}}"
+  register: crio_files
+
+- name: create /etc/cni/net.d
+  shell: mkdir -p /etc/cni/net.d
+
+- name: Execute modprobe overlay
+  shell: modprobe overlay
+
+- name: Execute modprobe br_netfilter
+  shell: modprobe br_netfilter
+
+- name: Execute modprobe sysctl --system
+  shell: sysctl --system
+
+- name: start_crio
+  systemd:
+    state: started
+    name: crio
+    enabled: yes

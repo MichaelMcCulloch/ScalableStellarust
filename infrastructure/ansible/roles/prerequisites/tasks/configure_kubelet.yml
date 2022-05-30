@@ -1,0 +1,14 @@
+---
+# - name: create directory /etc/kubernetes
+#   shell: mkdir -p /etc/kubernetes
+
+# - name: install kubelet.env -> /etc/kubernetes/kubelet.env
+#   copy:
+#     src: kubelet.env
+#     dest: /etc/kubernetes/kubelet.env
+#     backup: no
+
+- name: enable_kubelet
+  systemd:
+    name: kubelet
+    enabled: yes

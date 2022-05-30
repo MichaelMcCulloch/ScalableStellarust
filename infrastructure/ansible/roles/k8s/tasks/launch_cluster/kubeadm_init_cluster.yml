@@ -6,6 +6,7 @@
   tags:
     - bootstrap
     - cluster
+- shell: exit -1
 
 - name: Run Kubeadm Init
   when: "'curl: (7)' in curl_k8s.stderr"
@@ -13,7 +14,7 @@
     --pod-network-cidr={{pod_network_cidr}} \
     --control-plane-endpoint haproxy.{{domain}}:{{kubernetes_api_port}} \
     --upload-certs \
-    --v 1"
+    --v 2"
 
 - name: Make .kube directory
   file:
