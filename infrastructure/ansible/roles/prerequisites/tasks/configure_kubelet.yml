@@ -7,4 +7,8 @@
     src: kubelet.env
     dest: /etc/kubernetes/kubelet.env
     backup: no
-  notify: [enable_kubelet]
+
+- name: enable_kubelet
+  systemd:
+    name: kubelet
+    enabled: yes
