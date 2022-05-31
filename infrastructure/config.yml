@@ -19,3 +19,9 @@
         user: root
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
+
+    - name: Cleanup old registration since it's broken now
+      shell: subscription-manager clean
+
+    - name: Register System or Red Hat will Take away your repositories
+      shell: subscription-manager register --username YOUR_USER_NAME --password ************************** --auto-attach
