@@ -10,8 +10,15 @@
     name: haproxy
     state: present
 
-# Point the proxy at the master nodes
-- name: Copy HAProxy Config
+- name: Expose ports
+  block:
+    - name: Expose port 6443 on control_plane nodes
+      shell: >
+        firewall-cmd --permanent --add-port 6443/tcp;
+        firewall-cmd --permanent --add-port 443/tcp;
+        firewall-cmd --reload;
+
+- name: Copy HAProxy Config and Point the proxy at the master nodes
   register: config
   template:
     src: haproxy.cfg.j2

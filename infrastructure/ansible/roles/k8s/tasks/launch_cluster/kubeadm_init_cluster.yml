@@ -6,7 +6,6 @@
   tags:
     - bootstrap
     - cluster
-- shell: exit -1
 
 - name: Run Kubeadm Init
   when: "'curl: (7)' in curl_k8s.stderr"
