@@ -2,7 +2,6 @@ additional_pacman_packages:
   - cni-plugins
   - cri-o
   - conntrack-tools
-  - docker
   - ethtool
   - kubeadm
   - kubelet

@@ -6,4 +6,3 @@
     - import_tasks: install_dependencies.yml
     - import_tasks: configure_crio.yml
     - import_tasks: configure_kubelet.yml
-    - import_tasks: configure_docker.yml

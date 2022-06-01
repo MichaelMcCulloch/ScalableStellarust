@@ -20,6 +20,15 @@
       when: ('crio-bridge.conf' in cni_dir_contents.stdout) or
         ('crio-loopback.conf' in cni_dir_contents.stdout)
 
+- name: Execute modprobe overlay
+  shell: modprobe overlay
+
+- name: Execute modprobe br_netfilter
+  shell: modprobe br_netfilter
+
+- name: Execute modprobe sysctl --system
+  shell: sysctl --system
+
 - name: start_crio
   systemd:
     state: started
