@@ -1,28 +1,28 @@
 ---
+# Port usage mapping:
+# 6443 => K8S api
+# 2379-2380, 10250, 10251, 10252 => kubeadm
+# 179, 5473 => calico bgp, typha
+
 - name: Expose ports on the master nodes
-  block:
-    - name: Expose port 6443 on control_plane nodes
-      shell: firewall-cmd --permanent --add-port=6443/tcp
-    - name: Expose ports 2379-2380 on control_plane nodes
-      shell: firewall-cmd --permanent --add-port=2379-2380/tcp
-    - name: Expose port 10250 on control_plane nodes
-      shell: firewall-cmd --permanent --add-port=10250/tcp
-    - name: Expose port 10251 on control_plane nodes
-      shell: firewall-cmd --permanent --add-port=10251/tcp
-    - name: Expose port 10252 on control_plane nodes
-      shell: firewall-cmd --permanent --add-port=10252/tcp
-    - name: Reload firewall on control_plane nodes
-      shell: firewall-cmd --reload
+  shell: >
+    firewall-cmd --permanent --add-port=6443/tcp; 
+    firewall-cmd --permanent --add-port=2379-2380/tcp;
+    firewall-cmd --permanent --add-port=10250/tcp;
+    firewall-cmd --permanent --add-port=10251/tcp;
+    firewall-cmd --permanent --add-port=10252/tcp;
+    firewall-cmd --permanent --add-port=179/tcp;
+    firewall-cmd --permanent --add-port=5473/tcp;
+    firewall-cmd --reload;
   when:
     - inventory_hostname is in groups['control_plane']
 
 - name: Expose ports on the worker nodes
-  block:
-    - name: Expose port 10250 on worker nodes
-      shell: firewall-cmd --permanent --add-port=10250/tcp
-    - name: Expose ports 30000-32767 on worker nodes
-      shell: firewall-cmd --permanent --add-port=30000-32767/tcp
-    - name: Reload firewall on worker nodes
-      shell: firewall-cmd --reload
+  shell: >
+    firewall-cmd --permanent --add-port=10250/tcp;
+    firewall-cmd --permanent --add-port=30000-32767/tcp;
+    firewall-cmd --permanent --add-port=179/tcp;
+    firewall-cmd --permanent --add-port=5473/tcp;
+    firewall-cmd --reload;
   when:
     - inventory_hostname is in groups['workers']

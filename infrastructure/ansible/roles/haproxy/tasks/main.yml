@@ -12,7 +12,7 @@
 
 - name: Expose ports
   block:
-    - name: Expose port 6443 on control_plane nodes
+    - name: Expose port 6443 and 443
       shell: >
         firewall-cmd --permanent --add-port 6443/tcp;
         firewall-cmd --permanent --add-port 443/tcp;
