@@ -1,0 +1,12 @@
+---
+- name: Configure NetworkManager to allow Calico to manage the calico devices
+  copy:
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
+    backup: no
+  with_items: "{{config_files.NetworkManager}}"
+
+- name: Restart NetworkManager
+  systemd:
+    name: NetworkManager
+    state: restarted

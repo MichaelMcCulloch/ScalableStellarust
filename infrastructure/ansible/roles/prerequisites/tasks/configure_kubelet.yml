@@ -4,9 +4,10 @@
 
 - name: install kubelet.env -> /etc/kubernetes/kubelet.env
   copy:
-    src: kubelet.env
-    dest: /etc/kubernetes/kubelet.env
+    src: "{{item.file}}"
+    dest: "{{item.path}}"
     backup: no
+  with_items: "{{config_files.kubelet}}"
 
 - name: enable_kubelet
   systemd:

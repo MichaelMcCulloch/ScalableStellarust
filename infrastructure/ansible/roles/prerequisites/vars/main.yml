@@ -1,19 +1,20 @@
 config_files:
   cri_o:
-    - file: registries.conf
+    - file: etc/containers/registries.conf
       path: /etc/containers/
-      # see issue here: https://wiki.archlinux.org/title/CRI-O#Configuration
-    # - file: 00-plugin-dir.conf
-    #   path: /etc/crio/crio.conf.d/
-    - file: modules_k8s.conf
-      path: /etc/modules-load.d/k8s.conf
-    - file: sysctl_k8s.conf
-      path: /etc/sysctl.d/k8s.conf
-  docker:
-    - file: daemon.json
-      path: /etc/docker/
-    - file: taskmax.conf
-      path: /etc/systemd/system/docker.service.d/
+    - file: etc/modules-load.d/k8s.conf
+      path: /etc/modules-load.d/
+    - file: etc/sysctl.d/k8s.conf
+      path: /etc/sysctl.d/
+  kubelet:
+    - file: etc/kubernetes/kubelet.env
+      path: /etc/kubernetes/
+  repositories:
+    - file: etc/yum.repos.d/kubernetes.repo
+      path: /etc/yum.repos.d/
+  NetworkManager:
+    - file: etc/NetworkManager/conf.d/calico.conf
+      path: /etc/NetworkManager/conf.d/
 additional_pacman_packages:
   - kubectl
   - kubeadm

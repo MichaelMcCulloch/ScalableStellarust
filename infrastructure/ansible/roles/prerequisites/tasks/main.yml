@@ -4,9 +4,8 @@
     # kubernetes does not work when swap is enabled
     - import_tasks: disable_swap.yml
     - import_tasks: expose_ports.yml
+    - import_tasks: configure_network_manager.yml
     - import_tasks: import_repositories.yml
-    # - shell: exit -1
     - import_tasks: install_dependencies.yml
     - import_tasks: configure_crio.yml
     - import_tasks: configure_kubelet.yml
-    # - import_tasks: configure_docker.yml
