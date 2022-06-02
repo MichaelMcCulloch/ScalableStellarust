@@ -12,13 +12,18 @@
 		},
 		{
 			"type": "shell",
-			"command": "virsh --connect qemu:///system list --all | grep stellarust | awk '{ print $2 }' | xargs -n 1 -- virsh --connect qemu:///system undefine --nvram --domain || true",
+			"command": [
+				"virsh --connect qemu:///system list --all | ",
+				"grep stellarust | ",
+				"awk '{ print $2 }' | ",
+				"xargs -n 1 -- virsh --connect qemu:///system undefine --nvram --domain || true",
+			],
 			"group": "build",
 			"label": "Infrastructure::Vagrant::UndefineVM",
 		},
 		{
 			"type": "shell",
-			"command": "vagrant halt",
+			"command": "vagrant halt --force",
 			"group": "build",
 			"label": "Infrastructure::Vagrant::Halt",
 		},
