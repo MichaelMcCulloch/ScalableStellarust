@@ -11,6 +11,6 @@
 
 - name: Assert that all hosts know about "{{hostvars[item]['inventory_hostname'] }}"
   assert:
-    that: "'{{hostvars[item]['ansible_eth1']['ipv4']['address']}}' in hosts_grep.stdout"
+    that: "'{{hostvars[item]['ansible_enp5s0']['ipv4']['address']}}' in hosts_grep.stdout"
     quiet: true
   when: inventory_hostname != hostvars[item]['inventory_hostname']

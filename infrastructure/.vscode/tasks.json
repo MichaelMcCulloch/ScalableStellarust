@@ -5,7 +5,22 @@
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Spawn"
+			"label": "Infrastructure::Vagrant::Spawn",
+			"dependsOn": [
+				"Infrastructure::Vagrant::CopyEfiVars",
+			]
+		},
+		{
+			"type": "shell",
+			"command": "virsh list --all | grep stellarust | awk '{ print $2 }' | xargs -n 1 -- virsh shutdown --domain || true",
+			"group": "build",
+			"label": "Infrastructure::Vagrant::Shutdown",
+		},
+		{
+			"type": "shell",
+			"command": "virsh list --all | grep stellarust | awk '{ print $2 }' | xargs -n 1 -- virsh undefine --nvram --domain || true",
+			"group": "build",
+			"label": "Infrastructure::Vagrant::UndefineVM",
 		},
 		{
 			"type": "shell",
@@ -17,13 +32,21 @@
 			"type": "shell",
 			"command": "vagrant up --parallel --provision",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Provision"
+			"label": "Infrastructure::Vagrant::Provision",
+			"dependsOn": [
+				"Infrastructure::Vagrant::CopyEfiVars",
+			]
 		},
 		{
 			"type": "shell",
 			"command": "vagrant destroy --parallel",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Destroy"
+			"label": "Infrastructure::Vagrant::Destroy",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Infrastructure::Vagrant::Shutdown",
+				"Infrastructure::Vagrant::UndefineVM",
+			]
 		},
 		{
 			"group": "build",
@@ -34,6 +57,12 @@
 				"Infrastructure::Vagrant::Spawn",
 				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 			]
+		},
+		{
+			"group": "build",
+			"label": "Infrastructure::Vagrant::CopyEfiVars",
+			"type": "shell",
+			"command": "cp archlinux-EFI_VARS.fd /tmp/",
 		},
 		{
 			"type": "shell",

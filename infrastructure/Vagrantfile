@@ -22,9 +22,11 @@ Vagrant.configure("2") do |config|
       lv.disk_driver :cache => "writeback"
       lv.nic_model_type = "virtio"
       lv.video_type = "virtio"
-      lv.loader = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
-      lv.nvram = "/var/lib/libvirt/qemu/nvram/archlinux-2_VARS.fd"
+      lv.storage_pool_name = "stellarust"
       lv.driver = 'kvm'
+      # For UEFI:
+      lv.loader = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
+      lv.nvram = "/tmp/archlinux-EFI_VARS.fd"
       lv.machine_type = 'pc-q35-7.0'
     end
 
@@ -42,7 +44,6 @@ Vagrant.configure("2") do |config|
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "config.yml"
     end
-    config.vm.provision :reload
 end
 
 def define_datacenter(config, n_control_plane, n_worker)

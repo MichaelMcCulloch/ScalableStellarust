@@ -18,9 +18,10 @@
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
 
+    - shell: echo
     - name: Attach stellarust.com DNS to network interface
       replace:
-        path: /etc/systemd/network/eth1.network
+        path: /etc/systemd/network/enp5s0.network
         regexp: '(\s+)DHCP=ipv4(\s+.*)?$'
         replace: '\1DHCP=ipv4\nDomains=stellarust.com ~local\2'
         backup: no
