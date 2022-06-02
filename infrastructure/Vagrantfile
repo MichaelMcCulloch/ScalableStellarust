@@ -40,7 +40,6 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "config.yml"
     end
 
-    config.vm.provision :reload
 end
 
 def define_datacenter(config, n_control_plane, n_worker)
