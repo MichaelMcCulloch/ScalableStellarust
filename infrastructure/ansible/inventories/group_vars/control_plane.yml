@@ -10,6 +10,6 @@ additional_pacman_packages:
   - python-pip
   - socat
   - helm
-
+  - apache
 additional_python_packages:
   - PyYAML

@@ -1,8 +1,9 @@
 ---
 - block:
-      - import_tasks: add_repositories.yml
-      - import_tasks: install_dashboard.yml
-      - import_tasks: install_nginx_ingress.yml
-      - import_tasks: install_cert_manager.yml
-      - import_tasks: install_cert_issuer.yml
-      - import_tasks: create_ingress.yml
+        - import_tasks: add_repositories.yml
+        - import_tasks: install_dashboard.yml
+        - import_tasks: install_nginx_ingress.yml
+        - import_tasks: install_cert_manager.yml
+        - import_tasks: install_cert_issuer.yml
+        - import_tasks: config_http_auth.yml
+        - import_tasks: create_ingress.yml
