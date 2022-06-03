@@ -9,11 +9,12 @@
   systemd:
     state: restarted
     name: systemd-resolved
+
 - name: Restart systemd-networkd
   systemd:
     state: restarted
     name: systemd-networkd
-
-- name: Test all hosts know about each other
-  include_tasks: test_connectivity.yml
-  loop: "{{groups['datacenter']}}"
+# TODO: move to own role
+# - name: Test all hosts know about each other
+#   include_tasks: test_connectivity.yml
+#   loop: "{{groups['datacenter']}}"

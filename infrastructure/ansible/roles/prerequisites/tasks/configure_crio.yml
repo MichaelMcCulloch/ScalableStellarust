@@ -2,32 +2,40 @@
 # see issue here: https://wiki.archlinux.org/title/CRI-O#Configuration
 
 - name: Install CRI-o files
-  copy:
+  ansible.builtin.copy:
     src: "{{item.file}}"
     dest: "{{item.path}}"
     backup: no
   with_items: "{{config_files.cri_o}}"
   register: crio_files
 
-- name: Clear Existing CNI Configurations from /etc/cni/net.d
-  block:
-    - name: Get list of files in /etc/cni/net.d
-      shell: find /etc/cni/net.d/
-      register: cni_dir_contents
+- name: Delete files in /etc/cni/net.d/
+  ansible.builtin.file:
+    path: "/etc/cni/net.d/{{item}}"
+    state: absent
+  with_items:
+    - 100-crio-bridge.conf
+    - 199-crio-loopback.conf
 
-    - name: Wipe the /etc/cni/net.d directory if it has not been done already
-      shell: rm -rf /etc/cni/net.d/*
-      when: ('crio-bridge.conf' in cni_dir_contents.stdout) or
-        ('crio-loopback.conf' in cni_dir_contents.stdout)
+- name: Execute modprobe overlay, br_netfilter
+  community.general.modprobe:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - overlay
+    - br_netfilter
 
-- name: Execute modprobe overlay
-  shell: modprobe overlay
-
-- name: Execute modprobe br_netfilter
-  shell: modprobe br_netfilter
-
-- name: Execute modprobe sysctl --system
-  shell: sysctl --system
+- name: Set values so CRI-o can be used, i don't know what this does
+  ansible.posix.sysctl:
+    name: "{{item}}"
+    value: "1"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  with_items:
+    - net.ipv4.ip_forward
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-ip6tables
 
 - name: start_crio
   systemd:

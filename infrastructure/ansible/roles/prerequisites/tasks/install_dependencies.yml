@@ -1,12 +1,8 @@
 ---
 - name: Install Dependencies
   block:
-    - name: Install iptables-nft
-      shell: "yes | sudo pacman -S iptables-nft --needed"
-      register: install_iptables
-      changed_when: "'skipping' not in install_iptables.stderr"
-
     - name: Install Pacman Dependencies
+      when: additional_pacman_packages | length > 0
       pacman:
         name: "{{ additional_pacman_packages }}"
         state: present

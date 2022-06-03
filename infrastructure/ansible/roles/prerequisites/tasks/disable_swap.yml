@@ -1,6 +1,6 @@
 ---
 - name: check if /swap/swapfile exists
-  stat:
+  ansible.builtin.stat:
     path: /swap/swapfile
   register: swap_file
 
@@ -8,13 +8,15 @@
   when: swap_file.stat.exists
   block:
     - name: Turn Off Swap
-      shell: swapoff /swap/swapfile
+      ansible.builtin.shell: swapoff /swap/swapfile
 
     - name: Delete Swapfile
-      shell: rm -f /swap/swapfile
+      ansible.builtin.file:
+        path: /swap/swapfile
+        state: absent
 
     - name: Remove Swap from /etc/fstab
-      replace:
+      ansible.builtin.replace:
         path: /etc/fstab
         regexp: '(\s+)/swap/swapfile none swap defaults 0 0(\s+.*)?$'
         replace: '\1\2'
