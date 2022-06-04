@@ -1,279 +1,319 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+		//
+		// 	Infrastructure::Vagrant::Up
+		//
 		{
+			"label": "Infrastructure::Vagrant::Up",
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Up",
 			"dependsOn": [
 				"Infrastructure::Vagrant::CopyEfiVars",
 			]
 		},
+		//
+		// 	Infrastructure::Vagrant::UndefineVM
+		//
 		{
+			"label": "Infrastructure::Vagrant::UndefineVM",
 			"type": "shell",
 			"command": [
 				"virsh --connect qemu:///system list --all | ",
-				"grep stellarust | ",
-				"awk '{ print $2 }' | ",
-				"xargs -n 1 -- virsh --connect qemu:///system undefine --nvram --domain || true",
+				" grep stellarust | ",
+				" awk '{ print $2 }' | ",
+				" xargs -n 1 -- virsh --connect qemu:///system undefine --nvram --domain || true",
 			],
 			"group": "build",
-			"label": "Infrastructure::Vagrant::UndefineVM",
 		},
+		//
+		// 	Infrastructure::Vagrant::Halt
+		//
 		{
-			"type": "shell",
-			"command": "vagrant status | grep -P 'running' | cut -d' ' -f1 | xargs -P5 -n1 vagrant halt --force",
-			"group": "build",
 			"label": "Infrastructure::Vagrant::Halt",
-		},
-		{
 			"type": "shell",
-			"command": "ansible all -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -i inventories/inv.ini  -m ansible.builtin.shell -a 'shutdown now' -u root -e 'ansible_user=root' -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+			"command": [
+				"vagrant status | ",
+				" grep -P 'running' | ",
+				" cut -d' ' -f1 | ",
+				" xargs -P5 -n1 vagrant halt --force"
+			],
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::ShutdownNow",
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
 		},
+		//
+		// 	Infrastructure::Vagrant::Provision
+		//
 		{
+			"label": "Infrastructure::Vagrant::Provision",
 			"type": "shell",
 			"command": "vagrant up --parallel --provision",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Provision",
 			"dependsOn": [
 				"Infrastructure::Vagrant::CopyEfiVars",
 			]
 		},
+		//
+		// 	Infrastructure::Vagrant::Destroy
+		//
 		{
+			"label": "Infrastructure::Vagrant::Destroy",
 			"type": "shell",
 			"command": "vagrant destroy --parallel",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Destroy",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Infrastructure::Vagrant::Halt",
 				"Infrastructure::Vagrant::UndefineVM",
 			]
 		},
+		//
+		// 	Infrastructure::Vagrant::Redeploy
+		//
 		{
-			"group": "build",
 			"label": "Infrastructure::Vagrant::Redeploy",
+			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Infrastructure::Vagrant::Destroy",
 				"Infrastructure::Vagrant::Up",
-				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
+				"Infrastructure::Ansible::DeployDatacenter"
 			]
 		},
+		//
+		// 	Infrastructure::Vagrant::Deploy
+		//
 		{
+			"label": "Infrastructure::Vagrant::Deploy",
 			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Infrastructure::Vagrant::Up",
+				"Infrastructure::Ansible::DeployDatacenter"
+			]
+		},
+		//
+		// 	Infrastructure::Vagrant::CopyEfiVars 
+		//
+		{
 			"label": "Infrastructure::Vagrant::CopyEfiVars",
+			"group": "build",
 			"type": "shell",
 			"command": "cp archlinux-EFI_VARS.fd /tmp/",
 		},
+		//
+		// 	Infrastructure::Ansible::ShutdownNow
+		//
 		{
+			"label": "Infrastructure::Ansible::ShutdownNow",
+			"type": "shell",
+			"command": [
+				"ansible all",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" -m ansible.builtin.shell",
+				" -a 'shutdown now'",
+				" -u root",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'"
+			],
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				" env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
+				}
+			},
+		},
+		//
+		// 	Infrastructure::Ansible::PopulateHosts
+		//
+		{
+			"label": "Infrastructure::Ansible::PopulateHosts",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"1_populate_hosts.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 1_populate_hosts.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::PopulateHosts"
 		},
+		//
+		// 	Infrastructure::Ansible::StandupLoadBalancer
+		//
 		{
+			"label": "Infrastructure::Ansible::StandupLoadBalancer",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"2_standup_external_loadbalancer.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 2_standup_external_loadbalancer.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::StandupLoadBalancer"
 		},
+		//
+		// 	Infrastructure::Ansible::ConfigureClusterHosts
+		//
 		{
+			"label": "Infrastructure::Ansible::ConfigureClusterHosts",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"3_satisfy_k8s_prerequisites.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 3_satisfy_k8s_prerequisites.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::ConfigureClusterHosts"
 		},
+		//
+		// 	Infrastructure::Ansible::StandupKubernetes
+		//
 		{
+			"label": "Infrastructure::Ansible::StandupKubernetes",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"4_standup_k8s_cluster.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 4_standup_k8s_cluster.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::StandupKubernetes"
 		},
+		//
+		// 	Infrastructure::Ansible::TestDNS
+		//
 		{
+			"label": "Infrastructure::Ansible::TestDNS",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"5_test_dns_ok.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 5_test_dns_ok.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::TestDNS"
 		},
+		//
+		// 	Infrastructure::Ansible::InstallKubernetesDashboardAndExpose
+		//
 		{
+			"label": "Infrastructure::Ansible::InstallKubernetesDashboardAndExpose",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"6_dashboard.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" 6_dashboard.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::InstallKubernetesDashboardAndExpose"
 		},
+		//
+		// 	Infrastructure::Ansible::DeployDatacenter
+		//
 		{
+			"label": "Infrastructure::Ansible::DeployDatacenter",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				"-i",
-				"inventories/inv.ini",
-				"deploy_datacenter.yml",
-				"-e 'ansible_user=root'",
-				"-e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				"-u root",
+				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
+				" -i inventories/inv.ini",
+				" deploy_datacenter.yml",
+				" -e 'ansible_user=root'",
+				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 		},
+		//
+		// 	Infrastructure::Ansible::TeardownDatacenter
+		//
 		{
+			"label": "Infrastructure::Ansible::TeardownDatacenter",
 			"type": "shell",
 			"command": [
 				"ansible-playbook",
-				"-i",
-				"inventories/inv.ini",
-				"teardown_datacenter.yml",
-				"-u root",
+				" -i inventories/inv.ini",
+				" teardown_datacenter.yml",
+				" -u root",
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/ansible",
-				"env": {
+				" env": {
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
 			"group": "build",
-			"label": "Infrastructure::Ansible::VirtualMachines::TeardownDatacenter"
 		},
-		{
-			"type": "shell",
-			"command": [
-				"ansible-inventory",
-				"-i",
-				"inventories/containers/",
-				"--list",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				"env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug",
-					"SECURE_KEYS": "${workspaceFolder}/secure_keys"
-				}
-			},
-			"group": "build",
-			"label": "Infrastructure::Ansible::DockerContainers::ListContainers"
-		}
 	]
 }
