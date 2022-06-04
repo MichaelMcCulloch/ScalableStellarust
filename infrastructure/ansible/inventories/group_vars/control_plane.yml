@@ -10,6 +10,8 @@ additional_pacman_packages:
   - python-pip
   - socat
   - helm
+  - git # for helm plugins
   - apache
 additional_python_packages:
   - PyYAML
+  - kubernetes

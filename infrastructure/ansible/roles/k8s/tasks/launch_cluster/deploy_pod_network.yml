@@ -1,12 +1,21 @@
 ---
-- name: Deploy the Tigera Operator
-  shell: kubectl apply -f https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
-
-- name: Install calico-installation-crd.yml.j2 -> $HOME/calico-installation-crd.yml
+- name: Install Calico CRDs
   template:
-    src: calico-installation-crd.yml.j2
-    dest: $HOME/calico-installation-crd.yml
+    src: "{{item}}"
+    dest: "$HOME/{{item}}"
     backup: no
+  with_items:
+    - calico_base.yml
+    - calico_api.yml
 
-- name: Deploy Calico Pod Network
-  shell: kubectl apply -f $HOME/calico-installation-crd.yml
+- name: Deploy tigera-operator chart
+  kubernetes.core.helm:
+    name: calico
+    chart_ref: tigera-operator
+    chart_repo_url: https://projectcalico.docs.tigera.io/charts
+    chart_version: v3.23.1
+    release_namespace: tigera-operator
+    create_namespace: yes
+    values_files:
+      - calico_base.yml
+      - calico_api.yml

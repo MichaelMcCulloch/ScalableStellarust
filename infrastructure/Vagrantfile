@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
       :libvirt__network_address => "10.11.0.0/24"
 
 
-    define_datacenter config,2,2
+    define_datacenter config,3,7
 
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "config.yml"

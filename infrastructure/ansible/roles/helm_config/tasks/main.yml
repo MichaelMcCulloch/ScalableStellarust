@@ -1,0 +1,4 @@
+---
+- name: Install Helm Repositories
+  block:
+    - import_tasks: install_helm_diff.yml

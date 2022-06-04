@@ -1,0 +1,17 @@
+---
+- name: Define Certificate
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: Certificate
+      metadata:
+        name: "{{k8s_dash.certificate_name}}"
+        namespace: kubernetes-dashboard
+      spec:
+        secretName: "{{k8s_dash.cert_secret_name}}"
+        dnsNames:
+          - "{{cert_spec_dnsNames}}"
+        issuerRef:
+          name: "{{k8s_dash.issuer_name}}"
+          kind: Issuer

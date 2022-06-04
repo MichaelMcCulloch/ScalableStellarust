@@ -1,12 +1,12 @@
 ---
 - name: Kubeadm Phase Upload-Certs
   shell: kubeadm init phase upload-certs --upload-certs | grep ^[^\[].*
-  register: certs
+  register: upload_certs
   when: inventory_hostname == groups['control_plane'][0]
 
 - name: Get certs for manager nodes
   set_fact:
-    join_cert_manager: "{{ hostvars[groups['control_plane'][0]].certs.stdout }}"
+    join_cert_manager: "{{ hostvars[groups['control_plane'][0]].upload_certs.stdout }}"
 
 - name: Kubeadm Token Create Print Join Command
   shell: kubeadm token create --print-join-command
@@ -19,8 +19,12 @@
 
 - name: "Check localhost:{{kubernetes_api_port}} for response"
   shell: "curl https://localhost:{{kubernetes_api_port}}"
-  register: curl_k8s
-  failed_when: false
+  register: curl_k8s_master
+  when:
+    - inventory_hostname is in groups['control_plane']
+    - inventory_hostname != groups['control_plane'][0]
+  failed_when: no
+  changed_when: "'curl: (7)' in curl_k8s_master.stderr"
 
 - name: Kubeadm Join Control Plane Nodes
   shell: "{{join_command_manager}} --control-plane --certificate-key {{join_cert_manager}}"
@@ -28,7 +32,7 @@
   when:
     - inventory_hostname is in groups['control_plane']
     - inventory_hostname != groups['control_plane'][0]
-    - "'curl: (7)' in curl_k8s.stderr"
+    - curl_k8s_master.changed
 
 - name: Make .kube directory
   file:
@@ -38,3 +42,10 @@
   when:
     - inventory_hostname is in groups['control_plane']
     - inventory_hostname != groups['control_plane'][0]
+
+- name: Copy /etc/kubernetes/admin.conf on the remote machine to $HOME/.kube/config
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: $HOME/.kube/config
+    mode: 0600
+    remote_src: yes

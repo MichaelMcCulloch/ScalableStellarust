@@ -7,55 +7,63 @@
 
 global
     maxconn     20000
-    log         127.0.0.1 local0
+    log         127.0.0.1   local0
     user        haproxy
     chroot      /usr/share/haproxy
     pidfile     /run/haproxy.pid
     daemon
 
+defaults
+    log         global
+    mode        http
+    option      httplog
+    option      dontlognull
+    timeout     connect 5000
+    timeout     client  240000
+    timeout     server  240000
+
 frontend ingress
-        bind *:{{ingress_port}}
-        mode tcp
-        option  tcplog
-        option forwardfor
-        default_backend k8s_ingress
+    bind            *:{{ingress_port}}
+    mode            tcp
+    option          tcplog
+    option          forwardfor
+    default_backend k8s_ingress
 
 
 frontend apiservers
     bind            *:{{kubernetes_api_port}}
     mode            tcp
     option          tcplog
-    log             global
-    option          dontlognull
-    timeout client  30s
+    option          forwardfor
     default_backend k8s_apiservers
 
 backend k8s_apiservers
     mode            tcp
     balance         roundrobin
-    timeout         connect 30s
-    timeout         server  30s
+    option          tcplog
+    option          ssl-hello-chk
+    option          log-health-checks
 {% for item in groups['control_plane'] %}
-    server          {{hostvars[item]['inventory_hostname'] }}.{{domain}} {{ hostvars[item]['ansible_enp5s0']['ipv4']['address'] }}:{{kubernetes_api_port}} check
+    server          {{hostvars[item]['inventory_hostname'] }}.{{domain}}    {{ hostvars[item]['ansible_enp5s0']['ipv4']['address'] }}:{{kubernetes_api_port}}   check
 {% endfor %}
 
 
 backend k8s_ingress
-    mode tcp
-    option  tcplog
-    option ssl-hello-chk
-    option log-health-checks
-    default-server inter 10s fall 2
+    mode            tcp
+    option          tcplog
+    option          ssl-hello-chk
+    option          log-health-checks
+    default-server  inter   10s     fall    2
 {% for item in groups['workers'] %}
-    server          {{hostvars[item]['inventory_hostname'] }}.{{domain}} {{ hostvars[item]['ansible_enp5s0']['ipv4']['address'] }}:{{ingress_port}} check
+    server          {{hostvars[item]['inventory_hostname'] }}.{{domain}}    {{ hostvars[item]['ansible_enp5s0']['ipv4']['address'] }}:{{ingress_port}}  check
 {% endfor %}
 
 
 frontend stats
-   mode http
-   bind *:{{haproxy_port}}
-   http-request set-var(txn.base) base
-   http-request use-service prometheus-exporter if { path /metrics }
-   stats enable
-   stats uri /
-   stats refresh 10s
+   bind             *:{{haproxy_port}}
+   mode             http
+   http-request     set-var(txn.base)   base
+   http-request     use-service         prometheus-exporter if { path /metrics }
+   stats            enable
+   stats            uri                 /
+   stats            refresh             10s

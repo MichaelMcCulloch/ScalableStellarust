@@ -1,25 +1,26 @@
 ---
 - name: Verify kubernetes is running on localhost
   shell: "curl https://localhost:{{kubernetes_api_port}}"
-  register: curl_k8s
-  failed_when: false
+  failed_when: no
+  changed_when: "'curl: (7)' in curl_k8s_leader.stderr"
   tags:
     - bootstrap
     - cluster
+  register: curl_k8s_leader
 
 - name: Run Kubeadm Init
-  when: "'curl: (7)' in curl_k8s.stderr"
   shell: "kubeadm init \
     --pod-network-cidr={{pod_network_cidr}} \
     --control-plane-endpoint haproxy.{{domain}}:{{kubernetes_api_port}} \
     --upload-certs \
     --v 1"
+  when: curl_k8s_leader.changed
 
 - name: Make .kube directory
   file:
     path: $HOME/.kube
     state: directory
-    mode: "0600"
+    mode: 0600
 
 - name: Copy /etc/kubernetes/admin.conf on the remote machine to $HOME/.kube/config
   copy:

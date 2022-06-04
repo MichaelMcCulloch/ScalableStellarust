@@ -1,6 +1,0 @@
----
-- name: Create htpasswd-dashboard document
-  shell: "htpasswd -bnm {{htpasswd_user}} {{htpasswd_pass}} >> htpasswd-dashboard"
-
-- name: Create a secret with the contents of htpasswd-dashboard
-  shell: kubectl -n kubernetes-dashboard create secret generic htpasswd-dashboard --from-file=auth=htpasswd-dashboard

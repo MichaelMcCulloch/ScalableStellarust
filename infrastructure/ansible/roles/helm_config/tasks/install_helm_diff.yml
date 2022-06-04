@@ -1,0 +1,6 @@
+- name: Install Helm Diff plugin
+  shell: helm plugin install https://github.com/databus23/helm-diff
+  register: helm_diff
+  changed_when: helm_diff.stderr | length == 0
+  failed_when:
+    - '"plugin already exists" not in helm_diff.stderr and helm_diff.stderr | length > 0'

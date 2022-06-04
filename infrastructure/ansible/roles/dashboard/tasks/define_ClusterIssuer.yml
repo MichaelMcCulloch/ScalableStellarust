@@ -1,0 +1,12 @@
+---
+- name: Define Issuer
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+      metadata:
+        name: "{{k8s_dash.issuer_name}}"
+        namespace: kubernetes-dashboard
+      spec:
+        selfSigned: {}

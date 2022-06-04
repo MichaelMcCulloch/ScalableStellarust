@@ -1,0 +1,23 @@
+---
+- name: Create htpasswd-dashboard document
+  register: htpasswd
+  shell: "htpasswd -bnm {{htpasswd_user}} {{htpasswd_pass}} "
+
+- name: Set Fact for htpasswd username
+  set_fact:
+    htpasswd_username: '{{htpasswd.stdout.split(":")[0]}}'
+    htpasswd_password: '{{htpasswd.stdout.split(":")[1]}}'
+
+- name: Define Dashboard Secret
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      type: Opaque
+      metadata:
+        name: htpasswd-dashboard
+        namespace: kubernetes-dashboard
+      data:
+        username: "{{htpasswd_username | b64encode}}"
+        password: "{{htpasswd_password | b64encode}}"

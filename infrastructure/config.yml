@@ -18,7 +18,6 @@
         state: present
         key: "{{ lookup('file', '/home/michael/.ssh/id_rsa.pub') }}"
 
-    - shell: echo
     - name: Attach stellarust.com DNS to network interface
       replace:
         path: /etc/systemd/network/enp5s0.network

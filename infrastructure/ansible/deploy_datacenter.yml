@@ -11,10 +11,18 @@
   any_errors_fatal: true
   roles:
     - prerequisites
+
+- hosts: leader
+  any_errors_fatal: true
+  roles:
+    - helm_config
+
+- hosts: cluster
+  any_errors_fatal: true
+  roles:
     - k8s
 
 - hosts: leader
   any_errors_fatal: true
   roles:
-    - test_nslookup
     - dashboard

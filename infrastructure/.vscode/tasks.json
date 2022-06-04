@@ -5,7 +5,7 @@
 			"type": "shell",
 			"command": "vagrant up --parallel",
 			"group": "build",
-			"label": "Infrastructure::Vagrant::Spawn",
+			"label": "Infrastructure::Vagrant::Up",
 			"dependsOn": [
 				"Infrastructure::Vagrant::CopyEfiVars",
 			]
@@ -23,9 +23,22 @@
 		},
 		{
 			"type": "shell",
-			"command": "vagrant halt --force",
+			"command": "vagrant status | grep -P 'running' | cut -d' ' -f1 | xargs -P5 -n1 vagrant halt --force",
 			"group": "build",
 			"label": "Infrastructure::Vagrant::Halt",
+		},
+		{
+			"type": "shell",
+			"command": "ansible all -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory -i inventories/inv.ini  -m ansible.builtin.shell -a 'shutdown now' -u root -e 'ansible_user=root' -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
+			"group": "build",
+			"label": "Infrastructure::Ansible::VirtualMachines::ShutdownNow",
+			"options": {
+				"cwd": "${workspaceFolder}/ansible",
+				"env": {
+					"ANSIBLE_STDOUT_CALLBACK": "debug",
+					"ANSIBLE_STDERR_CALLBACK": "debug"
+				}
+			},
 		},
 		{
 			"type": "shell",
@@ -53,7 +66,7 @@
 			"dependsOrder": "sequence",
 			"dependsOn": [
 				"Infrastructure::Vagrant::Destroy",
-				"Infrastructure::Vagrant::Spawn",
+				"Infrastructure::Vagrant::Up",
 				"Infrastructure::Ansible::VirtualMachines::DeployDatacenter"
 			]
 		},

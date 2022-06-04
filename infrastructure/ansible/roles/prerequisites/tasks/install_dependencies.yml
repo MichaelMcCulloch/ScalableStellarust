@@ -1,14 +1,12 @@
 ---
-- name: Install Dependencies
-  block:
-    - name: Install Pacman Dependencies
-      when: additional_pacman_packages | length > 0
-      pacman:
-        name: "{{ additional_pacman_packages }}"
-        state: present
+- name: Install Pacman Dependencies
+  when: additional_pacman_packages | length > 0
+  pacman:
+    name: "{{ additional_pacman_packages }}"
+    state: present
 
-    - name: Install Python Dependencies
-      when: additional_python_packages | length > 0
-      pip:
-        name: "{{ additional_python_packages }}"
-        state: present
+- name: Install Python Dependencies
+  when: additional_python_packages | length > 0
+  pip:
+    name: "{{ additional_python_packages }}"
+    state: present
