@@ -22,10 +22,10 @@
         ingressClassName: nginx
         tls:
           - hosts:
-              - "{{ingress_spec_tls_hosts}}"
+              - "{{ingress_spec_host}}"
             secretName: "{{k8s_dash.cert_secret_name}}"
         rules:
-          - host: "{{ingress_spec_rules_host}}"
+          - host: "{{ingress_spec_host}}"
             http:
               paths:
                 - pathType: Prefix

@@ -1,9 +1,8 @@
 cert_manager_version: v1.8.0
 nginx_ingress_controller_version: v4.1.3
 kubernetes_dashboard_version: v2.6.0
-cert_spec_dnsNames: k8s-dash.stellarust.com
-ingress_spec_tls_hosts: k8s-dash.stellarust.com
-ingress_spec_rules_host: k8s-dash.stellarust.com
+cert_spec_dnsNames: haproxy.stellarust.com
+ingress_spec_host: haproxy.stellarust.com
 htpasswd_user: vagrant
 htpasswd_pass: vagrant
 k8s_dash:
