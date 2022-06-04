@@ -1,9 +1,10 @@
 ---
 - block:
-          - import_tasks: install_helm_packages.yml
-          - import_tasks: define_ClusterRoleBinding.yml
-          - import_tasks: define_ServiceAccount.yml
-          - import_tasks: define_ClusterIssuer.yml
-          - import_tasks: define_Certificate.yml
-          - import_tasks: define_Ingress.yml
-          - import_tasks: configure_http_auth.yml
+    - import_tasks: install_helm_packages.yml
+    - import_tasks: define_K8sDashService.yml
+    - import_tasks: define_ClusterRoleBinding.yml
+    - import_tasks: define_ServiceAccount.yml
+    - import_tasks: define_ClusterIssuer.yml
+    - import_tasks: define_Certificate.yml
+    - import_tasks: define_Ingress.yml
+    - import_tasks: configure_http_auth.yml

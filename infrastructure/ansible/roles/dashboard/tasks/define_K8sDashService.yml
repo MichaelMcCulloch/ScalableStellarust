@@ -1,0 +1,21 @@
+---
+- name: Define Service for dashboard
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      kind: Service
+      apiVersion: v1
+      metadata:
+        name: kubernetes-dashboard
+        namespace: kubernetes-dashboard
+        labels:
+          k8s-app: kubernetes-dashboard
+      spec:
+        selector:
+          k8s-app: kubernetes-dashboard
+        ports:
+          - port: 443
+            targetPort: 8443
+            nodePort: 30001
+            name: dashboard-port
+        type: NodePort

@@ -34,4 +34,4 @@
                     service:
                       name: kubernetes-dashboard
                       port:
-                        number: "{{ingress_port}}"
+                        name: dashboard-port
