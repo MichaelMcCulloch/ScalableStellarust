@@ -1,4 +1,0 @@
-- hosts: leader
-  any_errors_fatal: true
-  roles:
-    - dashboard

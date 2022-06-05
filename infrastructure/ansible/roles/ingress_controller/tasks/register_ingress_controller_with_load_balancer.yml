@@ -1,0 +1,33 @@
+---
+- name: Register the ports of the nginx-ingress-controller
+  register: https_port
+  shell: kubectl -n ingress-nginx get svc ingress-nginx-controller -o=jsonpath='{.spec.ports[?(@.appProtocol=="https")].nodePort}'
+  when: inventory_hostname is in groups['leader']
+
+- name: Extract the port number
+  set_fact:
+    https_port: "{{ hostvars[groups['leader'][0]].https_port.stdout }}"
+  when: inventory_hostname is in groups['haproxy_group']
+
+- name: Gather facts from workers
+  setup:
+  delegate_to: "{{ item }}"
+  delegate_facts: True
+  with_items: "{{ groups['workers'] }}"
+  when: inventory_hostname is in groups['haproxy_group']
+
+- name: copy the ingress config to haproxy
+  register: config
+  template:
+    src: 20-ingress.haproxy.cfg
+    dest: /etc/haproxy/20-ingress.cfg
+    backup: no
+  when: inventory_hostname is in groups['haproxy_group']
+
+- name: Start HAProxy
+  systemd:
+    state: restarted
+    name: haproxy
+    enabled: yes
+    daemon_reload: yes
+  when: inventory_hostname is in groups['haproxy_group']

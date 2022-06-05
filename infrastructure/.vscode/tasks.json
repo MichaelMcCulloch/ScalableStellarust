@@ -15,7 +15,7 @@
 		},
 		//
 		// 	Infrastructure::Vagrant::UndefineVM
-		//
+		//  This must be done untill vagrant destroy can accomodate the nvram.
 		{
 			"label": "Infrastructure::Vagrant::UndefineVM",
 			"type": "shell",
@@ -68,10 +68,10 @@
 			]
 		},
 		//
-		// 	Infrastructure::Vagrant::Redeploy
+		// 	Infrastructure::E2E::Redeploy
 		//
 		{
-			"label": "Infrastructure::Vagrant::Redeploy",
+			"label": "Infrastructure::E2E::Redeploy",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
@@ -81,10 +81,10 @@
 			]
 		},
 		//
-		// 	Infrastructure::Vagrant::Deploy
+		// 	Infrastructure::E2E::Deploy
 		//
 		{
-			"label": "Infrastructure::Vagrant::Deploy",
+			"label": "Infrastructure::E2E::Deploy",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
@@ -125,150 +125,6 @@
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
 			},
-		},
-		//
-		// 	Infrastructure::Ansible::PopulateHosts
-		//
-		{
-			"label": "Infrastructure::Ansible::PopulateHosts",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 1_populate_hosts.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
-		},
-		//
-		// 	Infrastructure::Ansible::StandupLoadBalancer
-		//
-		{
-			"label": "Infrastructure::Ansible::StandupLoadBalancer",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 2_standup_external_loadbalancer.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
-		},
-		//
-		// 	Infrastructure::Ansible::ConfigureClusterHosts
-		//
-		{
-			"label": "Infrastructure::Ansible::ConfigureClusterHosts",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 3_satisfy_k8s_prerequisites.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
-		},
-		//
-		// 	Infrastructure::Ansible::StandupKubernetes
-		//
-		{
-			"label": "Infrastructure::Ansible::StandupKubernetes",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 4_standup_k8s_cluster.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
-		},
-		//
-		// 	Infrastructure::Ansible::TestDNS
-		//
-		{
-			"label": "Infrastructure::Ansible::TestDNS",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 5_test_dns_ok.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
-		},
-		//
-		// 	Infrastructure::Ansible::InstallKubernetesDashboardAndExpose
-		//
-		{
-			"label": "Infrastructure::Ansible::InstallKubernetesDashboardAndExpose",
-			"type": "shell",
-			"command": [
-				"ansible-playbook",
-				" -i ../.vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory",
-				" -i inventories/inv.ini",
-				" 6_dashboard.yml",
-				" -e 'ansible_user=root'",
-				" -e 'ansible_ssh_private_key_file=~/.ssh/id_rsa'",
-				" -u root",
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/ansible",
-				" env": {
-					"ANSIBLE_STDOUT_CALLBACK": "debug",
-					"ANSIBLE_STDERR_CALLBACK": "debug"
-				}
-			},
-			"group": "build",
 		},
 		//
 		// 	Infrastructure::Ansible::DeployDatacenter

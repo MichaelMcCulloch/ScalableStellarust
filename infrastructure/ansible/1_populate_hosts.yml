@@ -1,5 +1,0 @@
----
-- hosts: datacenter
-  any_errors_fatal: true
-  roles:
-    - hosts_file

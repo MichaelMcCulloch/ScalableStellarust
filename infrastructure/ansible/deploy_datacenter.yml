@@ -22,6 +22,11 @@
   roles:
     - k8s
 
+- hosts: leader:haproxy_group
+  any_errors_fatal: true
+  roles:
+    - ingress_controller
+
 - hosts: leader
   any_errors_fatal: true
   roles:

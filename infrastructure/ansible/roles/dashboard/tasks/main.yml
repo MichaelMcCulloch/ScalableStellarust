@@ -1,7 +1,6 @@
 ---
 - block:
         - import_tasks: install_helm_packages.yml
-        - import_tasks: define_IngressController.yml
         - import_tasks: define_ClusterRoleBinding.yml
         - import_tasks: define_ServiceAccount.yml
         - import_tasks: define_ClusterIssuer.yml

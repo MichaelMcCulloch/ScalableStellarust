@@ -8,15 +8,6 @@
     release_namespace: kubernetes-dashboard
     create_namespace: yes
 
-- name: Install Nginx Ingress Controller
-  kubernetes.core.helm:
-    name: ingress-nginx
-    chart_ref: ingress-nginx
-    chart_repo_url: https://kubernetes.github.io/ingress-nginx
-    # chart_version: "{{nginx_ingress_controller_version}}"
-    release_namespace: ingress-nginx
-    create_namespace: yes
-
 - name: Install Cert Manager
   kubernetes.core.helm:
     name: cert-manager

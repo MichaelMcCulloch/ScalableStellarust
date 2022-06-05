@@ -1,0 +1,7 @@
+---
+- block:
+    - import_tasks: helm_install_ingress_nginx.yml
+    - import_tasks: define_IngressController.yml
+  when: inventory_hostname is in groups['leader']
+
+- import_tasks: register_ingress_controller_with_load_balancer.yml

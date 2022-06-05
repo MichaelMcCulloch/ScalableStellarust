@@ -19,7 +19,7 @@
 
 - name: remove the extant /etc/haproxy/haproxy.cfg
   file:
-    path: auth
+    path: /etc/haproxy/haproxy.cfg
     state: absent
 
 # Point the proxy at the master nodes

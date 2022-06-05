@@ -1,5 +1,5 @@
 ---
-- name: Define Service for dashboard
+- name: Redefine Ingress Controller to use node port
   kubernetes.core.k8s:
     state: present
     definition:

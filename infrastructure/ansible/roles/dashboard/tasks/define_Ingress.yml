@@ -34,4 +34,4 @@
                     service:
                       name: kubernetes-dashboard
                       port:
-                        name: dashboard-port
+                        number: 443

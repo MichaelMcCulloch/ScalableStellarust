@@ -1,0 +1,8 @@
+---
+- name: Install Nginx Ingress Controller
+  kubernetes.core.helm:
+    name: ingress-nginx
+    chart_ref: ingress-nginx
+    chart_repo_url: https://kubernetes.github.io/ingress-nginx
+    release_namespace: ingress-nginx
+    create_namespace: yes

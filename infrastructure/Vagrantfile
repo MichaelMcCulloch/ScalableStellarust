@@ -22,14 +22,16 @@ Vagrant.configure("2") do |config|
       lv.disk_driver :cache => "writeback"
       lv.nic_model_type = "virtio"
       lv.video_type = "virtio"
-      lv.storage_pool_name = "stellarust"
+      lv.storage_pool_name = "stellarust" # Make sure you create this storage pool because vagrant will not do it for you.
       lv.driver = 'kvm'
       # For UEFI:
+      # UEFI Enables the machine to skip the bootload and go straight to the OS. 1 Second boot time
       lv.loader = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
-      lv.nvram = "/tmp/archlinux-EFI_VARS.fd"
+      lv.nvram = "/tmp/archlinux-EFI_VARS.fd" 
       lv.machine_type = 'pc-q35-7.0'
     end
 
+    # The private network the k8s cluster is expected to communicate over
     config.vm.network "private_network", 
       :dev => "virbr1", 
       :mode => "bridge", 
@@ -55,9 +57,9 @@ def define_haproxy(config)
   name = "haproxy"
   config.vm.define name do |proxy|
     proxy.vm.hostname = name 
-    [8001, 6443].each do |port|
-      proxy.vm.network "forwarded_port", guest: port, host: port
-    end
+    # [].each do |port|
+    #   proxy.vm.network "forwarded_port", guest: port, host: port
+    # end
   end
 end
 

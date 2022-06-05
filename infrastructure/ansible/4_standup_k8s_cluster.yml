@@ -1,5 +1,0 @@
----
-- hosts: cluster
-  any_errors_fatal: true
-  roles:
-    - k8s
