@@ -10,19 +10,32 @@
     name: haproxy
     state: present
 
+- name: configure haproxy to use a list of files
+  ansible.builtin.lineinfile:
+    path: /usr/lib/systemd/system/haproxy.service
+    regexp: '^(.*)CONFIG=\/etc\/haproxy\/haproxy\.cfg(.*)$'
+    line: '\1CONFIG=/etc/haproxy\2'
+    backrefs: yes
+
+- name: remove the extant /etc/haproxy/haproxy.cfg
+  file:
+    path: auth
+    state: absent
+
 # Point the proxy at the master nodes
 - name: Copy HAProxy Config
   register: config
   template:
-    src: haproxy.cfg
-    dest: /etc/haproxy/
+    src: "{{item.file}}"
+    dest: "/etc/haproxy/{{item.name}}"
     backup: no
+  with_items: "{{haproxy_cfg_files}}"
 
 - name: Start HAProxy
-  when: config.changed
   systemd:
     state: restarted
     name: haproxy
     enabled: yes
+    daemon_reload: yes
 # - name: Test that haproxy is active
 #   include_tasks: test_haproxy_stats.yml

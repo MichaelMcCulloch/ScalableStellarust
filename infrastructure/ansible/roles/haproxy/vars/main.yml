@@ -1,1 +1,10 @@
 haproxy_port: 1024
+haproxy_cfg_files:
+  - file: 00-global.haproxy.cfg
+    name: 00-global.cfg
+  - file: 01-defaults.haproxy.cfg
+    name: 01-defaults.cfg
+  - file: 02-stats.haproxy.cfg
+    name: 02-stats.cfg
+  - file: 10-kubeapiserver.haproxy.cfg
+    name: 10-kubeapiserver.cfg
