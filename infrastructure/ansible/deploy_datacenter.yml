@@ -3,7 +3,7 @@
   roles:
     - hosts_file
 
-- hosts: haproxy_group
+- hosts: loadbalancer
   roles:
     - haproxy
 
@@ -22,7 +22,7 @@
   roles:
     - k8s
 
-- hosts: leader:haproxy_group
+- hosts: leader:loadbalancer
   any_errors_fatal: true
   roles:
     - ingress_controller

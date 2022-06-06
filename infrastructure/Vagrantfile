@@ -57,9 +57,6 @@ def define_haproxy(config)
   name = "haproxy"
   config.vm.define name do |proxy|
     proxy.vm.hostname = name 
-    # [].each do |port|
-    #   proxy.vm.network "forwarded_port", guest: port, host: port
-    # end
   end
 end
 
