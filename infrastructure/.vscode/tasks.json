@@ -14,30 +14,30 @@
 			]
 		},
 		//
-		// 	Infrastructure::Vagrant::UndefineVM
+		// 	Infrastructure::Virsh::Destroy
 		//  This must be done untill vagrant destroy can accomodate the nvram.
 		{
-			"label": "Infrastructure::Vagrant::UndefineVM",
+			"label": "Infrastructure::Virsh::Destroy",
 			"type": "shell",
 			"command": [
 				"virsh --connect qemu:///system list --all | ",
 				" grep stellarust | ",
 				" awk '{ print $2 }' | ",
-				" xargs -n 1 -- virsh --connect qemu:///system undefine --nvram --domain || true",
+				" xargs -I % -n 1 -- virsh --connect qemu:///system undefine % --nvram  --remove-all-storage || true",
 			],
 			"group": "build",
 		},
 		//
-		// 	Infrastructure::Vagrant::Halt
+		// 	Infrastructure::Virsh::Halt
 		//
 		{
-			"label": "Infrastructure::Vagrant::Halt",
+			"label": "Infrastructure::Virsh::Halt",
 			"type": "shell",
 			"command": [
-				"vagrant status | ",
-				" grep -P 'running' | ",
-				" cut -d' ' -f1 | ",
-				" xargs -P5 -n1 vagrant halt --force"
+				"virsh --connect qemu:///system list --all | ",
+				" grep stellarust | ",
+				" awk '{ print $2 }' | ",
+				" xargs -n 1 -- virsh --connect qemu:///system destroy || true",
 			],
 			"group": "build",
 		},
@@ -58,13 +58,11 @@
 		//
 		{
 			"label": "Infrastructure::Vagrant::Destroy",
-			"type": "shell",
-			"command": "vagrant destroy --parallel",
 			"group": "build",
 			"dependsOrder": "sequence",
 			"dependsOn": [
-				"Infrastructure::Vagrant::Halt",
-				"Infrastructure::Vagrant::UndefineVM",
+				"Infrastructure::Virsh::Halt",
+				"Infrastructure::Virsh::Destroy",
 			]
 		},
 		//
