@@ -12,6 +12,7 @@
           k8s-app: kubernetes-dashboard
         annotations:
           nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+          nginx.ingress.kubernetes.io/ssl-redirect: "true"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           nginx.ingress.kubernetes.io/rewrite-target: /
           nginx.ingress.kubernetes.io/auth-type: basic
