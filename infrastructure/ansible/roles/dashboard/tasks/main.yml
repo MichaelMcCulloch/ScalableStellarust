@@ -1,8 +1,7 @@
 ---
-- import_tasks: install_helm_packages.yml
+- import_tasks: install_dashboard.yml
 - import_tasks: define_serviceaccount.yml
 - import_tasks: define_clusterrolebinding.yml
-- import_tasks: define_clusterissuer.yml
-- import_tasks: define_certificate.yml
+- import_tasks: define_dashboard_certificate.yml
 - import_tasks: define_ingress.yml
 - import_tasks: configure_http_auth.yml

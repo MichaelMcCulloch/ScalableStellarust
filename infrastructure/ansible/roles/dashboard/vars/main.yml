@@ -1,12 +1,6 @@
-cert_manager_version: v1.8.0
-nginx_ingress_controller_version: v4.1.3
 kubernetes_dashboard_version: v2.6.0
-cert_spec_dnsNames: haproxy.stellarust.com
-ingress_spec_host: haproxy.stellarust.com
 htpasswd_user: vagrant
 htpasswd_pass: vagrant
-k8s_dash:
-  certificate_name: kubernetes-dashboard-certificate
-  cert_secret_name: certificate-prod-dashboard
-  issuer_name: k8s-dash-selfsigned
-  ingress_name: kubernetes-dashboard-ingress
+certificate_name: dash-cert
+cert_secret_name: dash-cert-secr
+ingress_name: dash-ing

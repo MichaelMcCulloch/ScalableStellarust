@@ -1,0 +1,3 @@
+---
+- import_tasks: install_cert_manager.yml
+- import_tasks: define_clusterissuer.yml

@@ -1,9 +1,14 @@
 ---
-- name: Create htpasswd-dashboard document
+- name: Create auth document
+  register: userpass
   shell: "htpasswd -bnm {{htpasswd_user}} {{htpasswd_pass}} > auth"
 
+- name: delete htpasswd if it exists
+  shell: "kubectl delete secret {{dashboard_http_secret_name}} -n kubernetes-dashboard"
+  failed_when: no
+
 - name: Convert htpasswd To a Secret
-  shell: kubectl -n kubernetes-dashboard create secret generic htpasswd-dashboard --from-file=auth
+  shell: "kubectl -n kubernetes-dashboard create secret generic {{dashboard_http_secret_name}} --from-file=auth"
 
 - name: remove auth file
   file:

@@ -1,0 +1,3 @@
+load_balancer: haproxy.{{domain}}
+cluster_issuer_name: stellarust-cluster-issuer
+dashboard_http_secret_name: dashboard-http-login-secret

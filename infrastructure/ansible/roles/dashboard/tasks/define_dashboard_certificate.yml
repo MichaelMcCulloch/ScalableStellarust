@@ -6,12 +6,12 @@
       apiVersion: cert-manager.io/v1
       kind: Certificate
       metadata:
-        name: "{{k8s_dash.certificate_name}}"
+        name: "{{certificate_name}}"
         namespace: kubernetes-dashboard
       spec:
-        secretName: "{{k8s_dash.cert_secret_name}}"
+        secretName: "{{cert_secret_name}}"
         dnsNames:
-          - "{{cert_spec_dnsNames}}"
+          - "{{load_balancer}}"
         issuerRef:
-          name: "{{k8s_dash.issuer_name}}"
+          name: "{{cluster_issuer_name}}"
           kind: Issuer
