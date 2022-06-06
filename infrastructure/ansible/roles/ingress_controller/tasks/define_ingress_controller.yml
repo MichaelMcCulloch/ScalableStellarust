@@ -1,5 +1,5 @@
 ---
-- name: Redefine Ingress Controller to use node port
+- name: Redefine Ingress Controller to use NodePort so that we can expose it to the LoadBalancer on all nodes
   kubernetes.core.k8s:
     state: present
     definition:
