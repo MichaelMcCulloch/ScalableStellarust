@@ -4,9 +4,8 @@
     state: present
     definition:
       apiVersion: cert-manager.io/v1
-      kind: Issuer
+      kind: ClusterIssuer
       metadata:
         name: "{{k8s_dash.issuer_name}}"
-        namespace: kubernetes-dashboard
       spec:
         selfSigned: {}
