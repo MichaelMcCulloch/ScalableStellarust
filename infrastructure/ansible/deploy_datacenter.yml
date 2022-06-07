@@ -3,6 +3,10 @@
   roles:
     - hosts_file
 
+- hosts: registry
+  roles:
+    - docker_registry
+
 - hosts: loadbalancer
   roles:
     - haproxy

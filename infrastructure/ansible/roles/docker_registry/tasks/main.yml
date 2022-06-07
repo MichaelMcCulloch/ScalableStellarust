@@ -1,0 +1,33 @@
+---
+- name: Install docker
+  pacman:
+    name: docker
+    state: present
+
+- name: Install docker[tls]
+  pip:
+    name: docker[tls]
+    state: present
+
+- name: Copy docker config files to host
+  template:
+    src: daemon.json
+    dest: /etc/docker/
+    backup: no
+
+- name: Restart docker
+  systemd:
+    state: restarted
+    name: docker
+    daemon_reload: yes
+    force: yes
+    enabled: yes
+
+- name: Start the registry container on the host network because otherwise it doesn't work
+  community.docker.docker_container:
+    name: registry
+    image: registry:2
+    state: started
+    network_mode: host
+    env:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:80
