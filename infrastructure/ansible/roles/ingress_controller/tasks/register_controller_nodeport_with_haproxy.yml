@@ -7,14 +7,14 @@
 - name: Extract the port number
   set_fact:
     https_port: "{{ hostvars[groups['leader'][0]].https_port.stdout }}"
-  when: inventory_hostname is in groups['haproxy_group']
+  when: inventory_hostname is in groups['loadbalancer']
 
 - name: Gather facts from workers
   setup:
   delegate_to: "{{ item }}"
   delegate_facts: True
   with_items: "{{ groups['workers'] }}"
-  when: inventory_hostname is in groups['haproxy_group']
+  when: inventory_hostname is in groups['loadbalancer']
 
 - name: copy the ingress config to haproxy
   register: config
@@ -22,7 +22,7 @@
     src: 20-ingress.haproxy.cfg
     dest: /etc/haproxy/20-ingress.cfg
     backup: no
-  when: inventory_hostname is in groups['haproxy_group']
+  when: inventory_hostname is in groups['loadbalancer']
 
 - name: Start HAProxy
   systemd:
@@ -30,4 +30,4 @@
     name: haproxy
     enabled: yes
     daemon_reload: yes
-  when: inventory_hostname is in groups['haproxy_group']
+  when: inventory_hostname is in groups['loadbalancer']

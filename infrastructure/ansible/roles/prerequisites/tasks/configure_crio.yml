@@ -3,11 +3,15 @@
 
 - name: Install CRI-o files
   ansible.builtin.copy:
-    src: "{{item.file}}"
-    dest: "{{item.path}}"
+    src: 00-plugin-dir.conf
+    dest: /etc/crio/crio.conf.d/
     backup: no
-  with_items: "{{config_files.cri_o}}"
-  register: crio_files
+
+- name: Install CRI-o files
+  ansible.builtin.tamplate:
+    src: registries.conf
+    dest: /etc/containers/registries.conf
+    backup: no
 
 - name: Delete files in /etc/cni/net.d/
   ansible.builtin.file:

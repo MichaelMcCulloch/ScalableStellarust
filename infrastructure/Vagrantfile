@@ -50,6 +50,7 @@ end
 
 def define_datacenter(config, n_control_plane, n_worker)
   define_haproxy config
+  define_image_registry config
   define_k8s config,n_control_plane, n_worker
 end
 
@@ -57,9 +58,13 @@ def define_haproxy(config)
   name = "haproxy"
   config.vm.define name do |proxy|
     proxy.vm.hostname = name 
-    # [].each do |port|
-    #   proxy.vm.network "forwarded_port", guest: port, host: port
-    # end
+  end
+end
+
+def define_image_registry(config)
+  name = "image-registry"
+  config.vm.define name do |registry|
+    registry.vm.hostname = name 
   end
 end
 

@@ -1,0 +1,16 @@
+{
+    "exec-opts": [
+        "native.cgroupdriver=systemd"
+    ],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "100m"
+    },
+    "storage-driver": "overlay2",
+    "registry-mirrors": [
+        "http://{{lan_docker_cache}}"
+    ],
+    "insecure-registries": [
+        "10.0.0.250:80"
+    ]
+}
