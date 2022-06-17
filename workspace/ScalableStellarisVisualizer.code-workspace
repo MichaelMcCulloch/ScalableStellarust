@@ -27,6 +27,10 @@
         {
             "name": "Infrastructure",
             "path": "../infrastructure"
+        },
+        {
+            "name": "Docker Compose",
+            "path": "../application/docker_compose"
         }
     ],
     "settings": {
