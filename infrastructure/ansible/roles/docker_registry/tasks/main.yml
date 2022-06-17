@@ -1,4 +1,16 @@
 ---
+- name: Ensure docker dir exists
+  file:
+    path: /etc/docker/
+    state: directory
+
+- name: Copy docker config files to host
+  register: docker_config
+  template:
+    src: daemon.json
+    dest: /etc/docker/
+    backup: no
+
 - name: Install docker
   pacman:
     name: docker
@@ -9,13 +21,8 @@
     name: docker[tls]
     state: present
 
-- name: Copy docker config files to host
-  template:
-    src: daemon.json
-    dest: /etc/docker/
-    backup: no
-
 - name: Restart docker
+  when: docker_config.changed
   systemd:
     state: restarted
     name: docker

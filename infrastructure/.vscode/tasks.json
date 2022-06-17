@@ -7,7 +7,7 @@
 		{
 			"label": "Infrastructure::Vagrant::Up",
 			"type": "shell",
-			"command": "vagrant up --parallel",
+			"command": "vagrant up",
 			"group": "build",
 			"dependsOn": [
 				"Infrastructure::Vagrant::CopyEfiVars",
@@ -38,6 +38,18 @@
 				" grep stellarust | ",
 				" awk '{ print $2 }' | ",
 				" xargs -n 1 -- virsh --connect qemu:///system destroy || true",
+			],
+			"group": "build",
+		},
+		//
+		// 	Infrastructure::Virsh::Reload
+		//
+		{
+			"label": "Infrastructure::Virsh::Reload",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Infrastructure::Virsh::Halt",
+				"Infrastructure::Vagrant::Up",
 			],
 			"group": "build",
 		},
@@ -166,6 +178,20 @@
 					"ANSIBLE_STDOUT_CALLBACK": "debug",
 					"ANSIBLE_STDERR_CALLBACK": "debug"
 				}
+			},
+			"group": "build",
+		},
+		//
+		// 	Infrastructure::Kubernetes::WatchPods
+		//
+		{
+			"label": "Infrastructure::Kubernetes::WatchPods",
+			"type": "shell",
+			"command": [
+				"vagrant ssh master-01 -c \"sudo sh -c 'watch -n1 kubectl get pods --all-namespaces -o wide' \"",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/",
 			},
 			"group": "build",
 		},

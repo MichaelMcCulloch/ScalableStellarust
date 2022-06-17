@@ -8,7 +8,7 @@
     backup: no
 
 - name: Install CRI-o files
-  ansible.builtin.tamplate:
+  ansible.builtin.template:
     src: registries.conf
     dest: /etc/containers/registries.conf
     backup: no
