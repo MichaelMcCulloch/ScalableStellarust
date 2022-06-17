@@ -1,7 +1,6 @@
 services:
   frontend:
     build:
-      # "context" and "dockerfile" fields have to be under "build"
       context: ../frontend_client
       dockerfile: Dockerfile
     ports:
@@ -11,7 +10,6 @@ services:
         mode: host
   extraction:
     build:
-      # "context" and "dockerfile" fields have to be under "build"
       context: ../services/extraction_service
       dockerfile: Dockerfile
     ports:
@@ -19,10 +17,8 @@ services:
         published: 8000
         protocol: tcp
         mode: host
-
   parsing:
     build:
-      # "context" and "dockerfile" fields have to be under "build"
       context: ../services/parsing_service
       dockerfile: Dockerfile
     ports:
@@ -32,7 +28,6 @@ services:
         mode: host
   unzip:
     build:
-      # "context" and "dockerfile" fields have to be under "build"
       context: ../services/unzipping_service
       dockerfile: Dockerfile
     ports:

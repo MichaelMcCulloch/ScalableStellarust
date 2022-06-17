@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "DockerCompose::Up",
+            "command": "docker-compose",
+            "type": "shell",
+            "args": [
+                "up",
+            ],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": "build",
+            "dependsOn": "DockerCompose::Build"
+        },
+        {
+            "label": "DockerCompose::Build",
+            "command": "docker-compose",
+            "type": "shell",
+            "args": [
+                "build",
+                "--parallel"
+            ],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": "build"
+        }
+    ]
+}

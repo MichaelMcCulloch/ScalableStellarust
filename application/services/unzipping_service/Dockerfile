@@ -1,5 +1,26 @@
 FROM ekidd/rust-musl-builder:latest as rust-build
 
+USER root
+RUN apt remove --purge --auto-remove cmake -y
+RUN sudo apt update && \
+    sudo apt install -y apt-transport-https ca-certificates gnupg software-properties-common wget && \
+    sudo apt clean all
+
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
+
+RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
+
+RUN apt-get update && apt-get install -y build-essential \
+    curl \
+    openssl libssl-dev \
+    libsasl2-dev\
+    pkg-config \
+    python \
+    valgrind \
+    zlib1g-dev \
+    cmake
+USER rust
+
 RUN echo "fn main() {}" > dummy.rs
 
 COPY --chown=rust:rust Cargo.lock Cargo.lock
