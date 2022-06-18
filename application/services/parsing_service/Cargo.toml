@@ -13,6 +13,7 @@ path = "src/main.rs"
 actix-web = "4.0.1"
 rdkafka = {version = "0.28.0", features = ["cmake-build"]}
 toml = "0.5.9"
-serde = "1.0.136"
+serde = "1.0.136" 
 serde_derive = "1.0.136"
 env_logger = "0.9.0"
+log = "0.4.17"

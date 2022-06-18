@@ -1,5 +1,29 @@
+version: '3'
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
   frontend:
+    container_name: frontend
     build:
       context: ../frontend_client
       dockerfile: Dockerfile
@@ -7,17 +31,17 @@ services:
       - target: 80
         published: 80
         protocol: tcp
-        mode: host
+
   extraction:
+    container_name: extraction
     build:
       context: ../services/extraction_service
-      dockerfile: Dockerfile
     ports:
       - target: 8000
         published: 8000
         protocol: tcp
-        mode: host
   parsing:
+    container_name: parsing
     build:
       context: ../services/parsing_service
       dockerfile: Dockerfile
@@ -25,8 +49,9 @@ services:
       - target: 8001
         published: 8001
         protocol: tcp
-        mode: host
+
   unzip:
+    container_name: unzip
     build:
       context: ../services/unzipping_service
       dockerfile: Dockerfile
@@ -34,4 +59,3 @@ services:
       - target: 8002
         published: 8002
         protocol: tcp
-        mode: host
