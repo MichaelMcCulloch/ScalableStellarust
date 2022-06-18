@@ -11,3 +11,15 @@ infrastructure/docker_images/*.sha256
 infrastructure/docker_images/*.tar.xz
 infrastructure/secure_keys/*.pem
 infrastructure/secure_keys/*.srl
+application/lib/target/.rustc_info.json
+application/lib/target/CACHEDIR.TAG
+application/lib/target/debug/.cargo-lock
+application/lib/target/debug/libkafka_message.d
+application/lib/target/debug/libkafka_message.rlib
+application/lib/target/debug/.fingerprint/kafka_message-89e25c46875c141c/dep-lib-kafka_message
+application/lib/target/debug/.fingerprint/kafka_message-89e25c46875c141c/invoked.timestamp
+application/lib/target/debug/.fingerprint/kafka_message-89e25c46875c141c/lib-kafka_message
+application/lib/target/debug/.fingerprint/kafka_message-89e25c46875c141c/lib-kafka_message.json
+application/lib/target/debug/deps/kafka_message-89e25c46875c141c.d
+application/lib/target/debug/deps/libkafka_message-89e25c46875c141c.rlib
+application/lib/target/debug/deps/libkafka_message-89e25c46875c141c.rmeta

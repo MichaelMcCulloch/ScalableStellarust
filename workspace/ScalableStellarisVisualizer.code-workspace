@@ -25,6 +25,10 @@
             "path": "../application/services/unzipping_service"
         },
         {
+            "name": "Library",
+            "path": "../application/lib"
+        },
+        {
             "name": "Infrastructure",
             "path": "../infrastructure"
         },
