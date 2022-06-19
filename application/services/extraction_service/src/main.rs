@@ -1,46 +1,16 @@
-use std::{thread, time::Duration};
-
 use actix_web::{
-    get, middleware,
+    middleware,
     web::{self, Data},
-    App, HttpResponse, HttpServer, Responder,
+    App, HttpServer,
 };
-use extraction_service::config;
-use futures::{executor::block_on, Stream};
-use log::{info, warn};
+
 use rdkafka::{
-    consumer::{self, CommitMode, Consumer, StreamConsumer},
-    message::OwnedHeaders,
-    producer::{FutureProducer, FutureRecord},
-    ClientConfig, Message,
+    consumer::{Consumer, StreamConsumer},
+    producer::FutureProducer,
+    ClientConfig,
 };
 
-#[get("/")]
-async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Extraction Service Prototype")
-}
-
-#[get("/healthcheck")]
-async fn healthcheck() -> impl Responder {
-    HttpResponse::Ok().body("I'm alive!")
-}
-
-#[get("/collect")]
-async fn collect(producer: Data<FutureProducer>) -> impl Responder {
-    let delivery_status = producer
-        .send(
-            FutureRecord::to("collect")
-                .payload(&format!("Message from Extract"))
-                .key(&format!("Key 0"))
-                .headers(OwnedHeaders::new().add("header_key", "header_value")),
-            Duration::from_secs(10),
-        )
-        .await;
-    match delivery_status {
-        Ok(_) => HttpResponse::Ok().body("Sent!"),
-        Err(e) => HttpResponse::InternalServerError().body(format!("{:?}", e)),
-    }
-}
+use extraction_service::{config, consumer_thread, rest_api};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -73,7 +43,7 @@ async fn main() -> std::io::Result<()> {
         ),
     );
     env_logger::init();
-    start_consumer_thread(consumer);
+    consumer_thread::start(consumer);
 
     let bind_address = format!("{}:{}", config.service.server, config.service.port);
     HttpServer::new(move || {
@@ -87,40 +57,11 @@ async fn main() -> std::io::Result<()> {
     .await
 }
 
-fn start_consumer_thread(consumer: StreamConsumer) {
-    thread::spawn(move || loop {
-        match block_on(consumer.recv()) {
-            Err(e) => warn!("Kafka error: {}", e),
-            Ok(m) => {
-                let payload = match m.payload_view::<str>() {
-                    None => "",
-                    Some(Ok(s)) => s,
-                    Some(Err(e)) => {
-                        warn!("Error while deserializing message payload: {:?}", e);
-                        ""
-                    }
-                };
-                info!(
-            "key: '{:?}', payload: '{}', topic: {}, partition: {}, offset: {}, timestamp: {:?}",
-            m.key(),
-            payload,
-            m.topic(),
-            m.partition(),
-            m.offset(),
-            m.timestamp()
-        );
-
-                consumer.commit_message(&m, CommitMode::Async).unwrap();
-            }
-        };
-    });
-}
-
 fn init(config: &mut web::ServiceConfig) {
     config.service(
         web::scope("")
-            .service(index)
-            .service(healthcheck)
-            .service(collect),
+            .service(rest_api::index)
+            .service(rest_api::healthcheck)
+            .service(rest_api::collect),
     );
 }
