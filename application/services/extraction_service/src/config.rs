@@ -12,6 +12,7 @@ pub struct Kafka {
     pub broker: String,
     pub port: u16,
     pub timeout: u16,
+    pub group_id: String,
 }
 
 #[derive(Deserialize)]

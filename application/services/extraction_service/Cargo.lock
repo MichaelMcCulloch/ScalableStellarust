@@ -416,10 +416,12 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "env_logger",
+ "futures",
  "log",
  "rdkafka",
  "serde",
  "serde_derive",
+ "serde_json",
  "toml",
 ]
 

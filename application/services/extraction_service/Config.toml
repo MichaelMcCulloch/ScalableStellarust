@@ -6,6 +6,7 @@ port = 8000
 broker = "broker"
 port = 29092
 timeout = 2000
+group_id = "stellarust"
 
 [log]
 actix_web = "info"
