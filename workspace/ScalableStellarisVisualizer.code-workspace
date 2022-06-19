@@ -1,41 +1,37 @@
 {
     "folders": [
         {
-            "name": "Workspace File",
+            "name": "VSCode Workspace File",
             "path": "."
         },
         {
-            "name": "Frontend Client",
+            "name": "Application::Frontend Service",
             "path": "../application/frontend_client"
         },
         {
-            "name": "Save Data Client",
+            "name": "Application::Save Data Client",
             "path": "../application/save_data_client"
         },
         {
-            "name": "Extraction Service",
+            "name": "Application::Service::Extraction Service",
             "path": "../application/services/extraction_service"
         },
         {
-            "name": "Parsing Service",
+            "name": "Application::Service::Parsing Service",
             "path": "../application/services/parsing_service"
         },
         {
-            "name": "Unzipping Service",
+            "name": "Application::Service::Unzipping Service",
             "path": "../application/services/unzipping_service"
         },
         {
-            "name": "Library",
-            "path": "../application/lib"
+            "name": "Application::Docker Compose",
+            "path": "../application/docker_compose"
         },
         {
             "name": "Infrastructure",
             "path": "../infrastructure"
         },
-        {
-            "name": "Docker Compose",
-            "path": "../application/docker_compose"
-        }
     ],
     "settings": {
         "workbench.colorCustomizations": {
