@@ -1,6 +1,6 @@
 use std::thread;
 
-use crate::messages::{KafkaBytes, KafkaMessage};
+use crate::kafka_message::{KafkaByteMessage, KafkaBytes, KafkaMessage};
 use futures::executor::block_on;
 use log::{info, warn};
 use rdkafka::{
@@ -16,8 +16,9 @@ pub fn start(consumer: StreamConsumer) {
                 match m.payload_view::<[u8]>() {
                     None => {}
                     Some(Ok(s)) => {
-                        let result = KafkaMessage::from_bytes(&s.to_vec());
-                        match result {
+                        let message: KafkaMessage = s.into();
+
+                        match message {
                             KafkaMessage::Extract(extract_message) => {
                                 info!("{:?}", extract_message)
                             }

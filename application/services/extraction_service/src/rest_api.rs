@@ -1,6 +1,6 @@
 use std::{fmt::format, time::Duration};
 
-use crate::messages::{ExtractMessage, KafkaBytes, KafkaMessage};
+use crate::kafka_message::{ExtractMessage, KafkaBytes, KafkaMessage};
 use actix_web::{get, web::Data, HttpResponse, Responder};
 use log::info;
 use rdkafka::{
@@ -25,12 +25,13 @@ async fn collect(producer: Data<FutureProducer>) -> impl Responder {
         name: format!("abc"),
         number: -1,
     });
-    let x = KafkaMessage::to_bytes::<256>(&value);
+
+    let message: Vec<u8> = value.into();
 
     let delivery_status = producer
         .send(
             FutureRecord::to("collect")
-                .payload(x.to_bytes())
+                .payload(&message)
                 .key(&format!("Key 0"))
                 .headers(OwnedHeaders::new().add("header_key", "header_value")),
             Duration::from_secs(10),
