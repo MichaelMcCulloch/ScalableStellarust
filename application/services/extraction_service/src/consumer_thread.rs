@@ -1,8 +1,8 @@
 use std::thread;
 
+use crate::messages::{KafkaBytes, KafkaMessage};
 use futures::executor::block_on;
 use log::{info, warn};
-use protocol::{KafkaBytes, KafkaMessage};
 use rdkafka::{
     consumer::{CommitMode, Consumer, StreamConsumer},
     Message,

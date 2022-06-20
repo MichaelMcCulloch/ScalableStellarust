@@ -440,7 +440,6 @@ dependencies = [
  "env_logger",
  "futures",
  "log",
- "protocol",
  "rdkafka",
  "rkyv",
  "serde",
@@ -915,15 +914,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c54b25569025b7fc9651de43004ae593a75ad88543b17178aa5e1b9c4f15f56f"
 dependencies = [
  "unicode-ident",
-]
-
-[[package]]
-name = "protocol"
-version = "0.1.0"
-dependencies = [
- "bytecheck",
- "rdkafka",
- "rkyv",
 ]
 
 [[package]]

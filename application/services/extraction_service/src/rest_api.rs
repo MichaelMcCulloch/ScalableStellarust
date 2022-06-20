@@ -1,8 +1,8 @@
 use std::{fmt::format, time::Duration};
 
+use crate::messages::{ExtractMessage, KafkaBytes, KafkaMessage};
 use actix_web::{get, web::Data, HttpResponse, Responder};
 use log::info;
-use protocol::{ExtractMessage, KafkaBytes, KafkaMessage};
 use rdkafka::{
     message::{OwnedHeaders, ToBytes},
     producer::{FutureProducer, FutureRecord},
