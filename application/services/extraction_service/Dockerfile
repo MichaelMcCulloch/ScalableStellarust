@@ -1,6 +1,7 @@
 FROM ekidd/rust-musl-builder:latest as rust-build
 
 
+# Install the necessary dependencies, mostly to statically link rdkafka to rust-rdkafka and force the latest version of cmake
 USER root
 RUN apt remove --purge --auto-remove cmake -y
 RUN sudo apt update && \
@@ -20,11 +21,25 @@ RUN apt-get update && apt-get install -y build-essential \
     valgrind \
     zlib1g-dev \
     cmake
+
+
+
 USER rust
 
 
-RUN echo "fn main() {}" > dummy.rs
+# we're buildin an 'unchanging' project out of just the cargo files, to avoid rebuilding from scratch for only your changes
 
+RUN mkdir -p /home/rust/application/service/extraction
+RUN mkdir -p /home/rust/application/lib/protocol/
+
+
+WORKDIR /home/rust/application/lib/protocol/
+RUN echo "fn main() {}" > dummy.rs
+COPY --chown=rust:rust lib/protocol/Cargo.lock Cargo.lock
+COPY --chown=rust:rust lib/protocol/Cargo.toml Cargo.toml
+
+WORKDIR /home/rust/application/service/extraction/
+RUN echo "fn main() {}" > dummy.rs
 COPY --chown=rust:rust Cargo.lock Cargo.lock
 COPY --chown=rust:rust Cargo.toml Cargo.toml
 
@@ -32,6 +47,11 @@ RUN sed -i 's#src/main.rs#dummy.rs#' Cargo.toml
 RUN cargo build --release 
 RUN sed -i 's#dummy.rs#src/main.rs#' Cargo.toml
 
+# WORKDIR /home/rust/application/lib/protocol/
+# COPY --chown=rust:rust lib/protocol/src   src
+# COPY --chown=rust:rust lib/protocol/Config.toml  Config.toml
+
+WORKDIR /home/rust/application/service/extraction/
 COPY --chown=rust:rust src   src
 COPY --chown=rust:rust Config.toml  Config.toml
 

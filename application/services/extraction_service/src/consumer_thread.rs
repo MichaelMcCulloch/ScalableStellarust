@@ -1,34 +1,36 @@
 use std::thread;
 
 use futures::executor::block_on;
-use log::{warn, info};
-use rdkafka::{consumer::{StreamConsumer, Consumer, CommitMode}, Message};
+use log::{info, warn};
+use protocol::{KafkaBytes, KafkaMessage};
+use rdkafka::{
+    consumer::{CommitMode, Consumer, StreamConsumer},
+    Message,
+};
 
 pub fn start(consumer: StreamConsumer) {
     thread::spawn(move || loop {
         match block_on(consumer.recv()) {
             Err(e) => warn!("Kafka error: {}", e),
             Ok(m) => {
-                let payload = match m.payload_view::<str>() {
-                    None => "",
-                    Some(Ok(s)) => s,
+                match m.payload_view::<[u8]>() {
+                    None => {}
+                    Some(Ok(s)) => {
+                        let result = KafkaMessage::from_bytes(&s.to_vec());
+                        match result {
+                            KafkaMessage::Extract(extract_message) => {
+                                info!("{:?}", extract_message)
+                            }
+                            KafkaMessage::Other(other_message) => info!("{:?}", other_message),
+                        }
+                    }
                     Some(Err(e)) => {
                         warn!("Error while deserializing message payload: {:?}", e);
-                        ""
                     }
                 };
-                info!(
-                    "key: '{:?}', payload: '{}', topic: {}, partition: {}, offset: {}, timestamp: {:?}",
-                    m.key(),
-                    payload,
-                    m.topic(),  
-                    m.partition(),
-                    m.offset(),
-                    m.timestamp()
-                );
 
                 consumer.commit_message(&m, CommitMode::Async).unwrap();
-                }
-            };
-        });
+            }
+        };
+    });
 }

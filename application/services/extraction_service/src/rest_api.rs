@@ -1,10 +1,13 @@
-use std::time::Duration;
+use std::{fmt::format, time::Duration};
 
 use actix_web::{get, web::Data, HttpResponse, Responder};
+use log::info;
+use protocol::{ExtractMessage, KafkaBytes, KafkaMessage};
 use rdkafka::{
-    message::OwnedHeaders,
+    message::{OwnedHeaders, ToBytes},
     producer::{FutureProducer, FutureRecord},
 };
+use rkyv::AlignedVec;
 
 #[get("/")]
 async fn index() -> impl Responder {
@@ -18,10 +21,16 @@ async fn healthcheck() -> impl Responder {
 
 #[get("/collect")]
 async fn collect(producer: Data<FutureProducer>) -> impl Responder {
+    let value = KafkaMessage::Extract(ExtractMessage {
+        name: format!("abc"),
+        number: -1,
+    });
+    let x = KafkaMessage::to_bytes::<256>(&value);
+
     let delivery_status = producer
         .send(
             FutureRecord::to("collect")
-                .payload(&format!("Message from Extract"))
+                .payload(x.to_bytes())
                 .key(&format!("Key 0"))
                 .headers(OwnedHeaders::new().add("header_key", "header_value")),
             Duration::from_secs(10),

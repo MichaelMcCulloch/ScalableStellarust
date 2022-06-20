@@ -1,4 +1,5 @@
 application/save_data_client/target/
+application/lib/*/target/
 application/services/*/target/
 application/services/*/*.tar.xz
 application/*/*.tar.xz

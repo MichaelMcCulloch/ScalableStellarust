@@ -25,6 +25,10 @@
             "path": "../application/services/unzipping_service"
         },
         {
+            "name": "Application::Library::Protocol",
+            "path": "../application/lib/protocol"
+        },
+        {
             "name": "Application::Docker Compose",
             "path": "../application/docker_compose"
         },
