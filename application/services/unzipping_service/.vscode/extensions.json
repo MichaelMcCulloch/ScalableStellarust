@@ -1,6 +1,0 @@
-{
-    "recommendations": [
-        "matklad.rust-analyzer",
-        "ms-azuretools.vscode-docker"
-    ]
-}

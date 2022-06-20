@@ -40,22 +40,3 @@ services:
       - target: 8000
         published: 8000
         protocol: tcp
-  parsing:
-    container_name: parsing
-    build:
-      context: ../services/parsing_service
-      dockerfile: Dockerfile
-    ports:
-      - target: 8001
-        published: 8001
-        protocol: tcp
-
-  unzip:
-    container_name: unzip
-    build:
-      context: ../services/unzipping_service
-      dockerfile: Dockerfile
-    ports:
-      - target: 8002
-        published: 8002
-        protocol: tcp

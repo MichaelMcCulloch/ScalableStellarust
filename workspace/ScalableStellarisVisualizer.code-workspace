@@ -17,18 +17,6 @@
             "path": "../application/services/extraction_service"
         },
         {
-            "name": "Application::Service::Parsing Service",
-            "path": "../application/services/parsing_service"
-        },
-        {
-            "name": "Application::Service::Unzipping Service",
-            "path": "../application/services/unzipping_service"
-        },
-        // {
-        //     "name": "Application::Library::Protocol",
-        //     "path": "../application/lib/protocol"
-        // },
-        {
             "name": "Application::Docker Compose",
             "path": "../application/docker_compose"
         },

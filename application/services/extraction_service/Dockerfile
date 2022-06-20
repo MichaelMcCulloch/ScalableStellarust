@@ -28,9 +28,6 @@ USER rust
 
 
 # we're buildin an 'unchanging' project out of just the cargo files, to avoid rebuilding from scratch for only your changes
-
-
-
 RUN echo "fn main() {}" > dummy.rs
 COPY --chown=rust:rust Cargo.lock Cargo.lock
 COPY --chown=rust:rust Cargo.toml Cargo.toml
