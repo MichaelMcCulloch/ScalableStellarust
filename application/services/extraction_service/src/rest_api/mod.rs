@@ -1,11 +1,12 @@
 use std::time::Duration;
 
-use crate::kafka::{ExtractMessage, KafkaMessage};
 use actix_web::{get, web::Data, HttpResponse, Responder};
 use rdkafka::{
     message::OwnedHeaders,
     producer::{FutureProducer, FutureRecord},
 };
+
+use crate::messaging::{ExtractMessage, KafkaMessage};
 
 #[get("/")]
 async fn index() -> impl Responder {

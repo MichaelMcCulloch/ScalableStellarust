@@ -1,6 +1,5 @@
 use std::thread;
 
-use crate::kafka::KafkaMessage;
 use futures::executor::block_on;
 use log::{info, warn};
 use rdkafka::{
@@ -8,7 +7,9 @@ use rdkafka::{
     Message,
 };
 
-pub fn start(consumer: StreamConsumer) {
+use crate::messaging::{callback::Processor, KafkaMessage};
+
+pub fn start(consumer: StreamConsumer, mut processor: Processor<KafkaMessage>) {
     thread::spawn(move || loop {
         match block_on(consumer.recv()) {
             Err(e) => warn!("Kafka error: {}", e),
@@ -17,12 +18,7 @@ pub fn start(consumer: StreamConsumer) {
                     None => {}
                     Some(Ok(s)) => {
                         let message: KafkaMessage = s.into();
-
-                        match message {
-                            KafkaMessage::Extract(extract_message) => {
-                                info!("{:?}", extract_message)
-                            }
-                        }
+                        processor.process_event(message);
                     }
                     Some(Err(e)) => {
                         warn!("Error while deserializing message payload: {:?}", e);

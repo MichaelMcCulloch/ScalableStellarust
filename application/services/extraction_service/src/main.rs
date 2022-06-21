@@ -4,13 +4,22 @@ use actix_web::{
     App, HttpServer,
 };
 
+use log::info;
 use rdkafka::{
     consumer::{Consumer, StreamConsumer},
     producer::FutureProducer,
     ClientConfig,
 };
 
-use extraction_service::{config, consumer_thread, rest_api};
+use extraction_service::{
+    config,
+    messaging::{callback::Processor, consumer_thread, KafkaMessage},
+    rest_api,
+};
+
+fn kafka_message_callback(msg: KafkaMessage) {
+    info!("{:?}", msg);
+}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -43,7 +52,12 @@ async fn main() -> std::io::Result<()> {
         ),
     );
     env_logger::init();
-    consumer_thread::start(consumer);
+    consumer_thread::start(
+        consumer,
+        Processor {
+            callback: Box::new(kafka_message_callback),
+        },
+    );
 
     let bind_address = format!("{}:{}", config.service.server, config.service.port);
     HttpServer::new(move || {
