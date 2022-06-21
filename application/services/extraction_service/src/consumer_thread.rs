@@ -1,6 +1,6 @@
 use std::thread;
 
-use crate::kafka_message::{KafkaByteMessage, KafkaBytes, KafkaMessage};
+use crate::kafka::KafkaMessage;
 use futures::executor::block_on;
 use log::{info, warn};
 use rdkafka::{
@@ -22,7 +22,6 @@ pub fn start(consumer: StreamConsumer) {
                             KafkaMessage::Extract(extract_message) => {
                                 info!("{:?}", extract_message)
                             }
-                            KafkaMessage::Other(other_message) => info!("{:?}", other_message),
                         }
                     }
                     Some(Err(e)) => {

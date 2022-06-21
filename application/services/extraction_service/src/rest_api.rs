@@ -1,13 +1,11 @@
-use std::{fmt::format, time::Duration};
+use std::time::Duration;
 
-use crate::kafka_message::{ExtractMessage, KafkaBytes, KafkaMessage};
+use crate::kafka::{ExtractMessage, KafkaMessage};
 use actix_web::{get, web::Data, HttpResponse, Responder};
-use log::info;
 use rdkafka::{
-    message::{OwnedHeaders, ToBytes},
+    message::OwnedHeaders,
     producer::{FutureProducer, FutureRecord},
 };
-use rkyv::AlignedVec;
 
 #[get("/")]
 async fn index() -> impl Responder {
