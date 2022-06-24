@@ -1,4 +1,4 @@
-use std::{default, fmt::Debug};
+use std::fmt::Debug;
 
 use bytecheck::CheckBytes;
 use derive_builder::Builder;

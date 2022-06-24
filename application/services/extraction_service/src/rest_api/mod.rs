@@ -6,7 +6,7 @@ use rdkafka::{
     producer::{FutureProducer, FutureRecord},
 };
 
-use crate::messaging::{ExtractMessage, ExtractMessageBuilder, KafkaMessageKind};
+use crate::messaging::ExtractMessageBuilder;
 
 #[get("/")]
 async fn index() -> impl Responder {

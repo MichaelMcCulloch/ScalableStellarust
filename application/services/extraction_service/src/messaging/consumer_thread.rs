@@ -1,8 +1,8 @@
-use std::{borrow::Borrow, thread};
+use std::thread;
 
 use crate::messaging::{callback::Callback, KafkaMessageKind};
 use futures::executor::block_on;
-use log::{info, warn};
+use log::warn;
 use rdkafka::{
     consumer::{CommitMode, Consumer, StreamConsumer},
     Message,
