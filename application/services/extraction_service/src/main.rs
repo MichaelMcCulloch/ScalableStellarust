@@ -13,11 +13,11 @@ use rdkafka::{
 
 use extraction_service::{
     config,
-    messaging::{callback::Processor, consumer_thread, KafkaMessage},
+    messaging::{consumer_thread, KafkaMessageKind},
     rest_api,
 };
 
-fn kafka_message_callback(msg: KafkaMessage) {
+fn kafka_message_callback(msg: KafkaMessageKind) {
     info!("{:?}", msg);
 }
 
@@ -52,12 +52,7 @@ async fn main() -> std::io::Result<()> {
         ),
     );
     env_logger::init();
-    consumer_thread::start(
-        consumer,
-        Processor {
-            callback: Box::new(kafka_message_callback),
-        },
-    );
+    consumer_thread::start(consumer, Box::new(kafka_message_callback));
 
     let bind_address = format!("{}:{}", config.service.server, config.service.port);
     HttpServer::new(move || {

@@ -6,7 +6,7 @@ use rdkafka::{
     producer::{FutureProducer, FutureRecord},
 };
 
-use crate::messaging::{ExtractMessage, KafkaMessage};
+use crate::messaging::{ExtractMessage, ExtractMessageBuilder, KafkaMessageKind};
 
 #[get("/")]
 async fn index() -> impl Responder {
@@ -20,12 +20,10 @@ async fn healthcheck() -> impl Responder {
 
 #[get("/collect")]
 async fn collect(producer: Data<FutureProducer>) -> impl Responder {
-    let value = KafkaMessage::Extract(ExtractMessage {
-        name: format!("abc"),
-        number: -1,
-    });
-
-    let message: Vec<u8> = value.into();
+    let message = ExtractMessageBuilder::default()
+        .name("value")
+        .number(0)
+        .build();
 
     let delivery_status = producer
         .send(

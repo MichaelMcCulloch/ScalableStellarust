@@ -3,4 +3,4 @@ pub mod consumer_thread;
 
 mod message;
 
-pub use message::{ExtractMessage, KafkaMessage};
+pub use message::{ExtractMessage, ExtractMessageBuilder, KafkaMessageKind};
